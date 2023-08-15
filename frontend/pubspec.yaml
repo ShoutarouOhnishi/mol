@@ -40,6 +40,8 @@ dependencies:
   flutter_riverpod: ^2.3.6
   freezed_annotation: ^2.4.1
   json_serializable: ^6.7.1
+  firebase_auth: ^4.7.2
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:
