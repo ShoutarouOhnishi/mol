@@ -5,24 +5,34 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "frontend",
-            "cwd": "frontend",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "frontend (profile mode)",
+            "name": "Frontend DEV Debug",
             "cwd": "frontend",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "debug",
+            "args": [
+                "--dart-define-from-file=dart_defines/dev.json"
+            ]
         },
         {
-            "name": "frontend (release mode)",
+            "name": "Frontend DEV Profile",
             "cwd": "frontend",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "flutterMode": "profile",
+            "args": [
+                "--dart-define-from-file=frontend/dart_defines/dev.json"
+            ]
+        },
+        {
+            "name": "Frontend DEV Release",
+            "cwd": "frontend",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release",
+            "args": [
+                "--dart-define-from-file=frontend/dart_defines/dev.json"
+            ]
         }
     ]
 }

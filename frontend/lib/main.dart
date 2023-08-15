@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/views/match_make_page.dart';
@@ -7,7 +8,26 @@ import 'services/auth_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  if (kIsWeb) {
+    // Webの場合の初期化
+    await Firebase.initializeApp(
+      options: const FirebaseOptions(
+        apiKey: String.fromEnvironment('firebaseWebApiKey'),
+        authDomain: String.fromEnvironment('firebaseWebAuthDomain'),
+        databaseURL: String.fromEnvironment('firebaseWebDatabaseURL'),
+        projectId: String.fromEnvironment('firebaseWebProjectId'),
+        storageBucket: String.fromEnvironment('firebaseWebStorageBucket'),
+        messagingSenderId:
+            String.fromEnvironment('firebaseWebMessagingSenderId'),
+        appId: String.fromEnvironment('firebaseWebAppId'),
+        measurementId: String.fromEnvironment('firebaseWebMeasurementId'),
+      ),
+    );
+  } else {
+    // iOS/Androidの場合の初期化
+    await Firebase.initializeApp();
+  }
+
   runApp(const ProviderScope(child: MyApp()));
 }
 
