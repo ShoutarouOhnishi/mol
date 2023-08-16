@@ -1,0 +1,10 @@
+description: 入力値に対するValidationErrorのメッセージ
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: '{attribute}は必ず指定してください。'
+

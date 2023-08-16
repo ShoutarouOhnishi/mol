@@ -1,0 +1,32 @@
+openapi: 3.0.0
+info:
+  title: Online Battle API
+  description: アプリ向けAPI仕様
+  version: 1.0.0
+  contact:
+    name: Shoutarou Ohnishi
+    email: shoutarou.ohnishi@gmail.com
+
+servers:
+  - url: "https://online-battle.jp/api/v1" # FIXME: Dev環境のURLを設定
+    description: Dev環境
+
+tags:
+  - name: account
+
+components:
+  securitySchemes:
+    firebaseTokenGuard:
+      type: http
+      bearerFormat: JWT
+      scheme: bearer
+    appTokenGuard:
+      type: http
+      bearerFormat: JWT
+      scheme: bearer
+
+paths:
+  /user:
+    $ref: './paths/account/user.yaml'
+
+
