@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:frontend/services/auth_service.dart';
+import 'package:frontend/services/firebase_auth_service.dart';
 import 'package:frontend/view_models/match_make_view_model.dart';
 
-class MatchMakePage extends ConsumerWidget {
+class MatchMakeView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final matchMakeState = ref.watch(matchMakeViewModelProvider);
     final viewModel = ref.watch(matchMakeViewModelProvider.notifier);
-    final userAsyncValue = ref.watch(userProvider);
+    final firebaseUserAsyncValue = ref.watch(firebaseUserProvider);
 
     return Scaffold(
       appBar: AppBar(title: Text('対戦マッチング')),
@@ -17,7 +17,7 @@ class MatchMakePage extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             // 対戦相手を探すボタン
-            userAsyncValue.when(
+            firebaseUserAsyncValue.when(
               data: (user) => ElevatedButton(
                 onPressed: () =>
                     viewModel.searchForOpponent(context, user!.uid), // UIDを渡す

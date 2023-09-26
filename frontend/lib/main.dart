@@ -2,9 +2,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:frontend/views/match_make_page.dart';
-
-import 'services/auth_service.dart';
+import 'package:frontend/app_router.dart';
+import 'package:frontend/constants/app.dart';
+import 'package:stack_trace/stack_trace.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,23 +29,32 @@ void main() async {
   }
 
   runApp(const ProviderScope(child: MyApp()));
+
+  FlutterError.demangleStackTrace = (StackTrace stack) {
+    if (stack is Trace) return stack.vmTrace;
+    if (stack is Chain) return stack.toTrace().vmTrace;
+    return stack;
+  };
 }
 
-class MyApp extends ConsumerWidget {
-  const MyApp({super.key});
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final auth = ref.read(authServiceProvider);
-    // アプリ起動時に匿名認証
-    auth.signInAnonymously();
+class MyApp extends ConsumerStatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
 
+  @override
+  ConsumerState<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends ConsumerState<MyApp> {
+  @override
+  Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Room App',
+      title: kAppName,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: MatchMakePage(),
+      initialRoute: AppRouter.splash,
+      onGenerateRoute: AppRouter.generateRoute,
     );
   }
 }

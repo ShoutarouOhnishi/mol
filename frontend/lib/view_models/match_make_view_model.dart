@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:frontend/repositories/match_make_repository.dart';
-import 'package:frontend/views/room_page.dart';
+import 'package:frontend/views/room_view.dart';
 
 part 'match_make_view_model.freezed.dart';
 
@@ -63,7 +63,7 @@ class MatchMakeViewModel extends StateNotifier<MatchMakeState> {
     // 対戦ルームへ遷移
     navigator.push(
       MaterialPageRoute(
-        builder: (context) => RoomPage(roomId: roomId),
+        builder: (context) => RoomView(roomId: roomId),
       ),
     );
   }

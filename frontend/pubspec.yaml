@@ -40,8 +40,11 @@ dependencies:
   freezed_annotation: ^2.4.1
   json_serializable: ^6.7.1
   firebase_auth: ^4.7.2
-  intl: ^0.18.1
+  intl: ^0.17.0
   cloud_firestore: ^4.8.4
+
+  openapi:
+    path: ./openapi/client
 
 dev_dependencies:
   flutter_test:
@@ -55,9 +58,14 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   freezed: ^2.4.2
   build_runner: ^2.4.6
+  mockito: ^5.4.2
+  firebase_core_platform_interface: ^4.8.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
+
+dependency_overrides:
+  analyzer: ^6.2.0
 
 # The following section is specific to Flutter packages.
 flutter:

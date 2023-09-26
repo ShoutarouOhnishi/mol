@@ -1,13 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final authServiceProvider = Provider<AuthService>((ref) => AuthService());
+final firebaseAuthServiceProvider =
+    Provider<FirebaseAuthService>((ref) => FirebaseAuthService());
 
-final userProvider = StreamProvider<User?>((ref) {
-  return ref.read(authServiceProvider).userChanges;
+final firebaseUserProvider = StreamProvider<User?>((ref) {
+  return ref.read(firebaseAuthServiceProvider).userChanges;
 });
 
-class AuthService {
+class FirebaseAuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // 現在のユーザーを取得する
@@ -33,6 +34,8 @@ class AuthService {
       return;
     }
   }
+
+  User? get currentUser => _auth.currentUser;
 
   // ユーザーの変更を監視するストリーム
   Stream<User?> get userChanges => _auth.authStateChanges();
