@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "firebase-tools": "^12.5.2",
+    "openapi-to-postmanv2": "^4.16.0",
+    "swagger-cli": "^4.0.4"
+  }
+}
