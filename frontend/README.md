@@ -19,3 +19,11 @@
   - repositories/     # データアクセスロジックの抽象化
   - services/         # 外部サービスとの通信（API呼び出し等）
   - utils/            # ユーティリティや拡張関数など
+
+## APIクライアントコード自動生成 (TODO: 一連の作業をシェルスクリプトで実行できるようにする)
+```console
+npm install @openapitools/openapi-generator-cli -g
+rm -rf openapi/client
+openapi-generator-cli generate -i ../docs/api/openapi.yml -g dart -o ./openapi/client
+rm -r ./openapi/client/test # 不要なテストコードを削除
+```
