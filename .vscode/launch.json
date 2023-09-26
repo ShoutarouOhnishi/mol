@@ -11,7 +11,7 @@
             "type": "dart",
             "flutterMode": "debug",
             "args": [
-                "--dart-define-from-file=dart_defines/dev.json"
+                "--dart-define-from-file=dart_defines/dev.json",
             ]
         },
         {
@@ -32,6 +32,21 @@
             "flutterMode": "release",
             "args": [
                 "--dart-define-from-file=frontend/dart_defines/dev.json"
+            ]
+        },
+        {
+            "name": "Frontend DEV Debug Web(WSL2)",
+            "cwd": "frontend",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "debug",
+            "args": [
+                "-d",
+                "web-server",
+                "--web-hostname=0.0.0.0",
+                "--web-port",
+                "8081",
+                "--dart-define-from-file=dart_defines/dev.json"
             ]
         }
     ]
