@@ -8,6 +8,8 @@ info:
     email: shoutarou.ohnishi@gmail.com
 
 servers:
+  - url: "http://localhost/api/v1"
+    description: ローカル環境
   - url: "https://online-battle.jp/api/v1" # FIXME: Dev環境のURLを設定
     description: Dev環境
 
@@ -26,7 +28,9 @@ components:
       scheme: bearer
 
 paths:
-  /user:
+  /api/v1/user:
     $ref: './paths/account/user.yaml'
+  /api/v1/authenticate:
+    $ref: './paths/authenticate/authenticate.yaml'
 
 

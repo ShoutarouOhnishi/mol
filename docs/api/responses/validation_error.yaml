@@ -1,4 +1,4 @@
-description: 入力値に対するValidationErrorのメッセージ
+description: "入力値に対するValidationErrorのメッセージ"
 content:
   application/json:
     schema:
@@ -6,5 +6,5 @@ content:
       properties:
         message:
           type: string
-          example: '{attribute}は必ず指定してください。'
+          example: "{attribute}は必ず指定してください。"
 

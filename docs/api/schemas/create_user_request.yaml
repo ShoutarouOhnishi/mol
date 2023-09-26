@@ -1,0 +1,10 @@
+description: ユーザー作成 - Input
+type: object
+required:
+  - name
+properties:
+  name:
+    description: 名前
+    type: string
+    example: "ゲスト"
+

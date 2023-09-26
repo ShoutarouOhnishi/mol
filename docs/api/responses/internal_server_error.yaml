@@ -1,4 +1,4 @@
-description: Internal Server Errror
+description: "Internal Server Errror"
 content:
   application/json:
     schema:
@@ -6,5 +6,5 @@ content:
       properties:
         message:
           type: string
-          example: 'システムエラーが発生しました。'
+          example: "システムエラーが発生しました。"
 
