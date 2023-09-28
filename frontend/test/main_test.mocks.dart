@@ -3,13 +3,12 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i5;
+import 'dart:async' as _i4;
 
-import 'package:flutter_riverpod/flutter_riverpod.dart' as _i4;
-import 'package:frontend/shared_notifiers/auth_state_notifier.dart' as _i2;
-import 'package:frontend/view_models/splash_view_model.dart' as _i3;
+import 'package:flutter_riverpod/flutter_riverpod.dart' as _i3;
+import 'package:frontend/view_models/splash_view_model.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:state_notifier/state_notifier.dart' as _i6;
+import 'package:state_notifier/state_notifier.dart' as _i5;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -22,8 +21,9 @@ import 'package:state_notifier/state_notifier.dart' as _i6;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeAuthState_0 extends _i1.SmartFake implements _i2.AuthState {
-  _FakeAuthState_0(
+class _FakeSplashViewState_0 extends _i1.SmartFake
+    implements _i2.SplashViewState {
+  _FakeSplashViewState_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -32,35 +32,16 @@ class _FakeAuthState_0 extends _i1.SmartFake implements _i2.AuthState {
         );
 }
 
-class _FakeSplashViewState_1 extends _i1.SmartFake
-    implements _i3.SplashViewState {
-  _FakeSplashViewState_1(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
-/// A class which mocks [AuthStateNotifier].
+/// A class which mocks [SplashViewModel].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockAuthStateNotifier extends _i1.Mock implements _i2.AuthStateNotifier {
-  MockAuthStateNotifier() {
+class MockSplashViewModel extends _i1.Mock implements _i2.SplashViewModel {
+  MockSplashViewModel() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i2.AuthState get currentState => (super.noSuchMethod(
-        Invocation.getter(#currentState),
-        returnValue: _FakeAuthState_0(
-          this,
-          Invocation.getter(#currentState),
-        ),
-      ) as _i2.AuthState);
-  @override
-  set onError(_i4.ErrorListener? _onError) => super.noSuchMethod(
+  set onError(_i3.ErrorListener? _onError) => super.noSuchMethod(
         Invocation.setter(
           #onError,
           _onError,
@@ -73,20 +54,20 @@ class MockAuthStateNotifier extends _i1.Mock implements _i2.AuthStateNotifier {
         returnValue: false,
       ) as bool);
   @override
-  _i5.Stream<_i2.AuthState> get stream => (super.noSuchMethod(
+  _i4.Stream<_i2.SplashViewState> get stream => (super.noSuchMethod(
         Invocation.getter(#stream),
-        returnValue: _i5.Stream<_i2.AuthState>.empty(),
-      ) as _i5.Stream<_i2.AuthState>);
+        returnValue: _i4.Stream<_i2.SplashViewState>.empty(),
+      ) as _i4.Stream<_i2.SplashViewState>);
   @override
-  _i2.AuthState get state => (super.noSuchMethod(
+  _i2.SplashViewState get state => (super.noSuchMethod(
         Invocation.getter(#state),
-        returnValue: _FakeAuthState_0(
+        returnValue: _FakeSplashViewState_0(
           this,
           Invocation.getter(#state),
         ),
-      ) as _i2.AuthState);
+      ) as _i2.SplashViewState);
   @override
-  set state(_i2.AuthState? value) => super.noSuchMethod(
+  set state(_i2.SplashViewState? value) => super.noSuchMethod(
         Invocation.setter(
           #state,
           value,
@@ -94,132 +75,29 @@ class MockAuthStateNotifier extends _i1.Mock implements _i2.AuthStateNotifier {
         returnValueForMissingStub: null,
       );
   @override
-  _i2.AuthState get debugState => (super.noSuchMethod(
+  _i2.SplashViewState get debugState => (super.noSuchMethod(
         Invocation.getter(#debugState),
-        returnValue: _FakeAuthState_0(
+        returnValue: _FakeSplashViewState_0(
           this,
           Invocation.getter(#debugState),
         ),
-      ) as _i2.AuthState);
+      ) as _i2.SplashViewState);
   @override
   bool get hasListeners => (super.noSuchMethod(
         Invocation.getter(#hasListeners),
         returnValue: false,
       ) as bool);
   @override
-  _i5.Future<void> initialize() => (super.noSuchMethod(
+  _i4.Future<void> initialize() => (super.noSuchMethod(
         Invocation.method(
           #initialize,
           [],
         ),
-        returnValue: _i5.Future<void>.value(),
-        returnValueForMissingStub: _i5.Future<void>.value(),
-      ) as _i5.Future<void>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
   @override
-  bool updateShouldNotify(
-    _i2.AuthState? old,
-    _i2.AuthState? current,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #updateShouldNotify,
-          [
-            old,
-            current,
-          ],
-        ),
-        returnValue: false,
-      ) as bool);
-  @override
-  _i4.RemoveListener addListener(
-    _i6.Listener<_i2.AuthState>? listener, {
-    bool? fireImmediately = true,
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #addListener,
-          [listener],
-          {#fireImmediately: fireImmediately},
-        ),
-        returnValue: () {},
-      ) as _i4.RemoveListener);
-  @override
-  void dispose() => super.noSuchMethod(
-        Invocation.method(
-          #dispose,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
-}
-
-/// A class which mocks [SplashViewStateNotifier].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockSplashViewStateNotifier extends _i1.Mock
-    implements _i3.SplashViewStateNotifier {
-  MockSplashViewStateNotifier() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  set onError(_i4.ErrorListener? _onError) => super.noSuchMethod(
-        Invocation.setter(
-          #onError,
-          _onError,
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
-  bool get mounted => (super.noSuchMethod(
-        Invocation.getter(#mounted),
-        returnValue: false,
-      ) as bool);
-  @override
-  _i5.Stream<_i3.SplashViewState> get stream => (super.noSuchMethod(
-        Invocation.getter(#stream),
-        returnValue: _i5.Stream<_i3.SplashViewState>.empty(),
-      ) as _i5.Stream<_i3.SplashViewState>);
-  @override
-  _i3.SplashViewState get state => (super.noSuchMethod(
-        Invocation.getter(#state),
-        returnValue: _FakeSplashViewState_1(
-          this,
-          Invocation.getter(#state),
-        ),
-      ) as _i3.SplashViewState);
-  @override
-  set state(_i3.SplashViewState? value) => super.noSuchMethod(
-        Invocation.setter(
-          #state,
-          value,
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
-  _i3.SplashViewState get debugState => (super.noSuchMethod(
-        Invocation.getter(#debugState),
-        returnValue: _FakeSplashViewState_1(
-          this,
-          Invocation.getter(#debugState),
-        ),
-      ) as _i3.SplashViewState);
-  @override
-  bool get hasListeners => (super.noSuchMethod(
-        Invocation.getter(#hasListeners),
-        returnValue: false,
-      ) as bool);
-  @override
-  _i5.Future<void> initialize() => (super.noSuchMethod(
-        Invocation.method(
-          #initialize,
-          [],
-        ),
-        returnValue: _i5.Future<void>.value(),
-        returnValueForMissingStub: _i5.Future<void>.value(),
-      ) as _i5.Future<void>);
-  @override
-  void consumeEvent(_i3.UiEvent? event) => super.noSuchMethod(
+  void consumeEvent(_i2.UiEvent? event) => super.noSuchMethod(
         Invocation.method(
           #consumeEvent,
           [event],
@@ -228,8 +106,8 @@ class MockSplashViewStateNotifier extends _i1.Mock
       );
   @override
   bool updateShouldNotify(
-    _i3.SplashViewState? old,
-    _i3.SplashViewState? current,
+    _i2.SplashViewState? old,
+    _i2.SplashViewState? current,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -242,8 +120,8 @@ class MockSplashViewStateNotifier extends _i1.Mock
         returnValue: false,
       ) as bool);
   @override
-  _i4.RemoveListener addListener(
-    _i6.Listener<_i3.SplashViewState>? listener, {
+  _i3.RemoveListener addListener(
+    _i5.Listener<_i2.SplashViewState>? listener, {
     bool? fireImmediately = true,
   }) =>
       (super.noSuchMethod(
@@ -253,7 +131,7 @@ class MockSplashViewStateNotifier extends _i1.Mock
           {#fireImmediately: fireImmediately},
         ),
         returnValue: () {},
-      ) as _i4.RemoveListener);
+      ) as _i3.RemoveListener);
   @override
   void dispose() => super.noSuchMethod(
         Invocation.method(

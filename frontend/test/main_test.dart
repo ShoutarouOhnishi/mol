@@ -7,7 +7,7 @@ import 'package:frontend/view_models/splash_view_model.dart';
 import 'package:mockito/annotations.dart';
 import 'main_test.mocks.dart';
 
-@GenerateMocks([SplashViewStateNotifier])
+@GenerateMocks([SplashViewModel])
 void main() {
   setUp(() async {
     // Firebaseのモッキング
@@ -20,8 +20,8 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          splashViewStateProvider.overrideWith((ref) =>
-              MockSplashViewStateNotifier()) // initializeメソッドでの状態変化による画面遷移を防ぐため、モックを使用
+          splashViewModelProvider.overrideWith((ref) =>
+              MockSplashViewModel()) // initializeメソッドでの状態変化による画面遷移を防ぐため、モックを使用
         ],
         child: const MyApp(),
       ),

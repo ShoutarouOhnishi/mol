@@ -5,10 +5,9 @@ import 'package:frontend/shared_notifiers/auth_state_notifier.dart';
 
 part 'splash_view_model.freezed.dart';
 
-final splashViewStateProvider =
-    StateNotifierProvider.autoDispose<SplashViewStateNotifier, SplashViewState>(
-        (ref) {
-  return SplashViewStateNotifier(ref.watch(authStateProvider.notifier));
+final splashViewModelProvider =
+    StateNotifierProvider.autoDispose<SplashViewModel, SplashViewState>((ref) {
+  return SplashViewModel(ref.watch(authStateProvider.notifier));
 });
 
 @freezed
@@ -31,10 +30,9 @@ class UiEvent with _$UiEvent {
 /// 最低スプラッシュ表示時間
 const _minimumSplashDuration = Duration(milliseconds: 1000);
 
-class SplashViewStateNotifier extends StateNotifier<SplashViewState> {
+class SplashViewModel extends StateNotifier<SplashViewState> {
   final AuthStateNotifier _authStateNotifier;
-  SplashViewStateNotifier(this._authStateNotifier)
-      : super(const SplashViewState());
+  SplashViewModel(this._authStateNotifier) : super(const SplashViewState());
 
   /// アプリ初期化処理実行
   Future<void> initialize() async {

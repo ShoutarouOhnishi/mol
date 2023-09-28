@@ -16,14 +16,14 @@ class _SplashViewState extends ConsumerState<SplashView> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(splashViewStateProvider.notifier).initialize();
+      ref.read(splashViewModelProvider.notifier).initialize();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     ref.listen<List<UiEvent>>(
-      splashViewStateProvider.select((s) => s.events),
+      splashViewModelProvider.select((s) => s.events),
       (_, events) {
         final event = events.firstOrNull;
         if (event == null) return;
@@ -45,7 +45,7 @@ class _SplashViewState extends ConsumerState<SplashView> {
             );
           },
         );
-        ref.read(splashViewStateProvider.notifier).consumeEvent(event);
+        ref.read(splashViewModelProvider.notifier).consumeEvent(event);
       },
     );
     return const Scaffold(
