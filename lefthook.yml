@@ -1,0 +1,17 @@
+pre-commit:
+  # pubspec.lock/composer.lockに変更がある場合のみ実行
+  git-pull:
+    script: |
+      #!/bin/bash
+
+      # Compare the pubspec.lock and composer.lock files between HEAD (current branch) and its upstream branch
+      pubspec_diff=$(git diff --name-only @{u} HEAD | grep -E 'pubspec\.yaml|pubspec\.lock')
+      composer_diff=$(git diff --name-only @{u} HEAD | grep 'composer\.lock')
+
+      if [ -n "$pubspec_diff" ]; then
+        fvm flutter pub get
+      fi
+
+      if [ -n "$composer_diff" ]; then
+        sail composer install
+      fi
