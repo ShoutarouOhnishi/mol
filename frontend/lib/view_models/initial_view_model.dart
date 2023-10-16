@@ -26,30 +26,12 @@ class InitialViewModel extends StateNotifier<InitialViewState> {
       this._authStateNotifier)
       : super(const InitialViewState());
 
-  Future<void> initialize() async {
-    if (state.isLoading) return;
-
-    state = state.copyWith(isLoading: true);
-
-    try {} on Exception catch (e) {
-    } finally {}
-  }
-
   Future<void> createAnounymouslyUser() async {
     if (state.isLoading) return;
     state = state.copyWith(isLoading: true);
 
     try {
-      User? firebaseUser = _firebaseAuthService.currentUser;
-      firebaseUser ??= await _firebaseAuthService.signInAnonymously();
-
-      String? idToken = await firebaseUser!.getIdToken();
-      final request = CreateUserRequest(name: state.userName);
-      final response = await _accountRepository.createUser(request, idToken!);
-      if (response == null) {
-        throw Exception();
-      }
-      _authStateNotifier.state = AuthState.authenticated(response.token);
+      _authStateNotifier.createAnounymouslyUser(state.userName);
     } on Exception catch (e) {
       // FIXME: エラー処理 ここで処理するか上層にあげるか
       debugPrint(e.toString());

@@ -59,25 +59,20 @@ class MockFirebaseAuthService extends _i1.Mock
 class MockAccountRepository extends _i1.Mock implements _i5.AccountRepository {
   @override
   _i3.Future<_i6.CreateUserResponse?> createUser(
-    _i6.CreateUserRequest? request,
-    String? idToken,
-  ) =>
+          _i6.CreateUserRequest? request) =>
       (super.noSuchMethod(
         Invocation.method(
           #createUser,
-          [
-            request,
-            idToken,
-          ],
+          [request],
         ),
         returnValue: _i3.Future<_i6.CreateUserResponse?>.value(),
         returnValueForMissingStub: _i3.Future<_i6.CreateUserResponse?>.value(),
       ) as _i3.Future<_i6.CreateUserResponse?>);
   @override
-  _i3.Future<_i6.LoginResponse?> login(String? idToken) => (super.noSuchMethod(
+  _i3.Future<_i6.LoginResponse?> login() => (super.noSuchMethod(
         Invocation.method(
           #login,
-          [idToken],
+          [],
         ),
         returnValue: _i3.Future<_i6.LoginResponse?>.value(),
         returnValueForMissingStub: _i3.Future<_i6.LoginResponse?>.value(),

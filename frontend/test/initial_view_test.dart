@@ -15,13 +15,17 @@ import 'package:frontend/views/initial_view.dart';
 import 'package:frontend/views/match_make_view.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:openapi/api.dart';
 import 'initial_view_test.mocks.dart';
+
+class MockApiClient extends Mock implements ApiClient {}
 
 // MockInitialViewModelに設定するようのAuthStateNotifier
 // 画面描画時とテストコードでの状態変更時に同じインスタンスを使うため
 class MockAuthStateNotifier extends AuthStateNotifier with Mock {
   MockAuthStateNotifier()
-      : super(MockFirebaseAuthService(), MockAccountRepository());
+      : super(MockFirebaseAuthService(), MockAccountRepository(),
+            MockApiClient());
 }
 
 /// InitialViewModelをモッキング
@@ -103,8 +107,8 @@ void main() {
     // デフォルトの状態を持ったMockInitialViewModelを作成
     final mockViewModel = MockInitialViewModel(MockAuthStateNotifier(),
         const AuthState.initial(), const InitialViewState());
-    final mockSplashViewModel = MockSplashViewModel(
-        AuthStateNotifier(MockFirebaseAuthService(), MockAccountRepository()));
+    final mockSplashViewModel = MockSplashViewModel(AuthStateNotifier(
+        MockFirebaseAuthService(), MockAccountRepository(), MockApiClient()));
 
     await tester.pumpWidget(
       ProviderScope(

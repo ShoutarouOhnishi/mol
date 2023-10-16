@@ -1,20 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:frontend/configs/environment_config.dart';
+import 'package:frontend/shared_notifiers/api_client_state_notifier.dart';
 import 'package:openapi/api.dart';
 
 class AccountRepository {
   final AccountApi _apiInstance;
 
-  AccountRepository()
-      : _apiInstance =
-            AccountApi(ApiClient(basePath: EnvironmentConfig.apiUrl));
+  AccountRepository(ApiClient apiClient) : _apiInstance = AccountApi(apiClient);
 
-  Future<CreateUserResponse?> createUser(
-      CreateUserRequest request, String idToken) async {
+  Future<CreateUserResponse?> createUser(CreateUserRequest request) async {
     try {
-      _apiInstance.apiClient
-          .addDefaultHeader('Authorization', 'Bearer $idToken');
       return await _apiInstance.createUser(request);
     } catch (e) {
       if (kDebugMode) {
@@ -24,10 +19,8 @@ class AccountRepository {
     }
   }
 
-  Future<LoginResponse?> login(String idToken) async {
+  Future<LoginResponse?> login() async {
     try {
-      _apiInstance.apiClient
-          .addDefaultHeader('Authorization', 'Bearer $idToken');
       return await _apiInstance.login();
     } catch (e) {
       if (kDebugMode) {
@@ -38,5 +31,5 @@ class AccountRepository {
   }
 }
 
-final accountRepositoryProvider =
-    Provider<AccountRepository>((ref) => AccountRepository());
+final accountRepositoryProvider = Provider<AccountRepository>(
+    (ref) => AccountRepository(ref.watch(apiClientStateProvider)));

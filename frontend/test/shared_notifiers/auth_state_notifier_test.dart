@@ -6,21 +6,22 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:frontend/repositories/account_repository.dart';
 import 'package:frontend/services/firebase_auth_service.dart';
 import 'package:openapi/api.dart';
-
 import 'auth_state_notifier_test.mocks.dart';
 
-@GenerateMocks([FirebaseAuthService, AccountRepository, User])
+@GenerateMocks([FirebaseAuthService, AccountRepository, User, ApiClient])
 void main() {
   group('initialize', () {
     late MockFirebaseAuthService mockFirebaseAuthService;
     late MockAccountRepository mockAccountRepository;
+    late MockApiClient mockApiClient;
     late AuthStateNotifier authStateNotifier;
 
     setUp(() {
       mockFirebaseAuthService = MockFirebaseAuthService();
       mockAccountRepository = MockAccountRepository();
-      authStateNotifier =
-          AuthStateNotifier(mockFirebaseAuthService, mockAccountRepository);
+      mockApiClient = MockApiClient();
+      authStateNotifier = AuthStateNotifier(
+          mockFirebaseAuthService, mockAccountRepository, mockApiClient);
     });
 
     test('FirebaseUserが取得できない場合にunauthenticatedとなる', () async {
@@ -55,8 +56,7 @@ void main() {
       final mockUser = MockUser();
       when(mockFirebaseAuthService.currentUser).thenReturn(mockUser);
       when(mockUser.getIdToken()).thenAnswer((_) => Future.value('idToken'));
-      when(mockAccountRepository.login('idToken'))
-          .thenAnswer((_) async => null);
+      when(mockAccountRepository.login()).thenAnswer((_) async => null);
 
       await authStateNotifier.initialize();
 
@@ -73,7 +73,7 @@ void main() {
       when(mockFirebaseAuthService.currentUser).thenReturn(mockUser);
       when(mockUser.getIdToken())
           .thenAnswer((_) async => Future.value('idToken'));
-      when(mockAccountRepository.login('idToken'))
+      when(mockAccountRepository.login())
           .thenAnswer((_) async => LoginResponse(token: 'token', userId: 1));
 
       await authStateNotifier.initialize();
