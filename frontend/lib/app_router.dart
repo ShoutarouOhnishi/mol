@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/views/initial_view.dart';
-import 'package:frontend/views/match_make_view.dart';
-import 'package:frontend/views/room_view.dart';
-import 'package:frontend/views/splash_view.dart';
+import 'package:frontend/presentation/page/initial_page.dart';
+import 'package:frontend/presentation/page/match_make_page.dart';
+import 'package:frontend/presentation/page/room_page.dart';
+import 'package:frontend/presentation/page/splash_page.dart';
 
 class AppRouter {
   static const splash = '/splash';
@@ -15,16 +15,16 @@ class AppRouter {
       case '/':
         return null;
       case splash:
-        return MaterialPageRoute(builder: (context) => const SplashView());
+        return MaterialPageRoute(builder: (context) => const SplashPage());
       case initial:
-        return MaterialPageRoute(builder: (context) => const InitialView());
+        return MaterialPageRoute(builder: (context) => const InitialPage());
       case matchMake:
-        return MaterialPageRoute(builder: (context) => MatchMakeView());
+        return MaterialPageRoute(builder: (context) => MatchMakePage());
       // FIXME: 実装
       // case room:
-      //   return MaterialPageRoute(builder: (context) => RoomView());
+      //   return MaterialPageRoute(builder: (context) => RoomPage());
       default:
-        return MaterialPageRoute(builder: (context) => const InitialView());
+        return MaterialPageRoute(builder: (context) => const InitialPage());
     }
   }
 }

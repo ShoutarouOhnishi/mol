@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/configs/environment_config.dart';
-import 'package:openapi/api.dart';
+import 'package:frontend/infrastructure/datasource/openapi/client/lib/api.dart';
 
 final apiClientStateProvider =
     StateNotifierProvider<ApiClientStateNotifier, ApiClient>((ref) {

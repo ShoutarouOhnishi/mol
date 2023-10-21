@@ -2,10 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:frontend/repositories/account_repository.dart';
-import 'package:frontend/services/firebase_auth_service.dart';
-import 'package:frontend/shared_notifiers/api_client_state_notifier.dart';
-import 'package:openapi/api.dart';
+import 'package:frontend/infrastructure/repository/account_repository.dart';
+import 'package:frontend/infrastructure/datasource/firebase_auth_service.dart';
+import 'package:frontend/presentation/notifier/api_client_state_notifier.dart';
+import 'package:frontend/infrastructure/datasource/openapi/client/lib/api.dart';
 
 part 'auth_state_notifier.freezed.dart';
 

@@ -3,18 +3,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/app_router.dart';
 import 'package:frontend/constants/app.dart';
 import 'package:frontend/constants/initali.dart';
-import 'package:frontend/shared_notifiers/auth_state_notifier.dart';
-import 'package:frontend/shared_notifiers/progress_state_notifier.dart';
-import 'package:frontend/view_models/initial_view_model.dart';
+import 'package:frontend/presentation/notifier/auth_state_notifier.dart';
+import 'package:frontend/presentation/notifier/progress_state_notifier.dart';
+import 'package:frontend/presentation/notifier/initial_page_state_notifier.dart';
 
-class InitialView extends ConsumerStatefulWidget {
-  const InitialView({Key? key}) : super(key: key);
+class InitialPage extends ConsumerStatefulWidget {
+  const InitialPage({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _InitialViewState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _InitialPageState();
 }
 
-class _InitialViewState extends ConsumerState<InitialView> {
+class _InitialPageState extends ConsumerState<InitialPage> {
   @override
   void initState() {
     super.initState();
@@ -23,7 +23,7 @@ class _InitialViewState extends ConsumerState<InitialView> {
   @override
   Widget build(BuildContext context) {
     Function? hideProgress;
-    final provider = initialViewModelProvider;
+    final provider = initialPageStateNotifierProvider;
     final state = ref.watch(provider);
     final notifier = ref.read(provider.notifier);
 
@@ -43,8 +43,8 @@ class _InitialViewState extends ConsumerState<InitialView> {
       },
     );
 
-    ref.listen<InitialViewState>(
-      initialViewModelProvider,
+    ref.listen<InitialPageState>(
+      initialPageStateNotifierProvider,
       (_, next) {
         if (next.isLoading) {
           hideProgress?.call();

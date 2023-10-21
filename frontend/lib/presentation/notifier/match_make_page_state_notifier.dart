@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:frontend/repositories/match_make_repository.dart';
-import 'package:frontend/views/room_view.dart';
+import 'package:frontend/infrastructure/repository/match_make_repository.dart';
+import 'package:frontend/presentation/page/room_page.dart';
 
-part 'match_make_view_model.freezed.dart';
+part 'match_make_page_state_notifier.freezed.dart';
 
 @freezed
 class MatchMakeState with _$MatchMakeState {
@@ -15,10 +15,10 @@ class MatchMakeState with _$MatchMakeState {
   const factory MatchMakeState.error(String message) = MatchMakeError;
 }
 
-class MatchMakeViewModel extends StateNotifier<MatchMakeState> {
+class MatchMakePageStateNotifier extends StateNotifier<MatchMakeState> {
   final MatchMakeRepository _matchMakerepository;
 
-  MatchMakeViewModel(this._matchMakerepository)
+  MatchMakePageStateNotifier(this._matchMakerepository)
       : super(const MatchMakeState.initial());
 
   Future<void> searchForOpponent(BuildContext context, String userId) async {
@@ -63,14 +63,14 @@ class MatchMakeViewModel extends StateNotifier<MatchMakeState> {
     // 対戦ルームへ遷移
     navigator.push(
       MaterialPageRoute(
-        builder: (context) => RoomView(roomId: roomId),
+        builder: (context) => RoomPage(roomId: roomId),
       ),
     );
   }
 }
 
-final matchMakeViewModelProvider =
-    StateNotifierProvider<MatchMakeViewModel, MatchMakeState>((ref) {
+final matchMakePageStateNotifierProvider =
+    StateNotifierProvider<MatchMakePageStateNotifier, MatchMakeState>((ref) {
   final matchMakeRepository = ref.watch(matchMakeRepositoryProvider);
-  return MatchMakeViewModel(matchMakeRepository);
+  return MatchMakePageStateNotifier(matchMakeRepository);
 });

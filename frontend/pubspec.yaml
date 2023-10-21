@@ -44,7 +44,7 @@ dependencies:
   cloud_firestore: ^4.8.4
 
   openapi:
-    path: ./openapi/client
+    path: ./lib/infrastructure/datasource/openapi/client
 
 dev_dependencies:
   flutter_test:

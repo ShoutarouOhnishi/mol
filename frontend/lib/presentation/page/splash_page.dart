@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/app_router.dart';
-import 'package:frontend/view_models/splash_view_model.dart';
+import 'package:frontend/presentation/notifier/splash_page_state_notifier.dart';
 
-class SplashView extends ConsumerStatefulWidget {
-  const SplashView({super.key});
+class SplashPage extends ConsumerStatefulWidget {
+  const SplashPage({super.key});
 
   @override
-  ConsumerState<SplashView> createState() => _SplashViewState();
+  ConsumerState<SplashPage> createState() => _SplashPageState();
 }
 
-class _SplashViewState extends ConsumerState<SplashView> {
+class _SplashPageState extends ConsumerState<SplashPage> {
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(splashViewModelProvider.notifier).initialize();
+      ref.read(splashPageStateNotifierProvider.notifier).initialize();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     ref.listen<List<UiEvent>>(
-      splashViewModelProvider.select((s) => s.events),
+      splashPageStateNotifierProvider.select((s) => s.events),
       (_, events) {
         final event = events.firstOrNull;
         if (event == null) return;
@@ -45,7 +45,7 @@ class _SplashViewState extends ConsumerState<SplashView> {
             );
           },
         );
-        ref.read(splashViewModelProvider.notifier).consumeEvent(event);
+        ref.read(splashPageStateNotifierProvider.notifier).consumeEvent(event);
       },
     );
     return const Scaffold(

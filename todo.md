@@ -8,10 +8,12 @@
 
 
 - TODO
+  - Clean Architectureのディレクトリ構成を確定する
+  - ChatGPTを活用して
+    - StateNotifierの各処理をUseCaseに分離させる  
+    - Repositoryをインターフェースと実装で分離させる  
+    - stateとstate_notifierを分離させる
   - SNSログイン追加
   - テストコード
   - Bearerトークンを各APIでセットするのではなく上層部でセットする
-  - shared_notifiersやwidgetsなどがしっくりこないため、変更する
-  - view_modelsやviewsを変更する　一般的なアーキテクチャを調査
   - openapiから自動生成されるコードでヘッダにaccept: application/jsonを指定する方法を考える　もしくはbackend
-  - main.dartで表示しているローディングを

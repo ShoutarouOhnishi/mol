@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:frontend/services/firebase_auth_service.dart';
-import 'package:frontend/view_models/match_make_view_model.dart';
+import 'package:frontend/infrastructure/datasource/firebase_auth_service.dart';
+import 'package:frontend/presentation/notifier/match_make_page_state_notifier.dart';
 
-class MatchMakeView extends ConsumerWidget {
+class MatchMakePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final matchMakeState = ref.watch(matchMakeViewModelProvider);
-    final viewModel = ref.watch(matchMakeViewModelProvider.notifier);
+    final matchMakeState = ref.watch(matchMakePageStateNotifierProvider);
+    final viewModel = ref.watch(matchMakePageStateNotifierProvider.notifier);
     final firebaseUserAsyncValue = ref.watch(firebaseUserProvider);
 
     return Scaffold(

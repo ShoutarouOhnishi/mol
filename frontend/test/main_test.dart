@@ -3,11 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:firebase_core_platform_interface/firebase_core_platform_interface.dart';
 import 'package:frontend/main.dart';
-import 'package:frontend/view_models/splash_view_model.dart';
+import 'package:frontend/presentation/notifier/splash_page_state_notifier.dart';
 import 'package:mockito/annotations.dart';
 import 'main_test.mocks.dart';
 
-@GenerateMocks([SplashViewModel])
+@GenerateMocks([SplashPageStateNotifier])
 void main() {
   setUp(() async {
     // Firebaseのモッキング
@@ -20,8 +20,8 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          splashViewModelProvider.overrideWith((ref) =>
-              MockSplashViewModel()) // initializeメソッドでの状態変化による画面遷移を防ぐため、モックを使用
+          splashPageStateNotifierProvider.overrideWith((ref) =>
+              MockSplashPageStateNotifier()) // initializeメソッドでの状態変化による画面遷移を防ぐため、モックを使用
         ],
         child: const MyApp(),
       ),

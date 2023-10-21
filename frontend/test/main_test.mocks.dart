@@ -6,7 +6,8 @@
 import 'dart:async' as _i4;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart' as _i3;
-import 'package:frontend/view_models/splash_view_model.dart' as _i2;
+import 'package:frontend/presentation/notifier/splash_page_state_notifier.dart'
+    as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:state_notifier/state_notifier.dart' as _i5;
 
@@ -21,9 +22,9 @@ import 'package:state_notifier/state_notifier.dart' as _i5;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeSplashViewState_0 extends _i1.SmartFake
-    implements _i2.SplashViewState {
-  _FakeSplashViewState_0(
+class _FakeSplashPageState_0 extends _i1.SmartFake
+    implements _i2.SplashPageState {
+  _FakeSplashPageState_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -32,11 +33,12 @@ class _FakeSplashViewState_0 extends _i1.SmartFake
         );
 }
 
-/// A class which mocks [SplashViewModel].
+/// A class which mocks [SplashPageStateNotifier].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockSplashViewModel extends _i1.Mock implements _i2.SplashViewModel {
-  MockSplashViewModel() {
+class MockSplashPageStateNotifier extends _i1.Mock
+    implements _i2.SplashPageStateNotifier {
+  MockSplashPageStateNotifier() {
     _i1.throwOnMissingStub(this);
   }
 
@@ -54,20 +56,20 @@ class MockSplashViewModel extends _i1.Mock implements _i2.SplashViewModel {
         returnValue: false,
       ) as bool);
   @override
-  _i4.Stream<_i2.SplashViewState> get stream => (super.noSuchMethod(
+  _i4.Stream<_i2.SplashPageState> get stream => (super.noSuchMethod(
         Invocation.getter(#stream),
-        returnValue: _i4.Stream<_i2.SplashViewState>.empty(),
-      ) as _i4.Stream<_i2.SplashViewState>);
+        returnValue: _i4.Stream<_i2.SplashPageState>.empty(),
+      ) as _i4.Stream<_i2.SplashPageState>);
   @override
-  _i2.SplashViewState get state => (super.noSuchMethod(
+  _i2.SplashPageState get state => (super.noSuchMethod(
         Invocation.getter(#state),
-        returnValue: _FakeSplashViewState_0(
+        returnValue: _FakeSplashPageState_0(
           this,
           Invocation.getter(#state),
         ),
-      ) as _i2.SplashViewState);
+      ) as _i2.SplashPageState);
   @override
-  set state(_i2.SplashViewState? value) => super.noSuchMethod(
+  set state(_i2.SplashPageState? value) => super.noSuchMethod(
         Invocation.setter(
           #state,
           value,
@@ -75,13 +77,13 @@ class MockSplashViewModel extends _i1.Mock implements _i2.SplashViewModel {
         returnValueForMissingStub: null,
       );
   @override
-  _i2.SplashViewState get debugState => (super.noSuchMethod(
+  _i2.SplashPageState get debugState => (super.noSuchMethod(
         Invocation.getter(#debugState),
-        returnValue: _FakeSplashViewState_0(
+        returnValue: _FakeSplashPageState_0(
           this,
           Invocation.getter(#debugState),
         ),
-      ) as _i2.SplashViewState);
+      ) as _i2.SplashPageState);
   @override
   bool get hasListeners => (super.noSuchMethod(
         Invocation.getter(#hasListeners),
@@ -106,8 +108,8 @@ class MockSplashViewModel extends _i1.Mock implements _i2.SplashViewModel {
       );
   @override
   bool updateShouldNotify(
-    _i2.SplashViewState? old,
-    _i2.SplashViewState? current,
+    _i2.SplashPageState? old,
+    _i2.SplashPageState? current,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -121,7 +123,7 @@ class MockSplashViewModel extends _i1.Mock implements _i2.SplashViewModel {
       ) as bool);
   @override
   _i3.RemoveListener addListener(
-    _i5.Listener<_i2.SplashViewState>? listener, {
+    _i5.Listener<_i2.SplashPageState>? listener, {
     bool? fireImmediately = true,
   }) =>
       (super.noSuchMethod(

@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:frontend/shared_notifiers/api_client_state_notifier.dart';
-import 'package:openapi/api.dart';
+import 'package:frontend/presentation/notifier/api_client_state_notifier.dart';
+import 'package:frontend/infrastructure/datasource/openapi/client/lib/api.dart';
 
 class AccountRepository {
   final AccountApi _apiInstance;

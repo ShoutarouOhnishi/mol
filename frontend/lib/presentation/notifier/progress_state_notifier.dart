@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:frontend/widgets/progress.dart';
+import 'package:frontend/presentation/component/progress.dart';
 
 part 'progress_state_notifier.freezed.dart';
 

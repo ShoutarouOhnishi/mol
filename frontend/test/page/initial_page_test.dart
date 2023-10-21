@@ -6,21 +6,21 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:frontend/app_router.dart';
 import 'package:frontend/constants/app.dart';
 import 'package:frontend/main.dart';
-import 'package:frontend/repositories/account_repository.dart';
-import 'package:frontend/services/firebase_auth_service.dart';
-import 'package:frontend/shared_notifiers/auth_state_notifier.dart';
-import 'package:frontend/view_models/initial_view_model.dart';
-import 'package:frontend/view_models/splash_view_model.dart';
-import 'package:frontend/views/initial_view.dart';
-import 'package:frontend/views/match_make_view.dart';
+import 'package:frontend/infrastructure/repository/account_repository.dart';
+import 'package:frontend/infrastructure/datasource/firebase_auth_service.dart';
+import 'package:frontend/presentation/notifier/auth_state_notifier.dart';
+import 'package:frontend/presentation/notifier/initial_page_state_notifier.dart';
+import 'package:frontend/presentation/notifier/splash_page_state_notifier.dart';
+import 'package:frontend/presentation/page/initial_page.dart';
+import 'package:frontend/presentation/page/match_make_page.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:openapi/api.dart';
-import 'initial_view_test.mocks.dart';
+import 'package:frontend/infrastructure/datasource/openapi/client/lib/api.dart';
+import './initial_page_test.mocks.dart';
 
 class MockApiClient extends Mock implements ApiClient {}
 
-// MockInitialViewModelに設定するようのAuthStateNotifier
+// MockInitialStateNotifierに設定するようのAuthStateNotifier
 // 画面描画時とテストコードでの状態変更時に同じインスタンスを使うため
 class MockAuthStateNotifier extends AuthStateNotifier with Mock {
   MockAuthStateNotifier()
@@ -28,17 +28,17 @@ class MockAuthStateNotifier extends AuthStateNotifier with Mock {
             MockApiClient());
 }
 
-/// InitialViewModelをモッキング
-/// InitialViewModelでは_authStateNotifierがprivateで定義されているため、
-/// MockInitialViewModelで新たにauthStateNotifierを定義する
-/// 一旦、`extends InitialViewModel`でInitialViewModelを継承してモッククラスを定義しているが、
-/// InitialViewModelに依存関係が増え、複雑になってきた場合は、`extends StateNotifier with Mock implements InitialViewModel`で、
-/// InitialViewModelをインターフェイス化しつつ、クラスを新しく定義することで対応する
-class MockInitialViewModel extends InitialViewModel {
+/// InitialStateNotifierをモッキング
+/// InitialStateNotifierでは_authStateNotifierがprivateで定義されているため、
+/// MockInitialStateNotifierで新たにauthStateNotifierを定義する
+/// 一旦、`extends InitialStateNotifier`でInitialStateNotifierを継承してモッククラスを定義しているが、
+/// InitialStateNotifierに依存関係が増え、複雑になってきた場合は、`extends StateNotifier with Mock implements InitialStateNotifier`で、
+/// InitialStateNotifierをインターフェイス化しつつ、クラスを新しく定義することで対応する
+class MockInitialStateNotifier extends InitialPageStateNotifier {
   final AuthStateNotifier authStateNotifier;
   final AuthState authState;
-  MockInitialViewModel(
-      this.authStateNotifier, this.authState, InitialViewState state)
+  MockInitialStateNotifier(
+      this.authStateNotifier, this.authState, InitialPageState state)
       : super(MockAccountRepository(), MockFirebaseAuthService(),
             authStateNotifier);
 
@@ -53,8 +53,8 @@ class MockInitialViewModel extends InitialViewModel {
   }
 }
 
-class MockSplashViewModel extends SplashViewModel {
-  MockSplashViewModel(AuthStateNotifier authStateNotifier)
+class MockSplashStateNotifier extends SplashPageStateNotifier {
+  MockSplashStateNotifier(AuthStateNotifier authStateNotifier)
       : super(authStateNotifier);
 
   // テスト用にinitializeメソッドをオーバーライド
@@ -81,7 +81,7 @@ void main() {
     await tester.pumpWidget(
       const ProviderScope(
         child: MaterialApp(
-          home: InitialView(),
+          home: InitialPage(),
         ),
       ),
     );
@@ -104,17 +104,19 @@ void main() {
 
   testWidgets('isLoading: trueの場合にLoadingウィジェットが表示される',
       (WidgetTester tester) async {
-    // デフォルトの状態を持ったMockInitialViewModelを作成
-    final mockViewModel = MockInitialViewModel(MockAuthStateNotifier(),
-        const AuthState.initial(), const InitialViewState());
-    final mockSplashViewModel = MockSplashViewModel(AuthStateNotifier(
+    // デフォルトの状態を持ったMockInitialStateNotifierを作成
+    final mockStateNotifier = MockInitialStateNotifier(MockAuthStateNotifier(),
+        const AuthState.initial(), const InitialPageState());
+    final mockSplashStateNotifier = MockSplashStateNotifier(AuthStateNotifier(
         MockFirebaseAuthService(), MockAccountRepository(), MockApiClient()));
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          initialViewModelProvider.overrideWith((ref) => mockViewModel),
-          splashViewModelProvider.overrideWith((ref) => mockSplashViewModel),
+          initialPageStateNotifierProvider
+              .overrideWith((ref) => mockStateNotifier),
+          splashPageStateNotifierProvider
+              .overrideWith((ref) => mockSplashStateNotifier),
         ],
         child: const MaterialApp(
           home: MyApp(),
@@ -126,7 +128,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // isLoadingをtrueに変更
-    await mockViewModel.changeLoading();
+    await mockStateNotifier.changeLoading();
 
     // ローディング表示処理が完了するまで固定秒待機
     await tester.pump(const Duration(
@@ -140,10 +142,10 @@ void main() {
   testWidgets('AuthStateがauthenticatedに変わった際にMatchMakeViewに遷移する',
       (WidgetTester tester) async {
     final mockAuthStateNotifier = MockAuthStateNotifier();
-    final mockInitialViewModel = MockInitialViewModel(
+    final mockInitialStateNotifier = MockInitialStateNotifier(
       mockAuthStateNotifier,
       const AuthState.authenticated('test_token'),
-      const InitialViewState(),
+      const InitialPageState(),
     );
     await tester.pumpWidget(
       ProviderScope(
@@ -151,10 +153,11 @@ void main() {
           authStateProvider.overrideWith(
             (ref) => mockAuthStateNotifier,
           ),
-          initialViewModelProvider.overrideWith((ref) => mockInitialViewModel),
+          initialPageStateNotifierProvider
+              .overrideWith((ref) => mockInitialStateNotifier),
         ],
         child: const MaterialApp(
-          home: InitialView(),
+          home: InitialPage(),
           onGenerateRoute: AppRouter.generateRoute, // 画面遷移をテストするため、ルートを設定
         ),
       ),
@@ -165,16 +168,16 @@ void main() {
     // 非同期処理の完了を待つ
     await tester.pumpAndSettle();
     // MatchMakeViewに画面遷移したことを確認
-    expect(find.byType(MatchMakeView), findsOneWidget);
+    expect(find.byType(MatchMakePage), findsOneWidget);
   });
 
   testWidgets('AuthStateがauthenticated以外に変わった際に画面遷移が行われない',
       (WidgetTester tester) async {
     final mockAuthStateNotifier = MockAuthStateNotifier();
-    final mockInitialViewModel = MockInitialViewModel(
+    final mockInitialStateNotifier = MockInitialStateNotifier(
       mockAuthStateNotifier,
       const AuthState.unauthenticated(),
-      const InitialViewState(),
+      const InitialPageState(),
     );
     await tester.pumpWidget(
       ProviderScope(
@@ -182,10 +185,11 @@ void main() {
           authStateProvider.overrideWith(
             (ref) => mockAuthStateNotifier,
           ),
-          initialViewModelProvider.overrideWith((ref) => mockInitialViewModel),
+          initialPageStateNotifierProvider
+              .overrideWith((ref) => mockInitialStateNotifier),
         ],
         child: const MaterialApp(
-          home: InitialView(),
+          home: InitialPage(),
           onGenerateRoute: AppRouter.generateRoute, // 画面遷移をテストするため、ルートを設定
         ),
       ),
@@ -196,8 +200,8 @@ void main() {
     // 非同期処理の完了を待つ
     await tester.pumpAndSettle();
     // InitialViewが表示されていることを確認
-    expect(find.byType(InitialView), findsOneWidget);
+    expect(find.byType(InitialPage), findsOneWidget);
     // MatchMakeViewに画面遷移していないことを確認
-    expect(find.byType(MatchMakeView), findsNothing);
+    expect(find.byType(MatchMakePage), findsNothing);
   });
 }

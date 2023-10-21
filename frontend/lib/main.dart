@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/app_router.dart';
 import 'package:frontend/constants/app.dart';
-import 'package:frontend/shared_notifiers/progress_state_notifier.dart';
+import 'package:frontend/presentation/notifier/progress_state_notifier.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 void main() async {

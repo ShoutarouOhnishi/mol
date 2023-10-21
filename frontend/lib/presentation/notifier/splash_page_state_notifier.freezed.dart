@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'splash_view_model.dart';
+part of 'splash_page_state_notifier.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,28 +15,28 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$SplashViewState {
+mixin _$SplashPageState {
   bool get isLoading => throw _privateConstructorUsedError;
   List<UiEvent> get events => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $SplashViewStateCopyWith<SplashViewState> get copyWith =>
+  $SplashPageStateCopyWith<SplashPageState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SplashViewStateCopyWith<$Res> {
-  factory $SplashViewStateCopyWith(
-          SplashViewState value, $Res Function(SplashViewState) then) =
-      _$SplashViewStateCopyWithImpl<$Res, SplashViewState>;
+abstract class $SplashPageStateCopyWith<$Res> {
+  factory $SplashPageStateCopyWith(
+          SplashPageState value, $Res Function(SplashPageState) then) =
+      _$SplashPageStateCopyWithImpl<$Res, SplashPageState>;
   @useResult
   $Res call({bool isLoading, List<UiEvent> events});
 }
 
 /// @nodoc
-class _$SplashViewStateCopyWithImpl<$Res, $Val extends SplashViewState>
-    implements $SplashViewStateCopyWith<$Res> {
-  _$SplashViewStateCopyWithImpl(this._value, this._then);
+class _$SplashPageStateCopyWithImpl<$Res, $Val extends SplashPageState>
+    implements $SplashPageStateCopyWith<$Res> {
+  _$SplashPageStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -63,22 +63,22 @@ class _$SplashViewStateCopyWithImpl<$Res, $Val extends SplashViewState>
 }
 
 /// @nodoc
-abstract class _$$_SplashViewStateCopyWith<$Res>
-    implements $SplashViewStateCopyWith<$Res> {
-  factory _$$_SplashViewStateCopyWith(
-          _$_SplashViewState value, $Res Function(_$_SplashViewState) then) =
-      __$$_SplashViewStateCopyWithImpl<$Res>;
+abstract class _$$_SplashPageStateCopyWith<$Res>
+    implements $SplashPageStateCopyWith<$Res> {
+  factory _$$_SplashPageStateCopyWith(
+          _$_SplashPageState value, $Res Function(_$_SplashPageState) then) =
+      __$$_SplashPageStateCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({bool isLoading, List<UiEvent> events});
 }
 
 /// @nodoc
-class __$$_SplashViewStateCopyWithImpl<$Res>
-    extends _$SplashViewStateCopyWithImpl<$Res, _$_SplashViewState>
-    implements _$$_SplashViewStateCopyWith<$Res> {
-  __$$_SplashViewStateCopyWithImpl(
-      _$_SplashViewState _value, $Res Function(_$_SplashViewState) _then)
+class __$$_SplashPageStateCopyWithImpl<$Res>
+    extends _$SplashPageStateCopyWithImpl<$Res, _$_SplashPageState>
+    implements _$$_SplashPageStateCopyWith<$Res> {
+  __$$_SplashPageStateCopyWithImpl(
+      _$_SplashPageState _value, $Res Function(_$_SplashPageState) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -87,7 +87,7 @@ class __$$_SplashViewStateCopyWithImpl<$Res>
     Object? isLoading = null,
     Object? events = null,
   }) {
-    return _then(_$_SplashViewState(
+    return _then(_$_SplashPageState(
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -102,8 +102,8 @@ class __$$_SplashViewStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SplashViewState implements _SplashViewState {
-  const _$_SplashViewState(
+class _$_SplashPageState implements _SplashPageState {
+  const _$_SplashPageState(
       {this.isLoading = false, final List<UiEvent> events = const []})
       : _events = events;
 
@@ -121,14 +121,14 @@ class _$_SplashViewState implements _SplashViewState {
 
   @override
   String toString() {
-    return 'SplashViewState(isLoading: $isLoading, events: $events)';
+    return 'SplashPageState(isLoading: $isLoading, events: $events)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SplashViewState &&
+            other is _$_SplashPageState &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             const DeepCollectionEquality().equals(other._events, _events));
@@ -141,13 +141,13 @@ class _$_SplashViewState implements _SplashViewState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SplashViewStateCopyWith<_$_SplashViewState> get copyWith =>
-      __$$_SplashViewStateCopyWithImpl<_$_SplashViewState>(this, _$identity);
+  _$$_SplashPageStateCopyWith<_$_SplashPageState> get copyWith =>
+      __$$_SplashPageStateCopyWithImpl<_$_SplashPageState>(this, _$identity);
 }
 
-abstract class _SplashViewState implements SplashViewState {
-  const factory _SplashViewState(
-      {final bool isLoading, final List<UiEvent> events}) = _$_SplashViewState;
+abstract class _SplashPageState implements SplashPageState {
+  const factory _SplashPageState(
+      {final bool isLoading, final List<UiEvent> events}) = _$_SplashPageState;
 
   @override
   bool get isLoading;
@@ -155,7 +155,7 @@ abstract class _SplashViewState implements SplashViewState {
   List<UiEvent> get events;
   @override
   @JsonKey(ignore: true)
-  _$$_SplashViewStateCopyWith<_$_SplashViewState> get copyWith =>
+  _$$_SplashPageStateCopyWith<_$_SplashPageState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

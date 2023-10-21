@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class RoomView extends StatelessWidget {
+class RoomPage extends StatelessWidget {
   final String roomId;
 
-  RoomView({required this.roomId});
+  RoomPage({required this.roomId});
 
   @override
   Widget build(BuildContext context) {

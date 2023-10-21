@@ -1,21 +1,22 @@
 import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:frontend/shared_notifiers/auth_state_notifier.dart';
+import 'package:frontend/presentation/notifier/auth_state_notifier.dart';
 
-part 'splash_view_model.freezed.dart';
+part 'splash_page_state_notifier.freezed.dart';
 
-final splashViewModelProvider =
-    StateNotifierProvider.autoDispose<SplashViewModel, SplashViewState>((ref) {
-  return SplashViewModel(ref.watch(authStateProvider.notifier));
+final splashPageStateNotifierProvider =
+    StateNotifierProvider.autoDispose<SplashPageStateNotifier, SplashPageState>(
+        (ref) {
+  return SplashPageStateNotifier(ref.watch(authStateProvider.notifier));
 });
 
 @freezed
-class SplashViewState with _$SplashViewState {
-  const factory SplashViewState({
+class SplashPageState with _$SplashPageState {
+  const factory SplashPageState({
     @Default(false) bool isLoading,
     @Default([]) List<UiEvent> events,
-  }) = _SplashViewState;
+  }) = _SplashPageState;
 }
 
 @freezed
@@ -30,9 +31,10 @@ class UiEvent with _$UiEvent {
 /// 最低スプラッシュ表示時間
 const _minimumSplashDuration = Duration(milliseconds: 1000);
 
-class SplashViewModel extends StateNotifier<SplashViewState> {
+class SplashPageStateNotifier extends StateNotifier<SplashPageState> {
   final AuthStateNotifier _authStateNotifier;
-  SplashViewModel(this._authStateNotifier) : super(const SplashViewState());
+  SplashPageStateNotifier(this._authStateNotifier)
+      : super(const SplashPageState());
 
   /// アプリ初期化処理実行
   Future<void> initialize() async {

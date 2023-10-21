@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:frontend/shared_notifiers/auth_state_notifier.dart';
+import 'package:frontend/presentation/notifier/auth_state_notifier.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:frontend/repositories/account_repository.dart';
-import 'package:frontend/services/firebase_auth_service.dart';
-import 'package:openapi/api.dart';
+import 'package:frontend/infrastructure/repository/account_repository.dart';
+import 'package:frontend/infrastructure/datasource/firebase_auth_service.dart';
+import 'package:frontend/infrastructure/datasource/openapi/client/lib/api.dart';
 import 'auth_state_notifier_test.mocks.dart';
 
 @GenerateMocks([FirebaseAuthService, AccountRepository, User, ApiClient])
