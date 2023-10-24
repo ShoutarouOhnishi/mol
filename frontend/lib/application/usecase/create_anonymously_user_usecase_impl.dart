@@ -1,0 +1,39 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:frontend/domain/usecase/create_anonymously_user_usecase.dart';
+import 'package:frontend/infrastructure/datasource/firebase_auth_service.dart';
+import 'package:frontend/infrastructure/datasource/openapi/client/lib/api.dart';
+import 'package:frontend/infrastructure/repository/account_repository.dart';
+import 'package:frontend/presentation/notifier/auth_state_notifier.dart';
+
+class CreateAnonymouslyUserUseCaseImpl implements CreateAnonymouslyUserUseCase {
+  final FirebaseAuthService _firebaseAuthService;
+  final AccountRepository _accountRepository;
+  final ApiClient _apiClient;
+
+  CreateAnonymouslyUserUseCaseImpl(
+      this._firebaseAuthService, this._accountRepository, this._apiClient);
+
+  @override
+  Future<AuthState> call(String userName) async {
+    try {
+      User? firebaseUser = _firebaseAuthService.currentUser;
+      firebaseUser ??= await _firebaseAuthService.signInAnonymously();
+
+      String? idToken = await firebaseUser!.getIdToken();
+      if (idToken == null) {
+        return const AuthState.unauthenticated();
+      }
+      _apiClient.addDefaultHeader('Authorization', 'Bearer $idToken');
+      final request = CreateUserRequest(name: userName);
+      final response = await _accountRepository.createUser(request);
+      if (response == null) {
+        return const AuthState.unauthenticated();
+      }
+      return AuthState.authenticated(response.token);
+    } on Exception catch (e) {
+      debugPrint(e.toString());
+      return AuthState.error(Exception());
+    }
+  }
+}

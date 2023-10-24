@@ -3,15 +3,20 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i3;
+import 'dart:async' as _i4;
 
-import 'package:firebase_auth/firebase_auth.dart' as _i4;
-import 'package:frontend/infrastructure/datasource/firebase_auth_service.dart'
-    as _i2;
-import 'package:frontend/infrastructure/datasource/openapi/client/lib/api.dart'
-    as _i6;
-import 'package:frontend/infrastructure/repository/account_repository.dart'
+import 'package:firebase_auth/firebase_auth.dart' as _i7;
+import 'package:frontend/application/usecase/create_anonymously_user_usecase_impl.dart'
     as _i5;
+import 'package:frontend/application/usecase/get_user_auth_state_usecase_impl.dart'
+    as _i3;
+import 'package:frontend/infrastructure/datasource/firebase_auth_service.dart'
+    as _i6;
+import 'package:frontend/infrastructure/datasource/openapi/client/lib/api.dart'
+    as _i9;
+import 'package:frontend/infrastructure/repository/account_repository.dart'
+    as _i8;
+import 'package:frontend/presentation/notifier/auth_state_notifier.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -25,59 +30,119 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
+class _FakeAuthState_0 extends _i1.SmartFake implements _i2.AuthState {
+  _FakeAuthState_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+/// A class which mocks [GetUserAuthStateUseCaseImpl].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockGetUserAuthStateUseCaseImpl extends _i1.Mock
+    implements _i3.GetUserAuthStateUseCaseImpl {
+  MockGetUserAuthStateUseCaseImpl() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i4.Future<_i2.AuthState> call() => (super.noSuchMethod(
+        Invocation.method(
+          #call,
+          [],
+        ),
+        returnValue: _i4.Future<_i2.AuthState>.value(_FakeAuthState_0(
+          this,
+          Invocation.method(
+            #call,
+            [],
+          ),
+        )),
+      ) as _i4.Future<_i2.AuthState>);
+}
+
+/// A class which mocks [CreateAnonymouslyUserUseCaseImpl].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockCreateAnonymouslyUserUseCaseImpl extends _i1.Mock
+    implements _i5.CreateAnonymouslyUserUseCaseImpl {
+  MockCreateAnonymouslyUserUseCaseImpl() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i4.Future<_i2.AuthState> call(String? userName) => (super.noSuchMethod(
+        Invocation.method(
+          #call,
+          [userName],
+        ),
+        returnValue: _i4.Future<_i2.AuthState>.value(_FakeAuthState_0(
+          this,
+          Invocation.method(
+            #call,
+            [userName],
+          ),
+        )),
+      ) as _i4.Future<_i2.AuthState>);
+}
+
 /// A class which mocks [FirebaseAuthService].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockFirebaseAuthService extends _i1.Mock
-    implements _i2.FirebaseAuthService {
+    implements _i6.FirebaseAuthService {
   @override
-  _i3.Stream<_i4.User?> get userChanges => (super.noSuchMethod(
+  _i4.Stream<_i7.User?> get userChanges => (super.noSuchMethod(
         Invocation.getter(#userChanges),
-        returnValue: _i3.Stream<_i4.User?>.empty(),
-        returnValueForMissingStub: _i3.Stream<_i4.User?>.empty(),
-      ) as _i3.Stream<_i4.User?>);
+        returnValue: _i4.Stream<_i7.User?>.empty(),
+        returnValueForMissingStub: _i4.Stream<_i7.User?>.empty(),
+      ) as _i4.Stream<_i7.User?>);
   @override
-  _i3.Future<_i4.User?> signInAnonymously() => (super.noSuchMethod(
+  _i4.Future<_i7.User?> signInAnonymously() => (super.noSuchMethod(
         Invocation.method(
           #signInAnonymously,
           [],
         ),
-        returnValue: _i3.Future<_i4.User?>.value(),
-        returnValueForMissingStub: _i3.Future<_i4.User?>.value(),
-      ) as _i3.Future<_i4.User?>);
+        returnValue: _i4.Future<_i7.User?>.value(),
+        returnValueForMissingStub: _i4.Future<_i7.User?>.value(),
+      ) as _i4.Future<_i7.User?>);
   @override
-  _i3.Future<void> signOut() => (super.noSuchMethod(
+  _i4.Future<void> signOut() => (super.noSuchMethod(
         Invocation.method(
           #signOut,
           [],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 }
 
 /// A class which mocks [AccountRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockAccountRepository extends _i1.Mock implements _i5.AccountRepository {
+class MockAccountRepository extends _i1.Mock implements _i8.AccountRepository {
   @override
-  _i3.Future<_i6.CreateUserResponse?> createUser(
-          _i6.CreateUserRequest? request) =>
+  _i4.Future<_i9.CreateUserResponse?> createUser(
+          _i9.CreateUserRequest? request) =>
       (super.noSuchMethod(
         Invocation.method(
           #createUser,
           [request],
         ),
-        returnValue: _i3.Future<_i6.CreateUserResponse?>.value(),
-        returnValueForMissingStub: _i3.Future<_i6.CreateUserResponse?>.value(),
-      ) as _i3.Future<_i6.CreateUserResponse?>);
+        returnValue: _i4.Future<_i9.CreateUserResponse?>.value(),
+        returnValueForMissingStub: _i4.Future<_i9.CreateUserResponse?>.value(),
+      ) as _i4.Future<_i9.CreateUserResponse?>);
   @override
-  _i3.Future<_i6.LoginResponse?> login() => (super.noSuchMethod(
+  _i4.Future<_i9.LoginResponse?> login() => (super.noSuchMethod(
         Invocation.method(
           #login,
           [],
         ),
-        returnValue: _i3.Future<_i6.LoginResponse?>.value(),
-        returnValueForMissingStub: _i3.Future<_i6.LoginResponse?>.value(),
-      ) as _i3.Future<_i6.LoginResponse?>);
+        returnValue: _i4.Future<_i9.LoginResponse?>.value(),
+        returnValueForMissingStub: _i4.Future<_i9.LoginResponse?>.value(),
+      ) as _i4.Future<_i9.LoginResponse?>);
 }

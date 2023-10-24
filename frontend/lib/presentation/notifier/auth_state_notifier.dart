@@ -1,18 +1,38 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:frontend/application/usecase/create_anonymously_user_usecase_impl.dart';
+import 'package:frontend/application/usecase/get_user_auth_state_usecase_impl.dart';
+import 'package:frontend/domain/usecase/create_anonymously_user_usecase.dart';
+import 'package:frontend/domain/usecase/get_user_auth_state_usecase.dart';
 import 'package:frontend/infrastructure/repository/account_repository.dart';
 import 'package:frontend/infrastructure/datasource/firebase_auth_service.dart';
 import 'package:frontend/presentation/notifier/api_client_state_notifier.dart';
-import 'package:frontend/infrastructure/datasource/openapi/client/lib/api.dart';
-
 part 'auth_state_notifier.freezed.dart';
 
+final getUserAuthStateUseCaseProvider =
+    Provider<GetUserAuthStateUseCase>((ref) {
+  final firebaseAuthService = ref.watch(firebaseAuthServiceProvider);
+  final apiClient = ref.watch(apiClientStateProvider);
+  final accountRepository = ref.watch(accountRepositoryProvider);
+  return GetUserAuthStateUseCaseImpl(
+      firebaseAuthService, apiClient, accountRepository);
+});
+
+final createAnonymouslyUserUseCaseProvider =
+    Provider<CreateAnonymouslyUserUseCase>((ref) {
+  final firebaseAuthService = ref.watch(firebaseAuthServiceProvider);
+
+  final accountRepository = ref.watch(accountRepositoryProvider);
+  final apiClient = ref.watch(apiClientStateProvider);
+  return CreateAnonymouslyUserUseCaseImpl(
+      firebaseAuthService, accountRepository, apiClient);
+});
 final authStateProvider =
     StateNotifierProvider<AuthStateNotifier, AuthState>((ref) {
-  return AuthStateNotifier(ref.watch(firebaseAuthServiceProvider),
-      ref.watch(accountRepositoryProvider), ref.watch(apiClientStateProvider));
+  final getUserStateUseCase = ref.watch(getUserAuthStateUseCaseProvider);
+  final createAnonymouslyUserUseCase =
+      ref.watch(createAnonymouslyUserUseCaseProvider);
+  return AuthStateNotifier(getUserStateUseCase, createAnonymouslyUserUseCase);
 });
 
 @freezed
@@ -24,61 +44,19 @@ class AuthState with _$AuthState {
 }
 
 class AuthStateNotifier extends StateNotifier<AuthState> {
-  final FirebaseAuthService _firebaseAuthService;
-  final AccountRepository _accountRepository;
-  final ApiClient _apiClient;
+  final GetUserAuthStateUseCase _getUserAuthStateUseCase;
+  final CreateAnonymouslyUserUseCase _createAnonymouslyUserUseCase;
 
   AuthStateNotifier(
-      this._firebaseAuthService, this._accountRepository, this._apiClient)
+      this._getUserAuthStateUseCase, this._createAnonymouslyUserUseCase)
       : super(const AuthState.initial());
 
-  Future<void> initialize() async {
-    try {
-      User? firebaseUser = _firebaseAuthService.currentUser;
-      if (firebaseUser == null) {
-        state = const AuthState.unauthenticated();
-        return;
-      }
-
-      String? idToken = await firebaseUser.getIdToken();
-      if (idToken == null) {
-        state = const AuthState.unauthenticated();
-        return;
-      }
-      _apiClient.addDefaultHeader('Authorization', 'Bearer $idToken');
-
-      final loginResponse = await _accountRepository.login();
-
-      if (loginResponse == null) {
-        state = const AuthState.unauthenticated();
-        return;
-      }
-      state = AuthState.authenticated(loginResponse.token);
-    } on Exception catch (e) {
-      state = AuthState.error(e);
-    }
+  Future<void> syncUserAuthState() async {
+    state = await _getUserAuthStateUseCase();
   }
 
-  Future<void> createAnounymouslyUser(String userName) async {
-    try {
-      User? firebaseUser = _firebaseAuthService.currentUser;
-      firebaseUser ??= await _firebaseAuthService.signInAnonymously();
-
-      String? idToken = await firebaseUser!.getIdToken();
-      if (idToken == null) {
-        throw Exception();
-      }
-      _apiClient.addDefaultHeader('Authorization', 'Bearer $idToken');
-      final request = CreateUserRequest(name: userName);
-      final response = await _accountRepository.createUser(request);
-      if (response == null) {
-        throw Exception();
-      }
-      state = AuthState.authenticated(response.token);
-    } on Exception catch (e) {
-      // FIXME: エラー処理 ここで処理するか上層にあげるか
-      debugPrint(e.toString());
-    }
+  Future<void> createAnonymouslyUser(String userName) async {
+    state = await _createAnonymouslyUserUseCase(userName);
   }
 
   AuthState get currentState => state;

@@ -82,7 +82,7 @@ class _InitialPageState extends ConsumerState<InitialPage> {
               width: MediaQuery.of(context).size.width / 4,
               child: ElevatedButton(
                 onPressed: () {
-                  notifier.createAnounymouslyUser();
+                  notifier.createAnonymouslyUser();
                 },
                 style: ElevatedButton.styleFrom(
                   shape: const RoundedRectangleBorder(

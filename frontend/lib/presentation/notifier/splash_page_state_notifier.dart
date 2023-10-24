@@ -53,7 +53,7 @@ class SplashPageStateNotifier extends StateNotifier<SplashPageState> {
         await Future.delayed(remainDuration);
       }
 
-      await _authStateNotifier.initialize();
+      await _authStateNotifier.syncUserAuthState();
 
       List<UiEvent> events = [];
       _authStateNotifier.state.when(

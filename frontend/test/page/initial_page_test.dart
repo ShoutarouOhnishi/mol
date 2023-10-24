@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:frontend/app_router.dart';
-import 'package:frontend/constants/app.dart';
+import 'package:frontend/application/usecase/create_anonymously_user_usecase_impl.dart';
+import 'package:frontend/application/usecase/get_user_auth_state_usecase_impl.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/infrastructure/repository/account_repository.dart';
 import 'package:frontend/infrastructure/datasource/firebase_auth_service.dart';
@@ -18,14 +19,15 @@ import 'package:mockito/mockito.dart';
 import 'package:frontend/infrastructure/datasource/openapi/client/lib/api.dart';
 import './initial_page_test.mocks.dart';
 
+@GenerateMocks([GetUserAuthStateUseCaseImpl, CreateAnonymouslyUserUseCaseImpl])
 class MockApiClient extends Mock implements ApiClient {}
 
 // MockInitialStateNotifierに設定するようのAuthStateNotifier
 // 画面描画時とテストコードでの状態変更時に同じインスタンスを使うため
 class MockAuthStateNotifier extends AuthStateNotifier with Mock {
   MockAuthStateNotifier()
-      : super(MockFirebaseAuthService(), MockAccountRepository(),
-            MockApiClient());
+      : super(MockGetUserAuthStateUseCaseImpl(),
+            MockCreateAnonymouslyUserUseCaseImpl());
 }
 
 /// InitialStateNotifierをモッキング
@@ -48,7 +50,7 @@ class MockInitialStateNotifier extends InitialPageStateNotifier {
   }
 
   @override
-  Future<void> createAnounymouslyUser() async {
+  Future<void> createAnonymouslyUser() async {
     authStateNotifier.state = authState;
   }
 }
@@ -108,7 +110,8 @@ void main() {
     final mockStateNotifier = MockInitialStateNotifier(MockAuthStateNotifier(),
         const AuthState.initial(), const InitialPageState());
     final mockSplashStateNotifier = MockSplashStateNotifier(AuthStateNotifier(
-        MockFirebaseAuthService(), MockAccountRepository(), MockApiClient()));
+        MockGetUserAuthStateUseCaseImpl(),
+        MockCreateAnonymouslyUserUseCaseImpl()));
 
     await tester.pumpWidget(
       ProviderScope(
