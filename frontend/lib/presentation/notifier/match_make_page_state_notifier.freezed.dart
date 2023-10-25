@@ -20,7 +20,7 @@ mixin _$MatchMakeState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() waiting,
+    required TResult Function(String roomId) matched,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -28,7 +28,7 @@ mixin _$MatchMakeState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? waiting,
+    TResult? Function(String roomId)? matched,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -36,7 +36,7 @@ mixin _$MatchMakeState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? waiting,
+    TResult Function(String roomId)? matched,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -45,7 +45,7 @@ mixin _$MatchMakeState {
   TResult map<TResult extends Object?>({
     required TResult Function(MatchMakeInitial value) initial,
     required TResult Function(MatchMakeLoading value) loading,
-    required TResult Function(MatchMakeWaiting value) waiting,
+    required TResult Function(MatchMakeMatched value) matched,
     required TResult Function(MatchMakeError value) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -53,7 +53,7 @@ mixin _$MatchMakeState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(MatchMakeInitial value)? initial,
     TResult? Function(MatchMakeLoading value)? loading,
-    TResult? Function(MatchMakeWaiting value)? waiting,
+    TResult? Function(MatchMakeMatched value)? matched,
     TResult? Function(MatchMakeError value)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -61,7 +61,7 @@ mixin _$MatchMakeState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(MatchMakeInitial value)? initial,
     TResult Function(MatchMakeLoading value)? loading,
-    TResult Function(MatchMakeWaiting value)? waiting,
+    TResult Function(MatchMakeMatched value)? matched,
     TResult Function(MatchMakeError value)? error,
     required TResult orElse(),
   }) =>
@@ -126,7 +126,7 @@ class _$MatchMakeInitial implements MatchMakeInitial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() waiting,
+    required TResult Function(String roomId) matched,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -137,7 +137,7 @@ class _$MatchMakeInitial implements MatchMakeInitial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? waiting,
+    TResult? Function(String roomId)? matched,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -148,7 +148,7 @@ class _$MatchMakeInitial implements MatchMakeInitial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? waiting,
+    TResult Function(String roomId)? matched,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -163,7 +163,7 @@ class _$MatchMakeInitial implements MatchMakeInitial {
   TResult map<TResult extends Object?>({
     required TResult Function(MatchMakeInitial value) initial,
     required TResult Function(MatchMakeLoading value) loading,
-    required TResult Function(MatchMakeWaiting value) waiting,
+    required TResult Function(MatchMakeMatched value) matched,
     required TResult Function(MatchMakeError value) error,
   }) {
     return initial(this);
@@ -174,7 +174,7 @@ class _$MatchMakeInitial implements MatchMakeInitial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(MatchMakeInitial value)? initial,
     TResult? Function(MatchMakeLoading value)? loading,
-    TResult? Function(MatchMakeWaiting value)? waiting,
+    TResult? Function(MatchMakeMatched value)? matched,
     TResult? Function(MatchMakeError value)? error,
   }) {
     return initial?.call(this);
@@ -185,7 +185,7 @@ class _$MatchMakeInitial implements MatchMakeInitial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(MatchMakeInitial value)? initial,
     TResult Function(MatchMakeLoading value)? loading,
-    TResult Function(MatchMakeWaiting value)? waiting,
+    TResult Function(MatchMakeMatched value)? matched,
     TResult Function(MatchMakeError value)? error,
     required TResult orElse(),
   }) {
@@ -240,7 +240,7 @@ class _$MatchMakeLoading implements MatchMakeLoading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() waiting,
+    required TResult Function(String roomId) matched,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -251,7 +251,7 @@ class _$MatchMakeLoading implements MatchMakeLoading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? waiting,
+    TResult? Function(String roomId)? matched,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -262,7 +262,7 @@ class _$MatchMakeLoading implements MatchMakeLoading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? waiting,
+    TResult Function(String roomId)? matched,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -277,7 +277,7 @@ class _$MatchMakeLoading implements MatchMakeLoading {
   TResult map<TResult extends Object?>({
     required TResult Function(MatchMakeInitial value) initial,
     required TResult Function(MatchMakeLoading value) loading,
-    required TResult Function(MatchMakeWaiting value) waiting,
+    required TResult Function(MatchMakeMatched value) matched,
     required TResult Function(MatchMakeError value) error,
   }) {
     return loading(this);
@@ -288,7 +288,7 @@ class _$MatchMakeLoading implements MatchMakeLoading {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(MatchMakeInitial value)? initial,
     TResult? Function(MatchMakeLoading value)? loading,
-    TResult? Function(MatchMakeWaiting value)? waiting,
+    TResult? Function(MatchMakeMatched value)? matched,
     TResult? Function(MatchMakeError value)? error,
   }) {
     return loading?.call(this);
@@ -299,7 +299,7 @@ class _$MatchMakeLoading implements MatchMakeLoading {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(MatchMakeInitial value)? initial,
     TResult Function(MatchMakeLoading value)? loading,
-    TResult Function(MatchMakeWaiting value)? waiting,
+    TResult Function(MatchMakeMatched value)? matched,
     TResult Function(MatchMakeError value)? error,
     required TResult orElse(),
   }) {
@@ -315,49 +315,75 @@ abstract class MatchMakeLoading implements MatchMakeState {
 }
 
 /// @nodoc
-abstract class _$$MatchMakeWaitingCopyWith<$Res> {
-  factory _$$MatchMakeWaitingCopyWith(
-          _$MatchMakeWaiting value, $Res Function(_$MatchMakeWaiting) then) =
-      __$$MatchMakeWaitingCopyWithImpl<$Res>;
+abstract class _$$MatchMakeMatchedCopyWith<$Res> {
+  factory _$$MatchMakeMatchedCopyWith(
+          _$MatchMakeMatched value, $Res Function(_$MatchMakeMatched) then) =
+      __$$MatchMakeMatchedCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String roomId});
 }
 
 /// @nodoc
-class __$$MatchMakeWaitingCopyWithImpl<$Res>
-    extends _$MatchMakeStateCopyWithImpl<$Res, _$MatchMakeWaiting>
-    implements _$$MatchMakeWaitingCopyWith<$Res> {
-  __$$MatchMakeWaitingCopyWithImpl(
-      _$MatchMakeWaiting _value, $Res Function(_$MatchMakeWaiting) _then)
+class __$$MatchMakeMatchedCopyWithImpl<$Res>
+    extends _$MatchMakeStateCopyWithImpl<$Res, _$MatchMakeMatched>
+    implements _$$MatchMakeMatchedCopyWith<$Res> {
+  __$$MatchMakeMatchedCopyWithImpl(
+      _$MatchMakeMatched _value, $Res Function(_$MatchMakeMatched) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? roomId = null,
+  }) {
+    return _then(_$MatchMakeMatched(
+      null == roomId
+          ? _value.roomId
+          : roomId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$MatchMakeWaiting implements MatchMakeWaiting {
-  const _$MatchMakeWaiting();
+class _$MatchMakeMatched implements MatchMakeMatched {
+  const _$MatchMakeMatched(this.roomId);
+
+  @override
+  final String roomId;
 
   @override
   String toString() {
-    return 'MatchMakeState.waiting()';
+    return 'MatchMakeState.matched(roomId: $roomId)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$MatchMakeWaiting);
+        (other.runtimeType == runtimeType &&
+            other is _$MatchMakeMatched &&
+            (identical(other.roomId, roomId) || other.roomId == roomId));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, roomId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$MatchMakeMatchedCopyWith<_$MatchMakeMatched> get copyWith =>
+      __$$MatchMakeMatchedCopyWithImpl<_$MatchMakeMatched>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() waiting,
+    required TResult Function(String roomId) matched,
     required TResult Function(String message) error,
   }) {
-    return waiting();
+    return matched(roomId);
   }
 
   @override
@@ -365,10 +391,10 @@ class _$MatchMakeWaiting implements MatchMakeWaiting {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? waiting,
+    TResult? Function(String roomId)? matched,
     TResult? Function(String message)? error,
   }) {
-    return waiting?.call();
+    return matched?.call(roomId);
   }
 
   @override
@@ -376,12 +402,12 @@ class _$MatchMakeWaiting implements MatchMakeWaiting {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? waiting,
+    TResult Function(String roomId)? matched,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
-    if (waiting != null) {
-      return waiting();
+    if (matched != null) {
+      return matched(roomId);
     }
     return orElse();
   }
@@ -391,10 +417,10 @@ class _$MatchMakeWaiting implements MatchMakeWaiting {
   TResult map<TResult extends Object?>({
     required TResult Function(MatchMakeInitial value) initial,
     required TResult Function(MatchMakeLoading value) loading,
-    required TResult Function(MatchMakeWaiting value) waiting,
+    required TResult Function(MatchMakeMatched value) matched,
     required TResult Function(MatchMakeError value) error,
   }) {
-    return waiting(this);
+    return matched(this);
   }
 
   @override
@@ -402,10 +428,10 @@ class _$MatchMakeWaiting implements MatchMakeWaiting {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(MatchMakeInitial value)? initial,
     TResult? Function(MatchMakeLoading value)? loading,
-    TResult? Function(MatchMakeWaiting value)? waiting,
+    TResult? Function(MatchMakeMatched value)? matched,
     TResult? Function(MatchMakeError value)? error,
   }) {
-    return waiting?.call(this);
+    return matched?.call(this);
   }
 
   @override
@@ -413,19 +439,24 @@ class _$MatchMakeWaiting implements MatchMakeWaiting {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(MatchMakeInitial value)? initial,
     TResult Function(MatchMakeLoading value)? loading,
-    TResult Function(MatchMakeWaiting value)? waiting,
+    TResult Function(MatchMakeMatched value)? matched,
     TResult Function(MatchMakeError value)? error,
     required TResult orElse(),
   }) {
-    if (waiting != null) {
-      return waiting(this);
+    if (matched != null) {
+      return matched(this);
     }
     return orElse();
   }
 }
 
-abstract class MatchMakeWaiting implements MatchMakeState {
-  const factory MatchMakeWaiting() = _$MatchMakeWaiting;
+abstract class MatchMakeMatched implements MatchMakeState {
+  const factory MatchMakeMatched(final String roomId) = _$MatchMakeMatched;
+
+  String get roomId;
+  @JsonKey(ignore: true)
+  _$$MatchMakeMatchedCopyWith<_$MatchMakeMatched> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -494,7 +525,7 @@ class _$MatchMakeError implements MatchMakeError {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() waiting,
+    required TResult Function(String roomId) matched,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -505,7 +536,7 @@ class _$MatchMakeError implements MatchMakeError {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? waiting,
+    TResult? Function(String roomId)? matched,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -516,7 +547,7 @@ class _$MatchMakeError implements MatchMakeError {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? waiting,
+    TResult Function(String roomId)? matched,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -531,7 +562,7 @@ class _$MatchMakeError implements MatchMakeError {
   TResult map<TResult extends Object?>({
     required TResult Function(MatchMakeInitial value) initial,
     required TResult Function(MatchMakeLoading value) loading,
-    required TResult Function(MatchMakeWaiting value) waiting,
+    required TResult Function(MatchMakeMatched value) matched,
     required TResult Function(MatchMakeError value) error,
   }) {
     return error(this);
@@ -542,7 +573,7 @@ class _$MatchMakeError implements MatchMakeError {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(MatchMakeInitial value)? initial,
     TResult? Function(MatchMakeLoading value)? loading,
-    TResult? Function(MatchMakeWaiting value)? waiting,
+    TResult? Function(MatchMakeMatched value)? matched,
     TResult? Function(MatchMakeError value)? error,
   }) {
     return error?.call(this);
@@ -553,7 +584,7 @@ class _$MatchMakeError implements MatchMakeError {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(MatchMakeInitial value)? initial,
     TResult Function(MatchMakeLoading value)? loading,
-    TResult Function(MatchMakeWaiting value)? waiting,
+    TResult Function(MatchMakeMatched value)? matched,
     TResult Function(MatchMakeError value)? error,
     required TResult orElse(),
   }) {

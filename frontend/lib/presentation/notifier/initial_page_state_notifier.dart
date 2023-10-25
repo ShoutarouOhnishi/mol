@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:frontend/application/usecase/create_anonymously_user_usecase_impl.dart';
-import 'package:frontend/domain/usecase/create_anonymously_user_usecase.dart';
+import 'package:frontend/presentation/notifier/auth_state_notifier.dart';
 
 part 'initial_page_state_notifier.freezed.dart';
 
@@ -15,9 +14,9 @@ class InitialPageState with _$InitialPageState {
 }
 
 class InitialPageStateNotifier extends StateNotifier<InitialPageState> {
-  final CreateAnonymouslyUserUseCase _createAnonymouslyUserUseCase;
+  final AuthStateNotifier _authStateNotifier;
 
-  InitialPageStateNotifier(this._createAnonymouslyUserUseCase)
+  InitialPageStateNotifier(this._authStateNotifier)
       : super(const InitialPageState());
 
   Future<void> createAnonymouslyUser() async {
@@ -25,7 +24,7 @@ class InitialPageStateNotifier extends StateNotifier<InitialPageState> {
     state = state.copyWith(isLoading: true);
 
     try {
-      _createAnonymouslyUserUseCase(state.userName);
+      _authStateNotifier.createAnonymouslyUser(state.userName);
     } on Exception catch (e) {
       // FIXME: エラー処理 ここで処理するか上層にあげるか
       debugPrint(e.toString());
@@ -41,7 +40,6 @@ class InitialPageStateNotifier extends StateNotifier<InitialPageState> {
 
 final initialPageStateNotifierProvider = StateNotifierProvider.autoDispose<
     InitialPageStateNotifier, InitialPageState>((ref) {
-  final createAnonymouslyUserUseCase =
-      ref.watch(createAnonymouslyUserUseCaseProvider);
-  return InitialPageStateNotifier(createAnonymouslyUserUseCase);
+  final authStateNotifier = ref.watch(authStateProvider.notifier);
+  return InitialPageStateNotifier(authStateNotifier);
 });
