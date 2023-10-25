@@ -41,8 +41,7 @@ class MockInitialStateNotifier extends InitialPageStateNotifier {
   final AuthState authState;
   MockInitialStateNotifier(
       this.authStateNotifier, this.authState, InitialPageState state)
-      : super(MockAccountRepository(), MockFirebaseAuthService(),
-            authStateNotifier);
+      : super(MockCreateAnonymouslyUserUseCaseImpl());
 
   // ローディングをtrueに変更するテスト用メソッド
   Future<void> changeLoading() async {

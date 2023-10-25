@@ -1,11 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:frontend/infrastructure/repository/account_repository.dart';
-import 'package:frontend/infrastructure/datasource/firebase_auth_service.dart';
-import 'package:frontend/presentation/notifier/auth_state_notifier.dart';
-import 'package:frontend/infrastructure/datasource/openapi/client/lib/api.dart';
+import 'package:frontend/application/usecase/create_anonymously_user_usecase_impl.dart';
+import 'package:frontend/domain/usecase/create_anonymously_user_usecase.dart';
 
 part 'initial_page_state_notifier.freezed.dart';
 
@@ -18,12 +15,9 @@ class InitialPageState with _$InitialPageState {
 }
 
 class InitialPageStateNotifier extends StateNotifier<InitialPageState> {
-  final AccountRepository _accountRepository;
-  final FirebaseAuthService _firebaseAuthService;
-  final AuthStateNotifier _authStateNotifier;
+  final CreateAnonymouslyUserUseCase _createAnonymouslyUserUseCase;
 
-  InitialPageStateNotifier(this._accountRepository, this._firebaseAuthService,
-      this._authStateNotifier)
+  InitialPageStateNotifier(this._createAnonymouslyUserUseCase)
       : super(const InitialPageState());
 
   Future<void> createAnonymouslyUser() async {
@@ -31,7 +25,7 @@ class InitialPageStateNotifier extends StateNotifier<InitialPageState> {
     state = state.copyWith(isLoading: true);
 
     try {
-      _authStateNotifier.createAnonymouslyUser(state.userName);
+      _createAnonymouslyUserUseCase(state.userName);
     } on Exception catch (e) {
       // FIXME: エラー処理 ここで処理するか上層にあげるか
       debugPrint(e.toString());
@@ -47,9 +41,7 @@ class InitialPageStateNotifier extends StateNotifier<InitialPageState> {
 
 final initialPageStateNotifierProvider = StateNotifierProvider.autoDispose<
     InitialPageStateNotifier, InitialPageState>((ref) {
-  final accountRepository = ref.watch(accountRepositoryProvider);
-  final firebaseAuthService = ref.watch(firebaseAuthServiceProvider);
-  final authStateNotifier = ref.read(authStateProvider.notifier);
-  return InitialPageStateNotifier(
-      accountRepository, firebaseAuthService, authStateNotifier);
+  final createAnonymouslyUserUseCase =
+      ref.watch(createAnonymouslyUserUseCaseProvider);
+  return InitialPageStateNotifier(createAnonymouslyUserUseCase);
 });

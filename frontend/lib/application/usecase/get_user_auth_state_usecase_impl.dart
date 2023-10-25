@@ -1,9 +1,20 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/domain/usecase/get_user_auth_state_usecase.dart';
 import 'package:frontend/infrastructure/datasource/firebase_auth_service.dart';
 import 'package:frontend/infrastructure/datasource/openapi/client/lib/api.dart';
 import 'package:frontend/infrastructure/repository/account_repository.dart';
+import 'package:frontend/presentation/notifier/api_client_state_notifier.dart';
 import 'package:frontend/presentation/notifier/auth_state_notifier.dart';
+
+final getUserAuthStateUseCaseProvider =
+    Provider<GetUserAuthStateUseCase>((ref) {
+  final firebaseAuthService = ref.watch(firebaseAuthServiceProvider);
+  final apiClient = ref.watch(apiClientStateProvider);
+  final accountRepository = ref.watch(accountRepositoryProvider);
+  return GetUserAuthStateUseCaseImpl(
+      firebaseAuthService, apiClient, accountRepository);
+});
 
 class GetUserAuthStateUseCaseImpl implements GetUserAuthStateUseCase {
   final FirebaseAuthService _firebaseAuthService;

@@ -4,29 +4,8 @@ import 'package:frontend/application/usecase/create_anonymously_user_usecase_imp
 import 'package:frontend/application/usecase/get_user_auth_state_usecase_impl.dart';
 import 'package:frontend/domain/usecase/create_anonymously_user_usecase.dart';
 import 'package:frontend/domain/usecase/get_user_auth_state_usecase.dart';
-import 'package:frontend/infrastructure/repository/account_repository.dart';
-import 'package:frontend/infrastructure/datasource/firebase_auth_service.dart';
-import 'package:frontend/presentation/notifier/api_client_state_notifier.dart';
 part 'auth_state_notifier.freezed.dart';
 
-final getUserAuthStateUseCaseProvider =
-    Provider<GetUserAuthStateUseCase>((ref) {
-  final firebaseAuthService = ref.watch(firebaseAuthServiceProvider);
-  final apiClient = ref.watch(apiClientStateProvider);
-  final accountRepository = ref.watch(accountRepositoryProvider);
-  return GetUserAuthStateUseCaseImpl(
-      firebaseAuthService, apiClient, accountRepository);
-});
-
-final createAnonymouslyUserUseCaseProvider =
-    Provider<CreateAnonymouslyUserUseCase>((ref) {
-  final firebaseAuthService = ref.watch(firebaseAuthServiceProvider);
-
-  final accountRepository = ref.watch(accountRepositoryProvider);
-  final apiClient = ref.watch(apiClientStateProvider);
-  return CreateAnonymouslyUserUseCaseImpl(
-      firebaseAuthService, accountRepository, apiClient);
-});
 final authStateProvider =
     StateNotifierProvider<AuthStateNotifier, AuthState>((ref) {
   final getUserStateUseCase = ref.watch(getUserAuthStateUseCaseProvider);

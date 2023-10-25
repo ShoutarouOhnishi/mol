@@ -4,11 +4,6 @@ import 'package:frontend/configs/environment_config.dart';
 import 'package:frontend/domain/usecase/set_id_token_usecase.dart';
 import 'package:frontend/infrastructure/datasource/openapi/client/lib/api.dart';
 
-final setIdTokenUseCaseProvider = Provider<SetIdTokenUseCase>((ref) {
-  final apiClient = ApiClient(basePath: EnvironmentConfig.apiUrl);
-  return SetIdTokenUseCaseImpl(apiClient);
-});
-
 final apiClientStateProvider =
     StateNotifierProvider<ApiClientStateNotifier, ApiClient>((ref) {
   final useCase = ref.read(setIdTokenUseCaseProvider);
