@@ -9,6 +9,7 @@ import 'package:frontend/application/usecase/get_user_auth_state_usecase_impl.da
 import 'package:frontend/main.dart';
 import 'package:frontend/infrastructure/repository/account_repository.dart';
 import 'package:frontend/infrastructure/datasource/firebase_auth_service.dart';
+import 'package:frontend/presentation/component/progress.dart';
 import 'package:frontend/presentation/notifier/auth_state_notifier.dart';
 import 'package:frontend/presentation/notifier/initial_page_state_notifier.dart';
 import 'package:frontend/presentation/notifier/splash_page_state_notifier.dart';
@@ -41,7 +42,7 @@ class MockInitialStateNotifier extends InitialPageStateNotifier {
   final AuthState authState;
   MockInitialStateNotifier(
       this.authStateNotifier, this.authState, InitialPageState state)
-      : super(MockCreateAnonymouslyUserUseCaseImpl());
+      : super(MockAuthStateNotifier());
 
   // ローディングをtrueに変更するテスト用メソッド
   Future<void> changeLoading() async {
@@ -138,7 +139,7 @@ void main() {
             300)); // pumpAndSettleだとローディングを非表示にするまで終わらず、タイムアウトしてしまうため、固定秒数で待つ
 
     // CircularProgressIndicatorの存在を確認
-    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    expect(find.byType(Progress), findsOneWidget);
   });
 
   testWidgets('AuthStateがauthenticatedに変わった際にMatchMakeViewに遷移する',

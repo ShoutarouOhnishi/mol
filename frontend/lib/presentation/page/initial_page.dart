@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/app_router.dart';
-import 'package:frontend/constants/app.dart';
-import 'package:frontend/constants/initali.dart';
+import 'package:frontend/constant/app.dart';
+import 'package:frontend/constant/initali.dart';
+import 'package:frontend/presentation/component/progress.dart';
 import 'package:frontend/presentation/notifier/auth_state_notifier.dart';
-import 'package:frontend/presentation/notifier/progress_state_notifier.dart';
 import 'package:frontend/presentation/notifier/initial_page_state_notifier.dart';
 
 class InitialPage extends ConsumerStatefulWidget {
@@ -22,7 +22,6 @@ class _InitialPageState extends ConsumerState<InitialPage> {
 
   @override
   Widget build(BuildContext context) {
-    Function? hideProgress;
     final provider = initialPageStateNotifierProvider;
     final state = ref.watch(provider);
     final notifier = ref.read(provider.notifier);
@@ -43,57 +42,49 @@ class _InitialPageState extends ConsumerState<InitialPage> {
       },
     );
 
-    ref.listen<InitialPageState>(
-      initialPageStateNotifierProvider,
-      (_, next) {
-        if (next.isLoading) {
-          hideProgress?.call();
-          hideProgress = ref.read(mainProgressProvider.notifier).show();
-        } else {
-          hideProgress?.call();
-          hideProgress = null;
-        }
-      },
-    );
-
     return Scaffold(
       appBar: AppBar(
         title: const Text(kAppName),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width / 3,
-              child: TextField(
-                decoration: const InputDecoration(
-                  border: UnderlineInputBorder(),
-                  labelText: kUserNameLblTxt,
-                ),
-                onChanged: (value) {
-                  notifier.onUserNameChanged(value);
-                },
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 80),
-              height: 50,
-              width: MediaQuery.of(context).size.width / 4,
-              child: ElevatedButton(
-                onPressed: () {
-                  notifier.createAnonymouslyUser();
-                },
-                style: ElevatedButton.styleFrom(
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(3)),
+      body: Stack(
+        children: [
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width / 3,
+                  child: TextField(
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: kUserNameLblTxt,
+                    ),
+                    onChanged: (value) {
+                      notifier.onUserNameChanged(value);
+                    },
                   ),
                 ),
-                child: const Text(kStartBtnTxt),
-              ),
-            )
-          ],
-        ),
+                Container(
+                  margin: const EdgeInsets.only(top: 80),
+                  height: 50,
+                  width: MediaQuery.of(context).size.width / 4,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      notifier.createAnonymouslyUser();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(3)),
+                      ),
+                    ),
+                    child: const Text(kStartBtnTxt),
+                  ),
+                )
+              ],
+            ),
+          ),
+          if (state.isLoading) const Progress(),
+        ],
       ),
     );
   }
