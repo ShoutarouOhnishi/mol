@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:frontend/infrastructure/datasource/firebase_auth_service.dart';
 import 'package:frontend/presentation/component/progress.dart';
+import 'package:frontend/presentation/notifier/auth_state_notifier.dart';
 import 'package:frontend/presentation/notifier/match_make_page_state_notifier.dart';
 import 'package:frontend/presentation/page/room_page.dart';
 
@@ -14,29 +14,15 @@ class MatchMakePage extends ConsumerWidget {
       matchMakePageStateNotifierProvider,
       (_, newState) {
         newState.maybeWhen(
-          loading: () {
-            debugPrint('Loading');
-          },
-          orElse: () {
-            newState.when(
-              initial: () {
-                debugPrint('initial');
-              },
-              matched: (roomId) {
-                debugPrint('matched');
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => RoomPage(roomId: roomId),
-                  ),
-                );
-              },
-              error: (error) {
-                debugPrint('error');
-                // FIXME: エラー処理
-              },
-              loading: () {},
+          matched: (roomId) {
+            debugPrint('matched');
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => RoomPage(roomId: roomId),
+              ),
             );
           },
+          orElse: () {},
         );
       },
     );
@@ -44,7 +30,7 @@ class MatchMakePage extends ConsumerWidget {
     final provider = matchMakePageStateNotifierProvider;
     final state = ref.watch(matchMakePageStateNotifierProvider);
     final notifier = ref.watch(provider.notifier);
-    final firebaseUserAsyncValue = ref.watch(firebaseUserProvider);
+    final authState = ref.watch(authStateProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text('対戦マッチング')),
@@ -55,22 +41,18 @@ class MatchMakePage extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 // 対戦相手を探すボタン
-                firebaseUserAsyncValue.when(
-                  data: (user) => ElevatedButton(
-                    onPressed: () => notifier.searchForOpponent(
-                        context, user!.uid), // UIDを渡す
-                    child: const Text('対戦相手を探す'),
-                  ),
-                  loading: () => const Progress(),
-                  error: (_, __) =>
-                      const Center(child: Text('An error occurred')),
+                ElevatedButton(
+                  onPressed: () => notifier.searchForOpponent(
+                      context, authState.token), // FIXME: ユーザーID等のユニークキーを渡す
+                  child: const Text('対戦相手を探す'),
                 ),
-                // エラーメッセージ
-                if (state is MatchMakeError) Text(state.message),
+
+                if (state is MatchMakeLoading) const Progress(),
+                if (state is Error)
+                  const Text('エラーが発生しました。\nしばらく経ってからもう一度お試しください。'),
               ],
             ),
           ),
-          if (state is MatchMakeLoading) const Progress(),
         ],
       ),
     );

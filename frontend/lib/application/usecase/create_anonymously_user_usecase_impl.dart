@@ -34,18 +34,20 @@ class CreateAnonymouslyUserUseCaseImpl implements CreateAnonymouslyUserUseCase {
 
       String? idToken = await firebaseUser!.getIdToken();
       if (idToken == null) {
-        return const AuthState.unauthenticated();
+        return const AuthState(event: AuthStateUIEvent.unauthenticated());
       }
       _apiClient.addDefaultHeader('Authorization', 'Bearer $idToken');
       final request = CreateUserRequest(name: userName);
       final response = await _accountRepository.createUser(request);
       if (response == null) {
-        return const AuthState.unauthenticated();
+        return const AuthState(event: AuthStateUIEvent.unauthenticated());
       }
-      return AuthState.authenticated(response.token);
+      return AuthState(
+          token: response.token,
+          event: AuthStateUIEvent.authenticated(response.token));
     } on Exception catch (e) {
       debugPrint(e.toString());
-      return AuthState.error(Exception());
+      return AuthState(event: AuthStateUIEvent.error(e));
     }
   }
 }

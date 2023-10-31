@@ -107,8 +107,8 @@ void main() {
   testWidgets('isLoading: trueの場合にLoadingウィジェットが表示される',
       (WidgetTester tester) async {
     // デフォルトの状態を持ったMockInitialStateNotifierを作成
-    final mockStateNotifier = MockInitialStateNotifier(MockAuthStateNotifier(),
-        const AuthState.initial(), const InitialPageState());
+    final mockStateNotifier = MockInitialStateNotifier(
+        MockAuthStateNotifier(), const AuthState(), const InitialPageState());
     final mockSplashStateNotifier = MockSplashStateNotifier(AuthStateNotifier(
         MockGetUserAuthStateUseCaseImpl(),
         MockCreateAnonymouslyUserUseCaseImpl()));
@@ -147,7 +147,7 @@ void main() {
     final mockAuthStateNotifier = MockAuthStateNotifier();
     final mockInitialStateNotifier = MockInitialStateNotifier(
       mockAuthStateNotifier,
-      const AuthState.authenticated('test_token'),
+      const AuthState(event: AuthStateUIEvent.authenticated('test_token')),
       const InitialPageState(),
     );
     await tester.pumpWidget(
@@ -179,7 +179,7 @@ void main() {
     final mockAuthStateNotifier = MockAuthStateNotifier();
     final mockInitialStateNotifier = MockInitialStateNotifier(
       mockAuthStateNotifier,
-      const AuthState.unauthenticated(),
+      const AuthState(event: AuthStateUIEvent.unauthenticated()),
       const InitialPageState(),
     );
     await tester.pumpWidget(

@@ -16,6 +16,154 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AuthState {
+  String get token => throw _privateConstructorUsedError;
+  AuthStateUIEvent get event => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $AuthStateCopyWith<AuthState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AuthStateCopyWith<$Res> {
+  factory $AuthStateCopyWith(AuthState value, $Res Function(AuthState) then) =
+      _$AuthStateCopyWithImpl<$Res, AuthState>;
+  @useResult
+  $Res call({String token, AuthStateUIEvent event});
+
+  $AuthStateUIEventCopyWith<$Res> get event;
+}
+
+/// @nodoc
+class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
+    implements $AuthStateCopyWith<$Res> {
+  _$AuthStateCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? token = null,
+    Object? event = null,
+  }) {
+    return _then(_value.copyWith(
+      token: null == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
+      event: null == event
+          ? _value.event
+          : event // ignore: cast_nullable_to_non_nullable
+              as AuthStateUIEvent,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AuthStateUIEventCopyWith<$Res> get event {
+    return $AuthStateUIEventCopyWith<$Res>(_value.event, (value) {
+      return _then(_value.copyWith(event: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$_AuthStateCopyWith<$Res> implements $AuthStateCopyWith<$Res> {
+  factory _$$_AuthStateCopyWith(
+          _$_AuthState value, $Res Function(_$_AuthState) then) =
+      __$$_AuthStateCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String token, AuthStateUIEvent event});
+
+  @override
+  $AuthStateUIEventCopyWith<$Res> get event;
+}
+
+/// @nodoc
+class __$$_AuthStateCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res, _$_AuthState>
+    implements _$$_AuthStateCopyWith<$Res> {
+  __$$_AuthStateCopyWithImpl(
+      _$_AuthState _value, $Res Function(_$_AuthState) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? token = null,
+    Object? event = null,
+  }) {
+    return _then(_$_AuthState(
+      token: null == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
+      event: null == event
+          ? _value.event
+          : event // ignore: cast_nullable_to_non_nullable
+              as AuthStateUIEvent,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_AuthState implements _AuthState {
+  const _$_AuthState(
+      {this.token = '', this.event = const AuthStateUIEvent.initial()});
+
+  @override
+  @JsonKey()
+  final String token;
+  @override
+  @JsonKey()
+  final AuthStateUIEvent event;
+
+  @override
+  String toString() {
+    return 'AuthState(token: $token, event: $event)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_AuthState &&
+            (identical(other.token, token) || other.token == token) &&
+            (identical(other.event, event) || other.event == event));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, token, event);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_AuthStateCopyWith<_$_AuthState> get copyWith =>
+      __$$_AuthStateCopyWithImpl<_$_AuthState>(this, _$identity);
+}
+
+abstract class _AuthState implements AuthState {
+  const factory _AuthState({final String token, final AuthStateUIEvent event}) =
+      _$_AuthState;
+
+  @override
+  String get token;
+  @override
+  AuthStateUIEvent get event;
+  @override
+  @JsonKey(ignore: true)
+  _$$_AuthStateCopyWith<_$_AuthState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$AuthStateUIEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
@@ -69,15 +217,16 @@ mixin _$AuthState {
 }
 
 /// @nodoc
-abstract class $AuthStateCopyWith<$Res> {
-  factory $AuthStateCopyWith(AuthState value, $Res Function(AuthState) then) =
-      _$AuthStateCopyWithImpl<$Res, AuthState>;
+abstract class $AuthStateUIEventCopyWith<$Res> {
+  factory $AuthStateUIEventCopyWith(
+          AuthStateUIEvent value, $Res Function(AuthStateUIEvent) then) =
+      _$AuthStateUIEventCopyWithImpl<$Res, AuthStateUIEvent>;
 }
 
 /// @nodoc
-class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
-    implements $AuthStateCopyWith<$Res> {
-  _$AuthStateCopyWithImpl(this._value, this._then);
+class _$AuthStateUIEventCopyWithImpl<$Res, $Val extends AuthStateUIEvent>
+    implements $AuthStateUIEventCopyWith<$Res> {
+  _$AuthStateUIEventCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -94,7 +243,7 @@ abstract class _$$_InitialCopyWith<$Res> {
 
 /// @nodoc
 class __$$_InitialCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res, _$_Initial>
+    extends _$AuthStateUIEventCopyWithImpl<$Res, _$_Initial>
     implements _$$_InitialCopyWith<$Res> {
   __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
       : super(_value, _then);
@@ -107,7 +256,7 @@ class _$_Initial implements _Initial {
 
   @override
   String toString() {
-    return 'AuthState.initial()';
+    return 'AuthStateUIEvent.initial()';
   }
 
   @override
@@ -194,7 +343,7 @@ class _$_Initial implements _Initial {
   }
 }
 
-abstract class _Initial implements AuthState {
+abstract class _Initial implements AuthStateUIEvent {
   const factory _Initial() = _$_Initial;
 }
 
@@ -209,7 +358,7 @@ abstract class _$$_AuthenticatedCopyWith<$Res> {
 
 /// @nodoc
 class __$$_AuthenticatedCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res, _$_Authenticated>
+    extends _$AuthStateUIEventCopyWithImpl<$Res, _$_Authenticated>
     implements _$$_AuthenticatedCopyWith<$Res> {
   __$$_AuthenticatedCopyWithImpl(
       _$_Authenticated _value, $Res Function(_$_Authenticated) _then)
@@ -239,7 +388,7 @@ class _$_Authenticated implements _Authenticated {
 
   @override
   String toString() {
-    return 'AuthState.authenticated(token: $token)';
+    return 'AuthStateUIEvent.authenticated(token: $token)';
   }
 
   @override
@@ -334,7 +483,7 @@ class _$_Authenticated implements _Authenticated {
   }
 }
 
-abstract class _Authenticated implements AuthState {
+abstract class _Authenticated implements AuthStateUIEvent {
   const factory _Authenticated(final String token) = _$_Authenticated;
 
   String get token;
@@ -352,7 +501,7 @@ abstract class _$$_UnauthenticatedCopyWith<$Res> {
 
 /// @nodoc
 class __$$_UnauthenticatedCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res, _$_Unauthenticated>
+    extends _$AuthStateUIEventCopyWithImpl<$Res, _$_Unauthenticated>
     implements _$$_UnauthenticatedCopyWith<$Res> {
   __$$_UnauthenticatedCopyWithImpl(
       _$_Unauthenticated _value, $Res Function(_$_Unauthenticated) _then)
@@ -366,7 +515,7 @@ class _$_Unauthenticated implements _Unauthenticated {
 
   @override
   String toString() {
-    return 'AuthState.unauthenticated()';
+    return 'AuthStateUIEvent.unauthenticated()';
   }
 
   @override
@@ -453,7 +602,7 @@ class _$_Unauthenticated implements _Unauthenticated {
   }
 }
 
-abstract class _Unauthenticated implements AuthState {
+abstract class _Unauthenticated implements AuthStateUIEvent {
   const factory _Unauthenticated() = _$_Unauthenticated;
 }
 
@@ -467,7 +616,7 @@ abstract class _$$_ErrorCopyWith<$Res> {
 
 /// @nodoc
 class __$$_ErrorCopyWithImpl<$Res>
-    extends _$AuthStateCopyWithImpl<$Res, _$_Error>
+    extends _$AuthStateUIEventCopyWithImpl<$Res, _$_Error>
     implements _$$_ErrorCopyWith<$Res> {
   __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
       : super(_value, _then);
@@ -496,7 +645,7 @@ class _$_Error implements _Error {
 
   @override
   String toString() {
-    return 'AuthState.error(e: $e)';
+    return 'AuthStateUIEvent.error(e: $e)';
   }
 
   @override
@@ -591,7 +740,7 @@ class _$_Error implements _Error {
   }
 }
 
-abstract class _Error implements AuthState {
+abstract class _Error implements AuthStateUIEvent {
   const factory _Error(final Exception e) = _$_Error;
 
   Exception get e;

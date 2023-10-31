@@ -39,7 +39,7 @@ void main() {
 
       final authState = await createAnonymouslyUserUseCaseImpl(userName);
 
-      authState.when(
+      authState.event.when(
         initial: () => fail('Should not be initial state'),
         authenticated: (token) => fail('Should not be authenticated state'),
         unauthenticated: () => expect(true, true), // Expected state
@@ -57,7 +57,7 @@ void main() {
 
       final authState = await createAnonymouslyUserUseCaseImpl(userName);
 
-      authState.when(
+      authState.event.when(
         initial: () => fail('Should not be initial state'),
         authenticated: (token) => fail('Should not be authenticated state'),
         unauthenticated: () => expect(true, true), // Expected state
@@ -76,7 +76,7 @@ void main() {
 
       final authState = await createAnonymouslyUserUseCaseImpl(userName);
 
-      authState.when(
+      authState.event.when(
         initial: () => fail('Should not be initial state'),
         authenticated: (token) => expect(true, true),
         unauthenticated: () => fail('Should not be unauthenticated state'),
@@ -90,7 +90,7 @@ void main() {
 
       final authState = await createAnonymouslyUserUseCaseImpl(userName);
 
-      authState.when(
+      authState.event.when(
         initial: () => fail('Should not be initial state'),
         authenticated: (token) => fail('Should not be authenticated state'),
         unauthenticated: () => fail('Should not be unauthenticated state'),

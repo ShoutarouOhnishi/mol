@@ -8,7 +8,10 @@
 
 
 - TODO
-  - Clean Architectureのディレクトリ構成を確定する
+  - `POST: /api/v1/user` のレスポンスに`token`だけでなくその他のユーザー情報も返すようにする
+    - アプリ側でユーザーモデルを生成する
+      - CreateUserResponse.dartをextends？
+      - 作成したユーザーモデルをauthState.authenticatedに持たせる
   - ChatGPTを活用して
     - StateNotifierの各処理をUseCaseに分離させる  
     - Repositoryをインターフェースと実装で分離させる  

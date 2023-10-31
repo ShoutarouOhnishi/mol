@@ -16,10 +16,18 @@ final authStateProvider =
 
 @freezed
 class AuthState with _$AuthState {
-  const factory AuthState.initial() = _Initial;
-  const factory AuthState.authenticated(String token) = _Authenticated;
-  const factory AuthState.unauthenticated() = _Unauthenticated;
-  const factory AuthState.error(Exception e) = _Error;
+  const factory AuthState({
+    @Default('') String token,
+    @Default(AuthStateUIEvent.initial()) AuthStateUIEvent event,
+  }) = _AuthState;
+}
+
+@freezed
+class AuthStateUIEvent with _$AuthStateUIEvent {
+  const factory AuthStateUIEvent.initial() = _Initial;
+  const factory AuthStateUIEvent.authenticated(String token) = _Authenticated;
+  const factory AuthStateUIEvent.unauthenticated() = _Unauthenticated;
+  const factory AuthStateUIEvent.error(Exception e) = _Error;
 }
 
 class AuthStateNotifier extends StateNotifier<AuthState> {
@@ -28,7 +36,7 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
 
   AuthStateNotifier(
       this._getUserAuthStateUseCase, this._createAnonymouslyUserUseCase)
-      : super(const AuthState.initial());
+      : super(const AuthState());
 
   Future<void> syncUserAuthState() async {
     state = await _getUserAuthStateUseCase();

@@ -56,7 +56,7 @@ class SplashPageStateNotifier extends StateNotifier<SplashPageState> {
       await _authStateNotifier.syncUserAuthState();
 
       List<UiEvent> events = [];
-      _authStateNotifier.state.when(
+      _authStateNotifier.state.event.when(
         initial: () => events = [const UiEvent.onCompleteNotLogin()],
         authenticated: (_) => events = [const UiEvent.onCompleteLogin()],
         unauthenticated: () => events = [const UiEvent.onCompleteNotLogin()],

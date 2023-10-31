@@ -18,8 +18,8 @@ void main() {
     });
 
     test('syncUserAuthStateでGetUserAuthStateUserCaseが実行されている', () async {
-      when(mockGetUserAuthStateUseCase.call())
-          .thenAnswer((_) async => const AuthState.unauthenticated());
+      when(mockGetUserAuthStateUseCase.call()).thenAnswer((_) async =>
+          const AuthState(event: AuthStateUIEvent.unauthenticated()));
 
       await authStateNotifier.syncUserAuthState();
 
@@ -38,8 +38,9 @@ void main() {
 
     test('syncUserAuthStateでGetUserAuthStateUserCaseが実行されている', () async {
       const testUserName = 'testUserName';
-      when(mockCreateAnonymouslyUserUseCase.call(testUserName))
-          .thenAnswer((_) async => const AuthState.unauthenticated());
+      when(mockCreateAnonymouslyUserUseCase.call(testUserName)).thenAnswer(
+          (_) async =>
+              const AuthState(event: AuthStateUIEvent.unauthenticated()));
 
       await authStateNotifier.createAnonymouslyUser(testUserName);
 

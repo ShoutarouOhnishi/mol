@@ -29,23 +29,25 @@ class GetUserAuthStateUseCaseImpl implements GetUserAuthStateUseCase {
     try {
       User? firebaseUser = _firebaseAuthService.currentUser;
       if (firebaseUser == null) {
-        return const AuthState.unauthenticated();
+        return const AuthState(event: AuthStateUIEvent.unauthenticated());
       }
 
       String? idToken = await firebaseUser.getIdToken();
       if (idToken == null) {
-        return const AuthState.unauthenticated();
+        return const AuthState(event: AuthStateUIEvent.unauthenticated());
       }
       _apiClient.addDefaultHeader('Authorization', 'Bearer $idToken');
 
       final loginResponse = await _accountRepository.login();
 
       if (loginResponse == null) {
-        return const AuthState.unauthenticated();
+        return const AuthState(event: AuthStateUIEvent.unauthenticated());
       }
-      return AuthState.authenticated(loginResponse.token);
+      return AuthState(
+          token: loginResponse.token,
+          event: AuthStateUIEvent.authenticated(loginResponse.token));
     } on Exception catch (e) {
-      return AuthState.error(e);
+      return AuthState(event: AuthStateUIEvent.error(e));
     }
   }
 }

@@ -29,7 +29,7 @@ class _InitialPageState extends ConsumerState<InitialPage> {
     ref.listen<AuthState>(
       authStateProvider,
       (_, newState) {
-        newState.when(initial: () {
+        newState.event.when(initial: () {
           debugPrint('initial');
         }, authenticated: (token) {
           debugPrint('authenticated');
