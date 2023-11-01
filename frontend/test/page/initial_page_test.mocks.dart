@@ -10,12 +10,11 @@ import 'package:frontend/application/usecase/create_anonymously_user_usecase_imp
     as _i5;
 import 'package:frontend/application/usecase/get_user_auth_state_usecase_impl.dart'
     as _i3;
+import 'package:frontend/domain/repository/account_repository.dart' as _i8;
 import 'package:frontend/infrastructure/datasource/firebase_auth_service.dart'
     as _i6;
 import 'package:frontend/infrastructure/datasource/openapi/client/lib/api.dart'
     as _i9;
-import 'package:frontend/infrastructure/repository/account_repository.dart'
-    as _i8;
 import 'package:frontend/presentation/notifier/auth_state_notifier.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 

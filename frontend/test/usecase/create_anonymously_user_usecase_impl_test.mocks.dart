@@ -8,14 +8,13 @@ import 'dart:async' as _i6;
 import 'package:firebase_auth/firebase_auth.dart' as _i3;
 import 'package:firebase_auth_platform_interface/firebase_auth_platform_interface.dart'
     as _i9;
+import 'package:frontend/domain/repository/account_repository.dart' as _i8;
 import 'package:frontend/domain/usecase/create_anonymously_user_usecase.dart'
     as _i10;
 import 'package:frontend/infrastructure/datasource/firebase_auth_service.dart'
     as _i5;
 import 'package:frontend/infrastructure/datasource/openapi/client/lib/api.dart'
     as _i7;
-import 'package:frontend/infrastructure/repository/account_repository.dart'
-    as _i8;
 import 'package:frontend/presentation/notifier/auth_state_notifier.dart' as _i4;
 import 'package:http/http.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;

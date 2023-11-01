@@ -1,17 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:frontend/domain/repository/account_repository.dart';
 import 'package:frontend/domain/usecase/create_anonymously_user_usecase.dart';
 import 'package:frontend/infrastructure/datasource/firebase_auth_service.dart';
 import 'package:frontend/infrastructure/datasource/openapi/client/lib/api.dart';
-import 'package:frontend/infrastructure/repository/account_repository.dart';
+import 'package:frontend/infrastructure/repository/account_repository_impl.dart';
 import 'package:frontend/presentation/notifier/api_client_state_notifier.dart';
 import 'package:frontend/presentation/notifier/auth_state_notifier.dart';
 
 final createAnonymouslyUserUseCaseProvider =
     Provider<CreateAnonymouslyUserUseCase>((ref) {
   final firebaseAuthService = ref.watch(firebaseAuthServiceProvider);
-
   final accountRepository = ref.watch(accountRepositoryProvider);
   final apiClient = ref.watch(apiClientStateProvider);
   return CreateAnonymouslyUserUseCaseImpl(

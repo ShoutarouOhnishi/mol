@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:frontend/domain/repository/match_make_repository.dart';
 import 'package:intl/intl.dart';
 
-class MatchMakeRepository {
+class MatchMakeRepositoryImpl implements MatchMakeRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  @override
   Future<void> addToWaitingList(String userId) {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('yyyy-MM-dd hh:mm:ss').format(now);
@@ -14,6 +16,7 @@ class MatchMakeRepository {
         .set({'date': formattedDate});
   }
 
+  @override
   Future<String?> getOldestWaitingUserId() async {
     QuerySnapshot querySnapshot = await _firestore
         .collection('waiting_users')
@@ -25,15 +28,18 @@ class MatchMakeRepository {
     return querySnapshot.docs.isNotEmpty ? querySnapshot.docs.first.id : null;
   }
 
+  @override
   Future<void> removeFromWaitingList(String userId) {
     return _firestore.collection('waiting_users').doc(userId).delete();
   }
 
+  @override
   Future<DocumentReference> createRoom(Map<String, dynamic> roomData) {
     return _firestore.collection('rooms').add(roomData);
   }
 
   // マッチング時にルームを作成するメソッド
+  @override
   Future<String> createMatchedRoom(String user1, String user2) async {
     final roomData = {'user1': user1, 'user2': user2};
     final roomRef = _firestore.collection('rooms').add(roomData);
@@ -48,6 +54,7 @@ class MatchMakeRepository {
     return roomId;
   }
 
+  @override
   void observeWaitingList(
       String waitingUserId, void Function(String roomId) onMatchFound) {
     _firestore
@@ -66,4 +73,4 @@ class MatchMakeRepository {
 }
 
 final matchMakeRepositoryProvider =
-    Provider<MatchMakeRepository>((ref) => MatchMakeRepository());
+    Provider<MatchMakeRepository>((ref) => MatchMakeRepositoryImpl());

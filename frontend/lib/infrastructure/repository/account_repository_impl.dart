@@ -1,13 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:frontend/domain/repository/account_repository.dart';
 import 'package:frontend/presentation/notifier/api_client_state_notifier.dart';
 import 'package:frontend/infrastructure/datasource/openapi/client/lib/api.dart';
 
-class AccountRepository {
+class AccountRepositoryImpl implements AccountRepository {
   final AccountApi _apiInstance;
 
-  AccountRepository(ApiClient apiClient) : _apiInstance = AccountApi(apiClient);
+  AccountRepositoryImpl(ApiClient apiClient)
+      : _apiInstance = AccountApi(apiClient);
 
+  @override
   Future<CreateUserResponse?> createUser(CreateUserRequest request) async {
     try {
       return await _apiInstance.createUser(request);
@@ -19,6 +22,7 @@ class AccountRepository {
     }
   }
 
+  @override
   Future<LoginResponse?> login() async {
     try {
       return await _apiInstance.login();
@@ -32,4 +36,4 @@ class AccountRepository {
 }
 
 final accountRepositoryProvider = Provider<AccountRepository>(
-    (ref) => AccountRepository(ref.watch(apiClientStateProvider)));
+    (ref) => AccountRepositoryImpl(ref.watch(apiClientStateProvider)));

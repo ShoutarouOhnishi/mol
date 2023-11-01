@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:frontend/application/usecase/create_anonymously_user_usecase_impl.dart';
+import 'package:frontend/domain/repository/account_repository.dart';
 import 'package:frontend/domain/usecase/create_anonymously_user_usecase.dart';
 import 'package:frontend/infrastructure/datasource/firebase_auth_service.dart';
 import 'package:frontend/infrastructure/datasource/openapi/client/lib/api.dart';
-import 'package:frontend/infrastructure/repository/account_repository.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'create_anonymously_user_usecase_impl_test.mocks.dart';

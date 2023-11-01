@@ -2,8 +2,9 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:frontend/domain/repository/match_make_repository.dart';
 import 'package:frontend/domain/usecase/match_with_opponent_usecase.dart';
-import 'package:frontend/infrastructure/repository/match_make_repository.dart';
+import 'package:frontend/infrastructure/repository/match_make_repository_impl.dart';
 import 'package:frontend/presentation/notifier/match_make_page_state_notifier.dart';
 
 final matchWithOpponentUseCaseProvider =
