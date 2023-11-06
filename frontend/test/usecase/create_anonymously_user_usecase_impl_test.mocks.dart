@@ -15,7 +15,7 @@ import 'package:frontend/infrastructure/datasource/firebase_auth_service.dart'
     as _i5;
 import 'package:frontend/infrastructure/datasource/openapi/client/lib/api.dart'
     as _i7;
-import 'package:frontend/presentation/notifier/auth_state_notifier.dart' as _i4;
+import 'package:frontend/presentation/state/auth_state.dart' as _i4;
 import 'package:http/http.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 

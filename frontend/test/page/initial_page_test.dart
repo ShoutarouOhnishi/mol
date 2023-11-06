@@ -16,6 +16,9 @@ import 'package:frontend/presentation/notifier/initial_page_state_notifier.dart'
 import 'package:frontend/presentation/notifier/splash_page_state_notifier.dart';
 import 'package:frontend/presentation/page/initial_page.dart';
 import 'package:frontend/presentation/page/match_make_page.dart';
+import 'package:frontend/presentation/state/auth_state.dart';
+import 'package:frontend/presentation/state/initial_page_state.dart';
+import 'package:frontend/presentation/state/splash_page_state.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:frontend/infrastructure/datasource/openapi/client/lib/api.dart';
@@ -65,7 +68,7 @@ class MockSplashStateNotifier extends SplashPageStateNotifier {
   @override
   Future<void> initialize() async {
     state = state.copyWith(
-      events: state.events + [const UiEvent.onCompleteNotLogin()],
+      events: state.events + [const SplashPageUiEvent.onCompleteNotLogin()],
     );
   }
 }

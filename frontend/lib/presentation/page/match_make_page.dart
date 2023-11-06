@@ -4,6 +4,7 @@ import 'package:frontend/presentation/component/progress.dart';
 import 'package:frontend/presentation/notifier/auth_state_notifier.dart';
 import 'package:frontend/presentation/notifier/match_make_page_state_notifier.dart';
 import 'package:frontend/presentation/page/room_page.dart';
+import 'package:frontend/presentation/state/match_make_page_state.dart';
 
 class MatchMakePage extends ConsumerWidget {
   const MatchMakePage({super.key});

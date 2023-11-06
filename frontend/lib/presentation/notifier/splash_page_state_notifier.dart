@@ -1,32 +1,13 @@
 import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:frontend/presentation/notifier/auth_state_notifier.dart';
-
-part 'splash_page_state_notifier.freezed.dart';
+import 'package:frontend/presentation/state/splash_page_state.dart';
 
 final splashPageStateNotifierProvider =
     StateNotifierProvider.autoDispose<SplashPageStateNotifier, SplashPageState>(
         (ref) {
   return SplashPageStateNotifier(ref.watch(authStateProvider.notifier));
 });
-
-@freezed
-class SplashPageState with _$SplashPageState {
-  const factory SplashPageState({
-    @Default(false) bool isLoading,
-    @Default([]) List<UiEvent> events,
-  }) = _SplashPageState;
-}
-
-@freezed
-class UiEvent with _$UiEvent {
-  const factory UiEvent.onCompleteNotLogin() = OnCompleteNotLogin;
-
-  const factory UiEvent.onCompleteLogin() = OnCompleteLogin;
-
-  const factory UiEvent.onError(Exception e) = OnError;
-}
 
 /// 最低スプラッシュ表示時間
 const _minimumSplashDuration = Duration(milliseconds: 1000);
@@ -55,22 +36,25 @@ class SplashPageStateNotifier extends StateNotifier<SplashPageState> {
 
       await _authStateNotifier.syncUserAuthState();
 
-      List<UiEvent> events = [];
+      List<SplashPageUiEvent> events = [];
       _authStateNotifier.state.event.when(
-        initial: () => events = [const UiEvent.onCompleteNotLogin()],
-        authenticated: (_) => events = [const UiEvent.onCompleteLogin()],
-        unauthenticated: () => events = [const UiEvent.onCompleteNotLogin()],
-        error: (e) => events = [UiEvent.onError(e)],
+        initial: () => events = [const SplashPageUiEvent.onCompleteNotLogin()],
+        authenticated: (_) =>
+            events = [const SplashPageUiEvent.onCompleteLogin()],
+        unauthenticated: () =>
+            events = [const SplashPageUiEvent.onCompleteNotLogin()],
+        error: (e) => events = [SplashPageUiEvent.onError(e)],
       );
       state = state.copyWith(events: state.events + events);
     } on Exception catch (e) {
-      state = state.copyWith(events: state.events + [UiEvent.onError(e)]);
+      state =
+          state.copyWith(events: state.events + [SplashPageUiEvent.onError(e)]);
     } finally {
       state = state.copyWith(isLoading: false);
     }
   }
 
-  void consumeEvent(UiEvent event) {
+  void consumeEvent(SplashPageUiEvent event) {
     state = state.copyWith(
       events: state.events.whereNot((e) => e == event).toList(),
     );

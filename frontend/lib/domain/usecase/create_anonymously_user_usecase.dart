@@ -1,4 +1,4 @@
-import 'package:frontend/presentation/notifier/auth_state_notifier.dart';
+import 'package:frontend/presentation/state/auth_state.dart';
 
 abstract class CreateAnonymouslyUserUseCase {
   Future<AuthState> call(String userName);

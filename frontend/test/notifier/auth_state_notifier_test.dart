@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:frontend/domain/usecase/create_anonymously_user_usecase.dart';
 import 'package:frontend/domain/usecase/get_user_auth_state_usecase.dart';
+import 'package:frontend/presentation/state/auth_state.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:frontend/presentation/notifier/auth_state_notifier.dart';

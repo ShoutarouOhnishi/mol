@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'splash_page_state_notifier.dart';
+part of 'splash_page_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$SplashPageState {
   bool get isLoading => throw _privateConstructorUsedError;
-  List<UiEvent> get events => throw _privateConstructorUsedError;
+  List<SplashPageUiEvent> get events => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SplashPageStateCopyWith<SplashPageState> get copyWith =>
@@ -30,7 +30,7 @@ abstract class $SplashPageStateCopyWith<$Res> {
           SplashPageState value, $Res Function(SplashPageState) then) =
       _$SplashPageStateCopyWithImpl<$Res, SplashPageState>;
   @useResult
-  $Res call({bool isLoading, List<UiEvent> events});
+  $Res call({bool isLoading, List<SplashPageUiEvent> events});
 }
 
 /// @nodoc
@@ -57,7 +57,7 @@ class _$SplashPageStateCopyWithImpl<$Res, $Val extends SplashPageState>
       events: null == events
           ? _value.events
           : events // ignore: cast_nullable_to_non_nullable
-              as List<UiEvent>,
+              as List<SplashPageUiEvent>,
     ) as $Val);
   }
 }
@@ -70,7 +70,7 @@ abstract class _$$_SplashPageStateCopyWith<$Res>
       __$$_SplashPageStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isLoading, List<UiEvent> events});
+  $Res call({bool isLoading, List<SplashPageUiEvent> events});
 }
 
 /// @nodoc
@@ -95,7 +95,7 @@ class __$$_SplashPageStateCopyWithImpl<$Res>
       events: null == events
           ? _value._events
           : events // ignore: cast_nullable_to_non_nullable
-              as List<UiEvent>,
+              as List<SplashPageUiEvent>,
     ));
   }
 }
@@ -104,16 +104,16 @@ class __$$_SplashPageStateCopyWithImpl<$Res>
 
 class _$_SplashPageState implements _SplashPageState {
   const _$_SplashPageState(
-      {this.isLoading = false, final List<UiEvent> events = const []})
+      {this.isLoading = false, final List<SplashPageUiEvent> events = const []})
       : _events = events;
 
   @override
   @JsonKey()
   final bool isLoading;
-  final List<UiEvent> _events;
+  final List<SplashPageUiEvent> _events;
   @override
   @JsonKey()
-  List<UiEvent> get events {
+  List<SplashPageUiEvent> get events {
     if (_events is EqualUnmodifiableListView) return _events;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_events);
@@ -147,12 +147,13 @@ class _$_SplashPageState implements _SplashPageState {
 
 abstract class _SplashPageState implements SplashPageState {
   const factory _SplashPageState(
-      {final bool isLoading, final List<UiEvent> events}) = _$_SplashPageState;
+      {final bool isLoading,
+      final List<SplashPageUiEvent> events}) = _$_SplashPageState;
 
   @override
   bool get isLoading;
   @override
-  List<UiEvent> get events;
+  List<SplashPageUiEvent> get events;
   @override
   @JsonKey(ignore: true)
   _$$_SplashPageStateCopyWith<_$_SplashPageState> get copyWith =>
@@ -160,7 +161,7 @@ abstract class _SplashPageState implements SplashPageState {
 }
 
 /// @nodoc
-mixin _$UiEvent {
+mixin _$SplashPageUiEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() onCompleteNotLogin,
@@ -208,15 +209,16 @@ mixin _$UiEvent {
 }
 
 /// @nodoc
-abstract class $UiEventCopyWith<$Res> {
-  factory $UiEventCopyWith(UiEvent value, $Res Function(UiEvent) then) =
-      _$UiEventCopyWithImpl<$Res, UiEvent>;
+abstract class $SplashPageUiEventCopyWith<$Res> {
+  factory $SplashPageUiEventCopyWith(
+          SplashPageUiEvent value, $Res Function(SplashPageUiEvent) then) =
+      _$SplashPageUiEventCopyWithImpl<$Res, SplashPageUiEvent>;
 }
 
 /// @nodoc
-class _$UiEventCopyWithImpl<$Res, $Val extends UiEvent>
-    implements $UiEventCopyWith<$Res> {
-  _$UiEventCopyWithImpl(this._value, this._then);
+class _$SplashPageUiEventCopyWithImpl<$Res, $Val extends SplashPageUiEvent>
+    implements $SplashPageUiEventCopyWith<$Res> {
+  _$SplashPageUiEventCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -233,7 +235,7 @@ abstract class _$$OnCompleteNotLoginCopyWith<$Res> {
 
 /// @nodoc
 class __$$OnCompleteNotLoginCopyWithImpl<$Res>
-    extends _$UiEventCopyWithImpl<$Res, _$OnCompleteNotLogin>
+    extends _$SplashPageUiEventCopyWithImpl<$Res, _$OnCompleteNotLogin>
     implements _$$OnCompleteNotLoginCopyWith<$Res> {
   __$$OnCompleteNotLoginCopyWithImpl(
       _$OnCompleteNotLogin _value, $Res Function(_$OnCompleteNotLogin) _then)
@@ -247,7 +249,7 @@ class _$OnCompleteNotLogin implements OnCompleteNotLogin {
 
   @override
   String toString() {
-    return 'UiEvent.onCompleteNotLogin()';
+    return 'SplashPageUiEvent.onCompleteNotLogin()';
   }
 
   @override
@@ -328,7 +330,7 @@ class _$OnCompleteNotLogin implements OnCompleteNotLogin {
   }
 }
 
-abstract class OnCompleteNotLogin implements UiEvent {
+abstract class OnCompleteNotLogin implements SplashPageUiEvent {
   const factory OnCompleteNotLogin() = _$OnCompleteNotLogin;
 }
 
@@ -341,7 +343,7 @@ abstract class _$$OnCompleteLoginCopyWith<$Res> {
 
 /// @nodoc
 class __$$OnCompleteLoginCopyWithImpl<$Res>
-    extends _$UiEventCopyWithImpl<$Res, _$OnCompleteLogin>
+    extends _$SplashPageUiEventCopyWithImpl<$Res, _$OnCompleteLogin>
     implements _$$OnCompleteLoginCopyWith<$Res> {
   __$$OnCompleteLoginCopyWithImpl(
       _$OnCompleteLogin _value, $Res Function(_$OnCompleteLogin) _then)
@@ -355,7 +357,7 @@ class _$OnCompleteLogin implements OnCompleteLogin {
 
   @override
   String toString() {
-    return 'UiEvent.onCompleteLogin()';
+    return 'SplashPageUiEvent.onCompleteLogin()';
   }
 
   @override
@@ -436,7 +438,7 @@ class _$OnCompleteLogin implements OnCompleteLogin {
   }
 }
 
-abstract class OnCompleteLogin implements UiEvent {
+abstract class OnCompleteLogin implements SplashPageUiEvent {
   const factory OnCompleteLogin() = _$OnCompleteLogin;
 }
 
@@ -450,7 +452,7 @@ abstract class _$$OnErrorCopyWith<$Res> {
 
 /// @nodoc
 class __$$OnErrorCopyWithImpl<$Res>
-    extends _$UiEventCopyWithImpl<$Res, _$OnError>
+    extends _$SplashPageUiEventCopyWithImpl<$Res, _$OnError>
     implements _$$OnErrorCopyWith<$Res> {
   __$$OnErrorCopyWithImpl(_$OnError _value, $Res Function(_$OnError) _then)
       : super(_value, _then);
@@ -479,7 +481,7 @@ class _$OnError implements OnError {
 
   @override
   String toString() {
-    return 'UiEvent.onError(e: $e)';
+    return 'SplashPageUiEvent.onError(e: $e)';
   }
 
   @override
@@ -568,7 +570,7 @@ class _$OnError implements OnError {
   }
 }
 
-abstract class OnError implements UiEvent {
+abstract class OnError implements SplashPageUiEvent {
   const factory OnError(final Exception e) = _$OnError;
 
   Exception get e;

@@ -3,13 +3,14 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i5;
 
-import 'package:flutter_riverpod/flutter_riverpod.dart' as _i3;
+import 'package:flutter_riverpod/flutter_riverpod.dart' as _i4;
 import 'package:frontend/presentation/notifier/splash_page_state_notifier.dart'
-    as _i2;
+    as _i3;
+import 'package:frontend/presentation/state/splash_page_state.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:state_notifier/state_notifier.dart' as _i5;
+import 'package:state_notifier/state_notifier.dart' as _i6;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -37,13 +38,13 @@ class _FakeSplashPageState_0 extends _i1.SmartFake
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockSplashPageStateNotifier extends _i1.Mock
-    implements _i2.SplashPageStateNotifier {
+    implements _i3.SplashPageStateNotifier {
   MockSplashPageStateNotifier() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  set onError(_i3.ErrorListener? _onError) => super.noSuchMethod(
+  set onError(_i4.ErrorListener? _onError) => super.noSuchMethod(
         Invocation.setter(
           #onError,
           _onError,
@@ -56,10 +57,10 @@ class MockSplashPageStateNotifier extends _i1.Mock
         returnValue: false,
       ) as bool);
   @override
-  _i4.Stream<_i2.SplashPageState> get stream => (super.noSuchMethod(
+  _i5.Stream<_i2.SplashPageState> get stream => (super.noSuchMethod(
         Invocation.getter(#stream),
-        returnValue: _i4.Stream<_i2.SplashPageState>.empty(),
-      ) as _i4.Stream<_i2.SplashPageState>);
+        returnValue: _i5.Stream<_i2.SplashPageState>.empty(),
+      ) as _i5.Stream<_i2.SplashPageState>);
   @override
   _i2.SplashPageState get state => (super.noSuchMethod(
         Invocation.getter(#state),
@@ -90,16 +91,16 @@ class MockSplashPageStateNotifier extends _i1.Mock
         returnValue: false,
       ) as bool);
   @override
-  _i4.Future<void> initialize() => (super.noSuchMethod(
+  _i5.Future<void> initialize() => (super.noSuchMethod(
         Invocation.method(
           #initialize,
           [],
         ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
   @override
-  void consumeEvent(_i2.UiEvent? event) => super.noSuchMethod(
+  void consumeEvent(_i2.SplashPageUiEvent? event) => super.noSuchMethod(
         Invocation.method(
           #consumeEvent,
           [event],
@@ -122,8 +123,8 @@ class MockSplashPageStateNotifier extends _i1.Mock
         returnValue: false,
       ) as bool);
   @override
-  _i3.RemoveListener addListener(
-    _i5.Listener<_i2.SplashPageState>? listener, {
+  _i4.RemoveListener addListener(
+    _i6.Listener<_i2.SplashPageState>? listener, {
     bool? fireImmediately = true,
   }) =>
       (super.noSuchMethod(
@@ -133,7 +134,7 @@ class MockSplashPageStateNotifier extends _i1.Mock
           {#fireImmediately: fireImmediately},
         ),
         returnValue: () {},
-      ) as _i3.RemoveListener);
+      ) as _i4.RemoveListener);
   @override
   void dispose() => super.noSuchMethod(
         Invocation.method(

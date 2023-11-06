@@ -1,17 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:frontend/presentation/notifier/auth_state_notifier.dart';
-
-part 'initial_page_state_notifier.freezed.dart';
-
-@freezed
-class InitialPageState with _$InitialPageState {
-  const factory InitialPageState({
-    @Default(false) bool isLoading,
-    @Default('ゲスト') String userName,
-  }) = _InitialPageState;
-}
+import 'package:frontend/presentation/state/initial_page_state.dart';
 
 class InitialPageStateNotifier extends StateNotifier<InitialPageState> {
   final AuthStateNotifier _authStateNotifier;

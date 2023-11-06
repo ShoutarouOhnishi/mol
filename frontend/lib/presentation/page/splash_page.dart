@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/app_router.dart';
 import 'package:frontend/presentation/notifier/splash_page_state_notifier.dart';
+import 'package:frontend/presentation/state/splash_page_state.dart';
 
 class SplashPage extends ConsumerStatefulWidget {
   const SplashPage({super.key});
@@ -22,7 +23,7 @@ class _SplashPageState extends ConsumerState<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen<List<UiEvent>>(
+    ref.listen<List<SplashPageUiEvent>>(
       splashPageStateNotifierProvider.select((s) => s.events),
       (_, events) {
         final event = events.firstOrNull;

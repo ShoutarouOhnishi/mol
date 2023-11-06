@@ -17,8 +17,4 @@
     - usecaseは複数箇所から呼び出されるため、特定の使用箇所でproviderを定義するのは適切ではない
     - 直感的にはusecaseの実装ファイルにproviderを定義したいが、usecaseはinterfaceを使用しており、実装を露呈しないメリットがある。
     　実装ファイルにproviderを定義すると、呼び出し側で実装ファイルをimportしないといけないため、実装を露顕することになる。
-  - 各ファイルでviewmodelという変数名をnotifierに変更していく
   - SNSログイン追加
-  - テストコード
-  - Bearerトークンを各APIでセットするのではなく上層部でセットする
-  - openapiから自動生成されるコードでヘッダにaccept: application/jsonを指定する方法を考える　もしくはbackend

@@ -9,7 +9,7 @@ import 'package:frontend/domain/usecase/create_anonymously_user_usecase.dart'
     as _i5;
 import 'package:frontend/domain/usecase/get_user_auth_state_usecase.dart'
     as _i3;
-import 'package:frontend/presentation/notifier/auth_state_notifier.dart' as _i2;
+import 'package:frontend/presentation/state/auth_state.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
