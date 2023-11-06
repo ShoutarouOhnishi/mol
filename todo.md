@@ -12,7 +12,6 @@
     - アプリ側でユーザーモデルを生成する
       - CreateUserResponse.dartをextends？
       - 作成したユーザーモデルをauthState.authenticatedに持たせる
-  - stateとstate_notifierを分離させる
   - usecaseのproviderをどこに定義すべきか
     - usecaseは複数箇所から呼び出されるため、特定の使用箇所でproviderを定義するのは適切ではない
     - 直感的にはusecaseの実装ファイルにproviderを定義したいが、usecaseはinterfaceを使用しており、実装を露呈しないメリットがある。
