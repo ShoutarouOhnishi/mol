@@ -8,11 +8,11 @@ import 'package:frontend/application/usecase/create_anonymously_user_usecase_imp
 import 'package:frontend/application/usecase/get_user_auth_state_usecase_impl.dart';
 import 'package:frontend/domain/repository/account_repository.dart';
 import 'package:frontend/main.dart';
-import 'package:frontend/infrastructure/repository/account_repository_impl.dart';
 import 'package:frontend/infrastructure/datasource/firebase_auth_service.dart';
 import 'package:frontend/presentation/component/progress.dart';
 import 'package:frontend/presentation/notifier/auth_state_notifier.dart';
 import 'package:frontend/presentation/notifier/initial_page_state_notifier.dart';
+import 'package:frontend/presentation/notifier/providers.dart';
 import 'package:frontend/presentation/notifier/splash_page_state_notifier.dart';
 import 'package:frontend/presentation/page/initial_page.dart';
 import 'package:frontend/presentation/page/match_make_page.dart';

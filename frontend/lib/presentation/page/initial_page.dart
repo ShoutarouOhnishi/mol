@@ -4,8 +4,7 @@ import 'package:frontend/app_router.dart';
 import 'package:frontend/constant/app.dart';
 import 'package:frontend/constant/initali.dart';
 import 'package:frontend/presentation/component/progress.dart';
-import 'package:frontend/presentation/notifier/auth_state_notifier.dart';
-import 'package:frontend/presentation/notifier/initial_page_state_notifier.dart';
+import 'package:frontend/presentation/notifier/providers.dart';
 import 'package:frontend/presentation/state/auth_state.dart';
 
 class InitialPage extends ConsumerStatefulWidget {

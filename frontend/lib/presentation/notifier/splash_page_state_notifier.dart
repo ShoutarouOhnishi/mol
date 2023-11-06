@@ -3,12 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/presentation/notifier/auth_state_notifier.dart';
 import 'package:frontend/presentation/state/splash_page_state.dart';
 
-final splashPageStateNotifierProvider =
-    StateNotifierProvider.autoDispose<SplashPageStateNotifier, SplashPageState>(
-        (ref) {
-  return SplashPageStateNotifier(ref.watch(authStateProvider.notifier));
-});
-
 /// 最低スプラッシュ表示時間
 const _minimumSplashDuration = Duration(milliseconds: 1000);
 

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/presentation/component/progress.dart';
-import 'package:frontend/presentation/notifier/auth_state_notifier.dart';
-import 'package:frontend/presentation/notifier/match_make_page_state_notifier.dart';
+import 'package:frontend/presentation/notifier/providers.dart';
 import 'package:frontend/presentation/page/room_page.dart';
 import 'package:frontend/presentation/state/match_make_page_state.dart';
 

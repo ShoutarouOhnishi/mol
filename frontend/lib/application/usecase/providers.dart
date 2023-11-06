@@ -12,7 +12,7 @@ import 'package:frontend/infrastructure/datasource/firebase_auth_service.dart';
 import 'package:frontend/infrastructure/datasource/openapi/client/lib/api.dart';
 import 'package:frontend/infrastructure/repository/account_repository_impl.dart';
 import 'package:frontend/infrastructure/repository/match_make_repository_impl.dart';
-import 'package:frontend/presentation/notifier/api_client_state_notifier.dart';
+import 'package:frontend/presentation/notifier/providers.dart';
 
 final createAnonymouslyUserUseCaseProvider =
     Provider<CreateAnonymouslyUserUseCase>((ref) {

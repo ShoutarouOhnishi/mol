@@ -27,9 +27,3 @@ class InitialPageStateNotifier extends StateNotifier<InitialPageState> {
     state = state.copyWith(userName: value);
   }
 }
-
-final initialPageStateNotifierProvider = StateNotifierProvider.autoDispose<
-    InitialPageStateNotifier, InitialPageState>((ref) {
-  final authStateNotifier = ref.watch(authStateProvider.notifier);
-  return InitialPageStateNotifier(authStateNotifier);
-});

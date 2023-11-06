@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/app_router.dart';
-import 'package:frontend/presentation/notifier/splash_page_state_notifier.dart';
+import 'package:frontend/presentation/notifier/providers.dart';
 import 'package:frontend/presentation/state/splash_page_state.dart';
 
 class SplashPage extends ConsumerStatefulWidget {

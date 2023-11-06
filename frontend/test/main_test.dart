@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:firebase_core_platform_interface/firebase_core_platform_interface.dart';
 import 'package:frontend/main.dart';
+import 'package:frontend/presentation/notifier/providers.dart';
 import 'package:frontend/presentation/notifier/splash_page_state_notifier.dart';
 import 'package:mockito/annotations.dart';
 import 'main_test.mocks.dart';
