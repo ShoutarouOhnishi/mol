@@ -8,10 +8,9 @@ import 'package:frontend/domain/usecase/create_anonymously_user_usecase.dart';
 import 'package:frontend/domain/usecase/get_user_auth_state_usecase.dart';
 import 'package:frontend/domain/usecase/match_with_opponent_usecase.dart';
 import 'package:frontend/domain/usecase/set_id_token_usecase.dart';
-import 'package:frontend/infrastructure/datasource/firebase_auth_service.dart';
 import 'package:frontend/infrastructure/datasource/openapi/client/lib/api.dart';
-import 'package:frontend/infrastructure/repository/account_repository_impl.dart';
-import 'package:frontend/infrastructure/repository/match_make_repository_impl.dart';
+import 'package:frontend/infrastructure/datasource/providers.dart';
+import 'package:frontend/infrastructure/repository/providers.dart';
 import 'package:frontend/presentation/notifier/providers.dart';
 
 final createAnonymouslyUserUseCaseProvider =

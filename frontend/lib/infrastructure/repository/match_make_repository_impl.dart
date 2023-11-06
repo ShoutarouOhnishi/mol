@@ -71,6 +71,3 @@ class MatchMakeRepositoryImpl implements MatchMakeRepository {
     });
   }
 }
-
-final matchMakeRepositoryProvider =
-    Provider<MatchMakeRepository>((ref) => MatchMakeRepositoryImpl());

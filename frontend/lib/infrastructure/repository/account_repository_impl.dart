@@ -1,8 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/domain/repository/account_repository.dart';
 import 'package:frontend/infrastructure/datasource/openapi/client/lib/api.dart';
-import 'package:frontend/presentation/notifier/providers.dart';
 
 class AccountRepositoryImpl implements AccountRepository {
   final AccountApi _apiInstance;
@@ -34,6 +32,3 @@ class AccountRepositoryImpl implements AccountRepository {
     }
   }
 }
-
-final accountRepositoryProvider = Provider<AccountRepository>(
-    (ref) => AccountRepositoryImpl(ref.watch(apiClientStateProvider)));
