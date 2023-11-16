@@ -8,8 +8,6 @@
 
 
 - TODO
-  - `POST: /api/v1/user` のレスポンスに`token`だけでなくその他のユーザー情報も返すようにする
-    - アプリ側でユーザーモデルを生成する
-      - CreateUserResponse.dartをextends？
-      - 作成したユーザーモデルをauthState.authenticatedに持たせる
   - SNSログイン追加
+  - AppUserControllerなどのExceptionを上流でキャッチして、適切なacceptでレスポンスを返す
+  - AuthenticateController => AuthController
