@@ -181,14 +181,16 @@ class ApiClient {
           return valueString == 'true' || valueString == '1';
         case 'DateTime':
           return value is DateTime ? value : DateTime.tryParse(value);
+        case 'CreateUser':
+          return CreateUser.fromJson(value);
         case 'CreateUser422Response':
           return CreateUser422Response.fromJson(value);
         case 'CreateUser500Response':
           return CreateUser500Response.fromJson(value);
-        case 'CreateUserRequest':
-          return CreateUserRequest.fromJson(value);
         case 'CreateUserResponse':
           return CreateUserResponse.fromJson(value);
+        case 'DisclosedUser':
+          return DisclosedUser.fromJson(value);
         case 'Login401Response':
           return Login401Response.fromJson(value);
         case 'Login403Response':

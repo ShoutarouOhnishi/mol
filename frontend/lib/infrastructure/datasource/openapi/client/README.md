@@ -46,14 +46,13 @@ import 'package:openapi/api.dart';
 // String yourTokenGeneratorFunction() { ... }
 //defaultApiClient.getAuthentication<HttpBearerAuth>('firebaseTokenGuard').setAccessToken(yourTokenGeneratorFunction);
 
-final api_instance = AccountApi();
-final createUserRequest = CreateUserRequest(); // CreateUserRequest | 
+final api_instance = AuthApi();
 
 try {
-    final result = api_instance.createUser(createUserRequest);
+    final result = api_instance.login();
     print(result);
 } catch (e) {
-    print('Exception when calling AccountApi->createUser: $e\n');
+    print('Exception when calling AuthApi->login: $e\n');
 }
 
 ```
@@ -64,16 +63,17 @@ All URIs are relative to *http://localhost/api/v1*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*AccountApi* | [**createUser**](doc//AccountApi.md#createuser) | **POST** /api/v1/user | ユーザー作成
-*AccountApi* | [**login**](doc//AccountApi.md#login) | **POST** /api/v1/authenticate | ログイン
+*AuthApi* | [**login**](doc//AuthApi.md#login) | **POST** /api/v1/login | ログイン
+*UserApi* | [**createUser**](doc//UserApi.md#createuser) | **POST** /api/v1/user | ユーザー作成
 
 
 ## Documentation For Models
 
+ - [CreateUser](doc//CreateUser.md)
  - [CreateUser422Response](doc//CreateUser422Response.md)
  - [CreateUser500Response](doc//CreateUser500Response.md)
- - [CreateUserRequest](doc//CreateUserRequest.md)
  - [CreateUserResponse](doc//CreateUserResponse.md)
+ - [DisclosedUser](doc//DisclosedUser.md)
  - [Login401Response](doc//Login401Response.md)
  - [Login403Response](doc//Login403Response.md)
  - [LoginResponse](doc//LoginResponse.md)

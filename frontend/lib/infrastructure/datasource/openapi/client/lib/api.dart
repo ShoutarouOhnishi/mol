@@ -27,12 +27,14 @@ part 'auth/oauth.dart';
 part 'auth/http_basic_auth.dart';
 part 'auth/http_bearer_auth.dart';
 
-part 'api/account_api.dart';
+part 'api/auth_api.dart';
+part 'api/user_api.dart';
 
+part 'model/create_user.dart';
 part 'model/create_user422_response.dart';
 part 'model/create_user500_response.dart';
-part 'model/create_user_request.dart';
 part 'model/create_user_response.dart';
+part 'model/disclosed_user.dart';
 part 'model/login401_response.dart';
 part 'model/login403_response.dart';
 part 'model/login_response.dart';
