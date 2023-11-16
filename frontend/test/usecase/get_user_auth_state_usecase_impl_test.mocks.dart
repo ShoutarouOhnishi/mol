@@ -8,7 +8,7 @@ import 'dart:async' as _i6;
 import 'package:firebase_auth/firebase_auth.dart' as _i3;
 import 'package:firebase_auth_platform_interface/firebase_auth_platform_interface.dart'
     as _i9;
-import 'package:frontend/domain/repository/account_repository.dart' as _i8;
+import 'package:frontend/domain/repository/auth_repository.dart' as _i8;
 import 'package:frontend/domain/usecase/create_anonymously_user_usecase.dart'
     as _i11;
 import 'package:frontend/domain/usecase/get_user_auth_state_usecase.dart'
@@ -294,24 +294,14 @@ class MockApiClient extends _i1.Mock implements _i7.ApiClient {
       ) as String);
 }
 
-/// A class which mocks [AccountRepository].
+/// A class which mocks [AuthRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockAccountRepository extends _i1.Mock implements _i8.AccountRepository {
-  MockAccountRepository() {
+class MockAuthRepository extends _i1.Mock implements _i8.AuthRepository {
+  MockAuthRepository() {
     _i1.throwOnMissingStub(this);
   }
 
-  @override
-  _i6.Future<_i7.CreateUserResponse?> createUser(
-          _i7.CreateUserRequest? request) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #createUser,
-          [request],
-        ),
-        returnValue: _i6.Future<_i7.CreateUserResponse?>.value(),
-      ) as _i6.Future<_i7.CreateUserResponse?>);
   @override
   _i6.Future<_i7.LoginResponse?> login() => (super.noSuchMethod(
         Invocation.method(

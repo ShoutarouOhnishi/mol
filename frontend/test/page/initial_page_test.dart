@@ -6,7 +6,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:frontend/app_router.dart';
 import 'package:frontend/application/usecase/create_anonymously_user_usecase_impl.dart';
 import 'package:frontend/application/usecase/get_user_auth_state_usecase_impl.dart';
-import 'package:frontend/domain/repository/account_repository.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/infrastructure/datasource/firebase_auth_service.dart';
 import 'package:frontend/presentation/component/progress.dart';
@@ -73,8 +72,7 @@ class MockSplashStateNotifier extends SplashPageStateNotifier {
   }
 }
 
-@GenerateNiceMocks(
-    [MockSpec<FirebaseAuthService>(), MockSpec<AccountRepository>()])
+@GenerateNiceMocks([MockSpec<FirebaseAuthService>()])
 void main() {
   setUp(() async {
     // Firebaseのモッキング

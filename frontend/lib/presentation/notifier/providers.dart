@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:frontend/application/usecase/usecase_providers.dart';
+import 'package:frontend/application/usecase/providers.dart';
 import 'package:frontend/infrastructure/datasource/openapi/client/lib/api.dart';
 import 'package:frontend/presentation/notifier/auth_state_notifier.dart';
 import 'package:frontend/presentation/notifier/initial_page_state_notifier.dart';

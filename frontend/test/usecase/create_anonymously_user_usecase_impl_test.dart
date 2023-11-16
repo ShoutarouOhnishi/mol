@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:frontend/application/usecase/create_anonymously_user_usecase_impl.dart';
-import 'package:frontend/domain/repository/account_repository.dart';
+import 'package:frontend/domain/repository/user_repository.dart';
 import 'package:frontend/domain/usecase/create_anonymously_user_usecase.dart';
 import 'package:frontend/infrastructure/datasource/firebase_auth_service.dart';
 import 'package:frontend/infrastructure/datasource/openapi/client/lib/api.dart';
@@ -12,7 +12,7 @@ import 'create_anonymously_user_usecase_impl_test.mocks.dart';
 @GenerateMocks([
   FirebaseAuthService,
   ApiClient,
-  AccountRepository,
+  UserRepository,
   User,
   CreateAnonymouslyUserUseCase
 ])
@@ -22,14 +22,14 @@ void main() {
     late CreateAnonymouslyUserUseCaseImpl createAnonymouslyUserUseCaseImpl;
     late MockFirebaseAuthService mockFirebaseAuthService;
     late MockApiClient mockApiClient;
-    late MockAccountRepository mockAccountRepository;
+    late MockUserRepository mockUserRepository;
     setUp(() {
       mockFirebaseAuthService = MockFirebaseAuthService();
       mockApiClient = MockApiClient();
-      mockAccountRepository = MockAccountRepository();
+      mockUserRepository = MockUserRepository();
 
       createAnonymouslyUserUseCaseImpl = CreateAnonymouslyUserUseCaseImpl(
-          mockFirebaseAuthService, mockAccountRepository, mockApiClient);
+          mockFirebaseAuthService, mockUserRepository, mockApiClient);
     });
 
     test('idTokenが取得できない場合にunauthenticatedとなる', () async {
@@ -51,8 +51,8 @@ void main() {
       final mockUser = MockUser();
       when(mockFirebaseAuthService.currentUser).thenReturn(mockUser);
       when(mockUser.getIdToken()).thenAnswer((_) => Future.value('idToken'));
-      final request = CreateUserRequest(name: userName);
-      when(mockAccountRepository.createUser(request))
+      final request = CreateUser(name: userName);
+      when(mockUserRepository.createUser(request))
           .thenAnswer((_) async => null);
 
       final authState = await createAnonymouslyUserUseCaseImpl(userName);
@@ -70,8 +70,8 @@ void main() {
       when(mockFirebaseAuthService.currentUser).thenReturn(mockUser);
       when(mockUser.getIdToken())
           .thenAnswer((_) async => Future.value('idToken'));
-      final request = CreateUserRequest(name: userName);
-      when(mockAccountRepository.createUser(request))
+      final request = CreateUser(name: userName);
+      when(mockUserRepository.createUser(request))
           .thenAnswer((_) async => CreateUserResponse(token: 'token'));
 
       final authState = await createAnonymouslyUserUseCaseImpl(userName);

@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:frontend/infrastructure/datasource/openapi/client/lib/api.dart';
 
 part 'auth_state.freezed.dart';
 
@@ -6,6 +7,7 @@ part 'auth_state.freezed.dart';
 class AuthState with _$AuthState {
   const factory AuthState({
     @Default('') String token,
+    DisclosedUser? user,
     @Default(AuthStateUIEvent.initial()) AuthStateUIEvent event,
   }) = _AuthState;
 }

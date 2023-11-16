@@ -16,19 +16,19 @@ import 'package:frontend/presentation/notifier/providers.dart';
 final createAnonymouslyUserUseCaseProvider =
     Provider<CreateAnonymouslyUserUseCase>((ref) {
   final firebaseAuthService = ref.watch(firebaseAuthServiceProvider);
-  final accountRepository = ref.watch(accountRepositoryProvider);
+  final userRepository = ref.watch(userRepositoryProvider);
   final apiClient = ref.watch(apiClientStateProvider);
   return CreateAnonymouslyUserUseCaseImpl(
-      firebaseAuthService, accountRepository, apiClient);
+      firebaseAuthService, userRepository, apiClient);
 });
 
 final getUserAuthStateUseCaseProvider =
     Provider<GetUserAuthStateUseCase>((ref) {
   final firebaseAuthService = ref.watch(firebaseAuthServiceProvider);
   final apiClient = ref.watch(apiClientStateProvider);
-  final accountRepository = ref.watch(accountRepositoryProvider);
+  final authRepository = ref.watch(authRepositoryProvider);
   return GetUserAuthStateUseCaseImpl(
-      firebaseAuthService, apiClient, accountRepository);
+      firebaseAuthService, apiClient, authRepository);
 });
 
 final matchWithOpponentUseCaseProvider =

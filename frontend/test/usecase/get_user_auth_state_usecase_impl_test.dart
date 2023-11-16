@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:frontend/application/usecase/get_user_auth_state_usecase_impl.dart';
-import 'package:frontend/domain/repository/account_repository.dart';
+import 'package:frontend/domain/repository/auth_repository.dart';
 import 'package:frontend/domain/usecase/create_anonymously_user_usecase.dart';
 import 'package:frontend/domain/usecase/get_user_auth_state_usecase.dart';
 import 'package:frontend/infrastructure/datasource/firebase_auth_service.dart';
@@ -13,7 +13,7 @@ import 'get_user_auth_state_usecase_impl_test.mocks.dart';
 @GenerateMocks([
   FirebaseAuthService,
   ApiClient,
-  AccountRepository,
+  AuthRepository,
   User,
   GetUserAuthStateUseCase,
   CreateAnonymouslyUserUseCase
@@ -23,14 +23,14 @@ void main() {
     late GetUserAuthStateUseCaseImpl getUserAuthStateUseCaseImpl;
     late MockFirebaseAuthService mockFirebaseAuthService;
     late MockApiClient mockApiClient;
-    late MockAccountRepository mockAccountRepository;
+    late MockAuthRepository mockAuthRepository;
     setUp(() {
       mockFirebaseAuthService = MockFirebaseAuthService();
       mockApiClient = MockApiClient();
-      mockAccountRepository = MockAccountRepository();
+      mockAuthRepository = MockAuthRepository();
 
       getUserAuthStateUseCaseImpl = GetUserAuthStateUseCaseImpl(
-          mockFirebaseAuthService, mockApiClient, mockAccountRepository);
+          mockFirebaseAuthService, mockApiClient, mockAuthRepository);
     });
 
     test('FirebaseUserが取得できない場合にunauthenticatedとなる', () async {
@@ -65,7 +65,7 @@ void main() {
       final mockUser = MockUser();
       when(mockFirebaseAuthService.currentUser).thenReturn(mockUser);
       when(mockUser.getIdToken()).thenAnswer((_) => Future.value('idToken'));
-      when(mockAccountRepository.login()).thenAnswer((_) async => null);
+      when(mockAuthRepository.login()).thenAnswer((_) async => null);
 
       final authState = await getUserAuthStateUseCaseImpl();
 
@@ -82,7 +82,7 @@ void main() {
       when(mockFirebaseAuthService.currentUser).thenReturn(mockUser);
       when(mockUser.getIdToken())
           .thenAnswer((_) async => Future.value('idToken'));
-      when(mockAccountRepository.login())
+      when(mockAuthRepository.login())
           .thenAnswer((_) async => LoginResponse(token: 'token', userId: 1));
 
       final authState = await getUserAuthStateUseCaseImpl();

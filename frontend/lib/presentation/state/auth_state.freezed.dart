@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$AuthState {
   String get token => throw _privateConstructorUsedError;
+  DisclosedUser? get user => throw _privateConstructorUsedError;
   AuthStateUIEvent get event => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -29,7 +30,7 @@ abstract class $AuthStateCopyWith<$Res> {
   factory $AuthStateCopyWith(AuthState value, $Res Function(AuthState) then) =
       _$AuthStateCopyWithImpl<$Res, AuthState>;
   @useResult
-  $Res call({String token, AuthStateUIEvent event});
+  $Res call({String token, DisclosedUser? user, AuthStateUIEvent event});
 
   $AuthStateUIEventCopyWith<$Res> get event;
 }
@@ -48,6 +49,7 @@ class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
   @override
   $Res call({
     Object? token = null,
+    Object? user = freezed,
     Object? event = null,
   }) {
     return _then(_value.copyWith(
@@ -55,6 +57,10 @@ class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String,
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as DisclosedUser?,
       event: null == event
           ? _value.event
           : event // ignore: cast_nullable_to_non_nullable
@@ -78,7 +84,7 @@ abstract class _$$_AuthStateCopyWith<$Res> implements $AuthStateCopyWith<$Res> {
       __$$_AuthStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String token, AuthStateUIEvent event});
+  $Res call({String token, DisclosedUser? user, AuthStateUIEvent event});
 
   @override
   $AuthStateUIEventCopyWith<$Res> get event;
@@ -96,6 +102,7 @@ class __$$_AuthStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? token = null,
+    Object? user = freezed,
     Object? event = null,
   }) {
     return _then(_$_AuthState(
@@ -103,6 +110,10 @@ class __$$_AuthStateCopyWithImpl<$Res>
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String,
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as DisclosedUser?,
       event: null == event
           ? _value.event
           : event // ignore: cast_nullable_to_non_nullable
@@ -115,18 +126,22 @@ class __$$_AuthStateCopyWithImpl<$Res>
 
 class _$_AuthState implements _AuthState {
   const _$_AuthState(
-      {this.token = '', this.event = const AuthStateUIEvent.initial()});
+      {this.token = '',
+      this.user,
+      this.event = const AuthStateUIEvent.initial()});
 
   @override
   @JsonKey()
   final String token;
+  @override
+  final DisclosedUser? user;
   @override
   @JsonKey()
   final AuthStateUIEvent event;
 
   @override
   String toString() {
-    return 'AuthState(token: $token, event: $event)';
+    return 'AuthState(token: $token, user: $user, event: $event)';
   }
 
   @override
@@ -135,11 +150,12 @@ class _$_AuthState implements _AuthState {
         (other.runtimeType == runtimeType &&
             other is _$_AuthState &&
             (identical(other.token, token) || other.token == token) &&
+            (identical(other.user, user) || other.user == user) &&
             (identical(other.event, event) || other.event == event));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, token, event);
+  int get hashCode => Object.hash(runtimeType, token, user, event);
 
   @JsonKey(ignore: true)
   @override
@@ -149,11 +165,15 @@ class _$_AuthState implements _AuthState {
 }
 
 abstract class _AuthState implements AuthState {
-  const factory _AuthState({final String token, final AuthStateUIEvent event}) =
-      _$_AuthState;
+  const factory _AuthState(
+      {final String token,
+      final DisclosedUser? user,
+      final AuthStateUIEvent event}) = _$_AuthState;
 
   @override
   String get token;
+  @override
+  DisclosedUser? get user;
   @override
   AuthStateUIEvent get event;
   @override

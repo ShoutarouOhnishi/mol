@@ -10,11 +10,8 @@ import 'package:frontend/application/usecase/create_anonymously_user_usecase_imp
     as _i5;
 import 'package:frontend/application/usecase/get_user_auth_state_usecase_impl.dart'
     as _i3;
-import 'package:frontend/domain/repository/account_repository.dart' as _i8;
 import 'package:frontend/infrastructure/datasource/firebase_auth_service.dart'
     as _i6;
-import 'package:frontend/infrastructure/datasource/openapi/client/lib/api.dart'
-    as _i9;
 import 'package:frontend/presentation/state/auth_state.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -118,30 +115,4 @@ class MockFirebaseAuthService extends _i1.Mock
         returnValue: _i4.Future<void>.value(),
         returnValueForMissingStub: _i4.Future<void>.value(),
       ) as _i4.Future<void>);
-}
-
-/// A class which mocks [AccountRepository].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockAccountRepository extends _i1.Mock implements _i8.AccountRepository {
-  @override
-  _i4.Future<_i9.CreateUserResponse?> createUser(
-          _i9.CreateUserRequest? request) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #createUser,
-          [request],
-        ),
-        returnValue: _i4.Future<_i9.CreateUserResponse?>.value(),
-        returnValueForMissingStub: _i4.Future<_i9.CreateUserResponse?>.value(),
-      ) as _i4.Future<_i9.CreateUserResponse?>);
-  @override
-  _i4.Future<_i9.LoginResponse?> login() => (super.noSuchMethod(
-        Invocation.method(
-          #login,
-          [],
-        ),
-        returnValue: _i4.Future<_i9.LoginResponse?>.value(),
-        returnValueForMissingStub: _i4.Future<_i9.LoginResponse?>.value(),
-      ) as _i4.Future<_i9.LoginResponse?>);
 }

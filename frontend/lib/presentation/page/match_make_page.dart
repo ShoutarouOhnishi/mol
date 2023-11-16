@@ -43,7 +43,9 @@ class MatchMakePage extends ConsumerWidget {
                 // 対戦相手を探すボタン
                 ElevatedButton(
                   onPressed: () => notifier.searchForOpponent(
-                      context, authState.token), // FIXME: ユーザーID等のユニークキーを渡す
+                      context,
+                      authState.user!.id
+                          .toString()), // FIXME: ユーザーID等のユニークキーを渡す
                   child: const Text('対戦相手を探す'),
                 ),
 
