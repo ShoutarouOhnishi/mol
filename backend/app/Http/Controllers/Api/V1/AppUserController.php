@@ -21,6 +21,7 @@ class AppUserController extends Controller
 
         return response()->json([
             'token' => $user->createToken($user->id, ['app-user-scope'])->accessToken,
+            'user' => $user->disclosed()
         ]);
     }
 }

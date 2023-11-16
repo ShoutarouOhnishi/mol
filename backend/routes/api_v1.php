@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\AppUserController;
-use App\Http\Controllers\Api\V1\AuthenticateController;
+use App\Http\Controllers\Api\V1\AuthController;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 
@@ -19,10 +19,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('firebase.verifyToken')->group(function (Router $router) {
     $router->apiResource('user', AppUserController::class)
         ->only(['store']);
-    $router->apiResource('authenticate', AuthenticateController::class)
+    $router->apiResource('login', AuthController::class)
         ->only(['store']);
 });
 
 Route::group(['middleware' => ['auth:api', 'scopes:app-user-scope']], function (Router $router) {
-
 });

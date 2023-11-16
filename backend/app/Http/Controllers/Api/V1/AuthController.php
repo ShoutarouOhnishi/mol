@@ -10,7 +10,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-class AuthenticateController extends Controller
+class AuthController extends Controller
 {
     public function store(Request $request): JsonResponse
     {
@@ -19,6 +19,7 @@ class AuthenticateController extends Controller
         ])->validate();
 
         $user = AppUser::where('firebase_uid', $validated['firebase_uid'])->withTrashed()->first();
+        \Log::debug($user);
         if (!$user) {
             return response()->json([
                 'message' => 'このFirebaseUIDでユーザーが存在しません。',

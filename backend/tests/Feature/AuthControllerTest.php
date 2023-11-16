@@ -9,7 +9,7 @@ use Spectator\Spectator;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
-class AuthenticateControllerTest extends TestCase
+class AuthControllerTest extends TestCase
 {
 
     use RefreshDatabase;
