@@ -1,0 +1,27 @@
+description: "ユーザー情報 - 公開プロパティのみ"
+type: object
+required:
+  - id
+  - name
+  - accessed_at
+  - created_at
+properties:
+  id:
+    description: "ID"
+    type: integer
+    example: 1
+  name:
+    description: "名前"
+    type: string
+    example: "ゲスト"
+  accessed_at:
+    description: "最終アクセス日時"
+    type: string
+    format: date-time
+    example: "2024-01-01T01:01:01Z"
+  created_at:
+    description: "作成日時"
+    type: string
+    format: date-time
+    example: "2024-01-01T01:01:01Z"
+

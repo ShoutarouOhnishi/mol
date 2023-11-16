@@ -14,7 +14,7 @@ servers:
     description: Dev環境
 
 tags:
-  - name: account
+  - name: auth
 
 components:
   securitySchemes:
@@ -29,8 +29,8 @@ components:
 
 paths:
   /api/v1/user:
-    $ref: './paths/account/user.yaml'
-  /api/v1/authenticate:
-    $ref: './paths/authenticate/authenticate.yaml'
+    $ref: './paths/user/user.yaml'
+  /api/v1/login:
+    $ref: './paths/auth/login.yaml'
 
 
