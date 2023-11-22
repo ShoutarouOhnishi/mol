@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Passport\HasApiTokens;
+use Carbon\Carbon;
 
 class AppUser extends Model implements Authenticatable
 {
@@ -46,4 +47,13 @@ class AppUser extends Model implements Authenticatable
     {
         $query->select('id', 'name', 'accessed_at', 'created_at');
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($query) {
+            $query->accessed_at = Carbon::now();
+        });
+    }
+
 }

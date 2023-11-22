@@ -19,7 +19,6 @@ class AuthController extends Controller
         ])->validate();
 
         $user = AppUser::where('firebase_uid', $validated['firebase_uid'])->withTrashed()->first();
-        \Log::debug($user);
         if (!$user) {
             return response()->json([
                 'message' => 'このFirebaseUIDでユーザーが存在しません。',
@@ -41,7 +40,7 @@ class AuthController extends Controller
 
         return response()->json([
             'token' => $token->accessToken,
-            'user_id' => $user->id,
+            'user' => AppUser::disclosed()->find($user->id)
         ]);
     }
 }

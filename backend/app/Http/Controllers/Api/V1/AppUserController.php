@@ -18,10 +18,9 @@ class AppUserController extends Controller
         ])->validate();
 
         $user = AppUser::create($validated);
-
         return response()->json([
             'token' => $user->createToken($user->id, ['app-user-scope'])->accessToken,
-            'user' => $user->disclosed()
+            'user' => AppUser::disclosed()->find($user->id)
         ]);
     }
 }
