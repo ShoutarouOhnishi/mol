@@ -11,3 +11,6 @@
   - SNSログイン追加
   - AppUserControllerなどのExceptionを上流でキャッチして、適切なacceptでレスポンスを返す
   - AuthenticateController => AuthController
+  - ゲストではじめる（createUser）でuserのレスポンスを取得できていない問題の解決
+    - flutter側とレスポンス側でcamelCaseとsnakecaseの違いが原因として可能性大
+  - ゲストではじめるを一度目に押下した際のみ403となる問題の解決
