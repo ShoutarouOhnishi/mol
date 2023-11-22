@@ -48,6 +48,16 @@
                 "8081",
                 "--dart-define-from-file=dart_defines/dev.json"
             ]
-        }
+        },
+        {
+            "name": "Listen for Xdebug",
+            "type": "php",
+            "request": "launch",
+            "port": 9003,
+            "hostname": "localhost",
+            "pathMappings": {
+                "/var/www/html": "${workspaceFolder}/backend"
+            }
+        },
     ]
 }
