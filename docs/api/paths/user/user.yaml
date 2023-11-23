@@ -21,6 +21,7 @@ post:
             description: ユーザー作成結果
             required:
               - token
+              - user
             properties:
               token:
                 type: string
@@ -28,7 +29,6 @@ post:
                 example: "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIyIiwianRpIjoiYTBlOTRjODg1NDE4NzQyZDFlNzlhZTRlODc5MDQwY2FhZTI2NTdmYzVhNTgzYWRmZDhiOTg3OTkwNjMxZTVkMTBhYmQ1ZDA1NTYxMmE4M2UiLCJpYXQiOjE2OTA1MDk3MDksIm5iZiI6MTY5MDUwOTcwOSwiZXhwIjoxNzIyMTMyMTA5LCJzdWIiOiIxMTQiLCJzY29wZXMiOltdfQ.n7u1rpfXCsHd-kDFhE7XxI5QGoePiMjhZEjNIg7bueahnVvLBT_ip57kiAcxIP-DBuuzddRjVNCgPHvkoPZ2nBh0jKXPEzYxHoWrOS0lCBWG24Jv3B4X2cSmeHWpAF4788vOeRnkEuAJJj0bkFAzgnCBk-HRgo06IspDKQ1vfx2PVTLYxtO81bGJQHvGGOkvr0l5PXZ5Y7YsLuVMKryonQUI7k1mjTqCzxgJBvVtPaYrWd-sKsxzTO5omqPSXIUbNu52h-j87LR6ketsUjLjUEM84HNQgh_GGb2RJQpLpDXV_UE0LMs0o1p3zPCorG8EOPjMCIgSDJBC0tL0_5sPz5lqaDRX_0WyggwiwfD4YcC7SCH1lE5z5STpAL1Is57474JJnc85lnXqfj_xm4Cubg1JxBRB9WoCnvTxnUJ56orM-ah2fKmuvDrfttMgXKw-K2PWvrXuRWaSYBS7KtKh8xTuJrJltnafDKYCoZXgIIO9O6ZFZFFSh5YJYrBAQACXLwqQbDzxoGmmOYSMZtO2j72nHJaYaz8OWffe5ts3t7z-k0C-Dx_taxMrmAAhXB2bUCGoL4NR4qL66-v-12RfyU_wPsZjnA2AaJ29bFmi-G3JLQLU2qQ0tmxeCourSfPOOV2X2IqFBWECsGht9GeJG1veiPoVqQspqM732C7oj8k"
               user: 
                 $ref: '../../schemas/user/disclosed_user.yaml'
-                type: object
     '422':
       $ref: '../../responses/validation_error.yaml'
     '500':

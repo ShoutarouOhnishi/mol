@@ -1,5 +1,4 @@
 description: "ユーザー情報 - 公開プロパティのみ"
-type: object
 required:
   - id
   - name
@@ -17,11 +16,11 @@ properties:
   accessed_at:
     description: "最終アクセス日時"
     type: string
-    format: date-time
+    readOnly: true
     example: "2024-01-01T01:01:01Z"
   created_at:
     description: "作成日時"
     type: string
-    format: date-time
+    readOnly: true
     example: "2024-01-01T01:01:01Z"
 
