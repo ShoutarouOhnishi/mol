@@ -5,6 +5,6 @@
 ```console
 npm ci
 rm -rf lib/infrastructure/datasource/openapi/client
-openapi-generator-cli generate -i ../docs/api/openapi.yml -g dart -o ./lib/infrastructure/datasource/openapi/client
+openapi-generator-cli generate -i ../docs/api/openapi.yml -g dart -o ./lib/infrastructure/datasource/openapi/client -t ../docs/api/templates
 rm -r ./lib/infrastructure/datasource/openapi/client/test # 不要なテストコードを削除
 ```
