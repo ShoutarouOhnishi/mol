@@ -14,30 +14,26 @@ class CreateUserResponse {
   /// Returns a new [CreateUserResponse] instance.
   CreateUserResponse({
     required this.token,
-    this.user,
+    required this.user,
   });
 
   /// APIトークン
+  @JsonKey(name: 'token')
   String token;
 
-  ///
-  /// Please note: This property should have been non-nullable! Since the specification file
-  /// does not include a default value (using the "default:" property), however, the generated
-  /// source code must fall back to having a nullable type.
-  /// Consider adding a "default:" property in the specification file to hide this note.
-  ///
-  DisclosedUser? user;
+  @JsonKey(name: 'user')
+  DisclosedUser user;
 
   @override
   bool operator ==(Object other) => identical(this, other) || other is CreateUserResponse &&
-     other.token == token &&
-     other.user == user;
+    other.token == token &&
+    other.user == user;
 
   @override
   int get hashCode =>
     // ignore: unnecessary_parenthesis
     (token.hashCode) +
-    (user == null ? 0 : user!.hashCode);
+    (user.hashCode);
 
   @override
   String toString() => 'CreateUserResponse[token=$token, user=$user]';
@@ -45,11 +41,7 @@ class CreateUserResponse {
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
       json[r'token'] = this.token;
-    if (this.user != null) {
       json[r'user'] = this.user;
-    } else {
-      json[r'user'] = null;
-    }
     return json;
   }
 
@@ -73,7 +65,7 @@ class CreateUserResponse {
 
       return CreateUserResponse(
         token: mapValueOfType<String>(json, r'token')!,
-        user: mapValueOfType<DisclosedUser>(json, r'user'),
+        user: DisclosedUser.fromJson(json[r'user'])!,
       );
     }
     return null;
@@ -122,6 +114,7 @@ class CreateUserResponse {
   /// The list of required keys that must be present in a JSON.
   static const requiredKeys = <String>{
     'token',
+    'user',
   };
 }
 

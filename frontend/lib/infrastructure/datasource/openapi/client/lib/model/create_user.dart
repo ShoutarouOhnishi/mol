@@ -17,11 +17,12 @@ class CreateUser {
   });
 
   /// 名前
+  @JsonKey(name: 'name')
   String name;
 
   @override
   bool operator ==(Object other) => identical(this, other) || other is CreateUser &&
-     other.name == name;
+    other.name == name;
 
   @override
   int get hashCode =>

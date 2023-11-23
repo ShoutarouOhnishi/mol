@@ -18,15 +18,17 @@ class LoginResponse {
   });
 
   /// APIトークン
+  @JsonKey(name: 'token')
   String token;
 
   /// ユーザーID
+  @JsonKey(name: 'user_id')
   int userId;
 
   @override
   bool operator ==(Object other) => identical(this, other) || other is LoginResponse &&
-     other.token == token &&
-     other.userId == userId;
+    other.token == token &&
+    other.userId == userId;
 
   @override
   int get hashCode =>

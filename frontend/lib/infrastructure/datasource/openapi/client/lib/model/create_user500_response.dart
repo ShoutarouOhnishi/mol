@@ -16,6 +16,7 @@ class CreateUser500Response {
     this.message,
   });
 
+  @JsonKey(name: 'message')
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
   /// does not include a default value (using the "default:" property), however, the generated
@@ -26,7 +27,7 @@ class CreateUser500Response {
 
   @override
   bool operator ==(Object other) => identical(this, other) || other is CreateUser500Response &&
-     other.message == message;
+    other.message == message;
 
   @override
   int get hashCode =>

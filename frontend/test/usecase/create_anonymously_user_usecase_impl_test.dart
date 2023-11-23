@@ -71,8 +71,11 @@ void main() {
       when(mockUser.getIdToken())
           .thenAnswer((_) async => Future.value('idToken'));
       final request = CreateUser(name: userName);
-      when(mockUserRepository.createUser(request))
-          .thenAnswer((_) async => CreateUserResponse(token: 'token'));
+      when(mockUserRepository.createUser(request)).thenAnswer((_) async =>
+          CreateUserResponse(
+              token: 'token',
+              user: DisclosedUser(
+                  id: 1, name: 'name', createdAt: '', accessedAt: '')));
 
       final authState = await createAnonymouslyUserUseCaseImpl(userName);
 

@@ -247,7 +247,7 @@ class MockApiClient extends _i1.Mock implements _i7.ApiClient {
       ) as _i6.Future<_i2.Response>);
   @override
   _i6.Future<dynamic> deserializeAsync(
-    String? json,
+    String? value,
     String? targetType, {
     bool? growable = false,
   }) =>
@@ -255,7 +255,7 @@ class MockApiClient extends _i1.Mock implements _i7.ApiClient {
         Invocation.method(
           #deserializeAsync,
           [
-            json,
+            value,
             targetType,
           ],
           {#growable: growable},
@@ -264,14 +264,14 @@ class MockApiClient extends _i1.Mock implements _i7.ApiClient {
       ) as _i6.Future<dynamic>);
   @override
   dynamic deserialize(
-    String? json,
+    String? value,
     String? targetType, {
     bool? growable = false,
   }) =>
       super.noSuchMethod(Invocation.method(
         #deserialize,
         [
-          json,
+          value,
           targetType,
         ],
         {#growable: growable},

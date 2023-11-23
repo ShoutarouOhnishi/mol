@@ -20,23 +20,27 @@ class DisclosedUser {
   });
 
   /// ID
+  @JsonKey(name: 'id')
   int id;
 
   /// 名前
+  @JsonKey(name: 'name')
   String name;
 
   /// 最終アクセス日時
-  DateTime accessedAt;
+  @JsonKey(name: 'accessed_at')
+  String accessedAt;
 
   /// 作成日時
-  DateTime createdAt;
+  @JsonKey(name: 'created_at')
+  String createdAt;
 
   @override
   bool operator ==(Object other) => identical(this, other) || other is DisclosedUser &&
-     other.id == id &&
-     other.name == name &&
-     other.accessedAt == accessedAt &&
-     other.createdAt == createdAt;
+    other.id == id &&
+    other.name == name &&
+    other.accessedAt == accessedAt &&
+    other.createdAt == createdAt;
 
   @override
   int get hashCode =>
@@ -53,8 +57,8 @@ class DisclosedUser {
     final json = <String, dynamic>{};
       json[r'id'] = this.id;
       json[r'name'] = this.name;
-      json[r'accessed_at'] = this.accessedAt.toUtc().toIso8601String();
-      json[r'created_at'] = this.createdAt.toUtc().toIso8601String();
+      json[r'accessed_at'] = this.accessedAt;
+      json[r'created_at'] = this.createdAt;
     return json;
   }
 
@@ -79,8 +83,8 @@ class DisclosedUser {
       return DisclosedUser(
         id: mapValueOfType<int>(json, r'id')!,
         name: mapValueOfType<String>(json, r'name')!,
-        accessedAt: mapDateTime(json, r'accessed_at', '')!,
-        createdAt: mapDateTime(json, r'created_at', '')!,
+        accessedAt: mapValueOfType<String>(json, r'accessed_at')!,
+        createdAt: mapValueOfType<String>(json, r'created_at')!,
       );
     }
     return null;

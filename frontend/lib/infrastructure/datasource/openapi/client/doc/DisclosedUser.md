@@ -10,8 +10,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **int** | ID | 
 **name** | **String** | 名前 | 
-**accessedAt** | [**DateTime**](DateTime.md) | 最終アクセス日時 | 
-**createdAt** | [**DateTime**](DateTime.md) | 作成日時 | 
+**accessedAt** | **String** | 最終アクセス日時 | [readonly] 
+**createdAt** | **String** | 作成日時 | [readonly] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
