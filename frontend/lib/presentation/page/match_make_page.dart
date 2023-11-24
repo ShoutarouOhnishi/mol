@@ -49,12 +49,12 @@ class MatchMakePage extends ConsumerWidget {
                   child: const Text('対戦相手を探す'),
                 ),
 
-                if (state is MatchMakeLoading) const Progress(),
                 if (state is Error)
                   const Text('エラーが発生しました。\nしばらく経ってからもう一度お試しください。'),
               ],
             ),
           ),
+          if (state is MatchMakeLoading) const Progress(),
         ],
       ),
     );
