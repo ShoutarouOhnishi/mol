@@ -82,8 +82,10 @@ void main() {
       when(mockFirebaseAuthService.currentUser).thenReturn(mockUser);
       when(mockUser.getIdToken())
           .thenAnswer((_) async => Future.value('idToken'));
-      when(mockAuthRepository.login())
-          .thenAnswer((_) async => LoginResponse(token: 'token', userId: 1));
+      when(mockAuthRepository.login()).thenAnswer((_) async => LoginResponse(
+          token: 'token',
+          user: DisclosedUser(
+              id: 1, name: 'name', accessedAt: '', createdAt: '')));
 
       final authState = await getUserAuthStateUseCaseImpl();
 

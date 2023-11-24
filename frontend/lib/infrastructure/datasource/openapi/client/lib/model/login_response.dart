@@ -14,35 +14,34 @@ class LoginResponse {
   /// Returns a new [LoginResponse] instance.
   LoginResponse({
     required this.token,
-    required this.userId,
+    required this.user,
   });
 
   /// APIトークン
   @JsonKey(name: 'token')
   String token;
 
-  /// ユーザーID
-  @JsonKey(name: 'user_id')
-  int userId;
+  @JsonKey(name: 'user')
+  DisclosedUser user;
 
   @override
   bool operator ==(Object other) => identical(this, other) || other is LoginResponse &&
     other.token == token &&
-    other.userId == userId;
+    other.user == user;
 
   @override
   int get hashCode =>
     // ignore: unnecessary_parenthesis
     (token.hashCode) +
-    (userId.hashCode);
+    (user.hashCode);
 
   @override
-  String toString() => 'LoginResponse[token=$token, userId=$userId]';
+  String toString() => 'LoginResponse[token=$token, user=$user]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
       json[r'token'] = this.token;
-      json[r'user_id'] = this.userId;
+      json[r'user'] = this.user;
     return json;
   }
 
@@ -66,7 +65,7 @@ class LoginResponse {
 
       return LoginResponse(
         token: mapValueOfType<String>(json, r'token')!,
-        userId: mapValueOfType<int>(json, r'user_id')!,
+        user: DisclosedUser.fromJson(json[r'user'])!,
       );
     }
     return null;
@@ -115,7 +114,7 @@ class LoginResponse {
   /// The list of required keys that must be present in a JSON.
   static const requiredKeys = <String>{
     'token',
-    'user_id',
+    'user',
   };
 }
 
