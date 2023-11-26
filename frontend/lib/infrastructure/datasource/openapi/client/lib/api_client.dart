@@ -11,7 +11,10 @@
 part of openapi.api;
 
 class ApiClient {
-  ApiClient({this.basePath = 'http://localhost/api/v1', this.authentication,});
+  ApiClient({this.basePath = 'http://localhost/api/v1', this.authentication,}) {
+    // デフォルトヘッダーに 'Accept: application/json' を追加
+    defaultHeaderMap['Accept'] = 'application/json';
+  };
 
   final String basePath;
   final Authentication? authentication;
