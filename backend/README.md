@@ -72,3 +72,19 @@ choco install docker-desktop
 
 ...その他のセットアップはMacOSと同様
 
+
+# デプロイ
+## Dockerイメージのビルド
+`docker build -t main .`
+
+## Dockerイメージにタグ付け
+`docker tag main:latest 785460806234.dkr.ecr.ap-northeast-1.amazonaws.com/main:latest`
+
+## ECRへの認証
+`aws ecr get-login-password --region ap-northeast-1 | docker login --username AWS --password-stdin 785460806234.dkr.ecr.ap-northeast-1.amazonaws.com/main`
+
+## DockerイメージをECRにプッシュ
+`docker push 785460806234.dkr.ecr.ap-northeast-1.amazonaws.com/main:latest`
+
+## ECSクラスターに紐づく全ECSタスクを停止（停止することで新タスクが起動する）
+`../infra/terraform/stop_ecs_tasks.sh $ecs_cluster_name`
