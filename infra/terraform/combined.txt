@@ -1,111 +1,27 @@
-resource "aws_ecs_task_definition" "laravel" {
-  family                   = "laravel"
-  network_mode             = "awsvpc"
-  requires_compatibilities = ["FARGATE"]
-  cpu                      = "512"  # 必要なければ256に変更
-  memory                   = "1024" # 必要なければ512に変更
-  execution_role_arn       = aws_iam_role.ecs_execution_role.arn
-  task_role_arn            = aws_iam_role.ecs_execution_role.arn
-
-  container_definitions = jsonencode([
-    {
-      name  = "laravel",
-      image = aws_ecr_repository.main.repository_url, # ECRのURLを指定
-      portMappings = [
-        {
-          containerPort = 80,
-          hostPort      = 80
-        },
-      ],
-      logConfiguration = {
-        logDriver = "awslogs",
-        options = {
-          "awslogs-group"         = aws_cloudwatch_log_group.ecs_logs.name,
-          "awslogs-region"        = "ap-northeast-1",
-          "awslogs-stream-prefix" = "ecs"
-        }
-      },
-      # TODO: AWS Secrets Managerを使用してセキュアな管理を行う
-      environment = [
-        {
-          name  = "DB_HOST"
-          value = aws_db_instance.laravel_db.address
-        },
-        {
-          name  = "DB_DATABASE"
-          value = "laraveldb"
-        },
-        {
-          name  = "DB_USERNAME"
-          value = "dbuser"
-        },
-        {
-          name  = "DB_PASSWORD"
-          value = "dbpassword"
-        }
-        # その他の環境変数...
-      ],
-    },
-  ])
+resource "aws_cloudwatch_log_group" "ecs_logs" {
+  name              = "/ecs/ecs-logs"
+  retention_in_days = 30
 }
-provider "aws" {
-  profile = "terraform"
-  region  = "ap-northeast-1" # AWSリージョンを指定
-}
-resource "aws_ecs_cluster" "main" {
-  name = "laravel-cluster"
-}
-resource "aws_db_instance" "laravel_db" {
-  allocated_storage    = 20
-  engine               = "mysql"
-  engine_version       = "5.7"
-  instance_class       = "db.t2.micro"
-  identifier           = "laraveldb"
-  username             = "dbuser"
-  password             = "dbpassword"
-  parameter_group_name = "default.mysql5.7"
-  vpc_security_group_ids = [aws_security_group.rds.id]
-  db_subnet_group_name = aws_db_subnet_group.main.name
-  skip_final_snapshot = true
-}# resource "aws_ecs_service" "laravel" {
-#   name            = "laravel-service"
-#   cluster         = aws_ecs_cluster.main.id
-#   task_definition = aws_ecs_task_definition.laravel.arn
-#   launch_type     = "FARGATE"
-#   desired_count   = 1
+resource "aws_instance" "bastion" {
+  ami           = "ami-012261b9035f8f938" # Amazon Linux 2 AMI ID
+  instance_type = "t2.micro"
 
-#   network_configuration {
-#     subnets         = [aws_subnet.private.id]
-#     security_groups = [aws_security_group.ecs_tasks.id]
-#   }
+  key_name = aws_key_pair.deployer.key_name
 
-#   load_balancer {
-#     target_group_arn = aws_lb_target_group.laravel_tg.arn
-#     container_name   = "laravel"
-#     container_port   = 80
-#   }
-# }
+  vpc_security_group_ids = [aws_security_group.bastion.id]
 
+  subnet_id = aws_subnet.public.id # パブリックサブネットのID
 
-resource "aws_ecs_service" "laravel" {
-  name            = "laravel-service"
-  cluster         = aws_ecs_cluster.main.id
-  task_definition = aws_ecs_task_definition.laravel.arn
-  launch_type     = "FARGATE"
-  desired_count   = 1
-
-  network_configuration {
-    subnets          = [aws_subnet.public.id]
-    security_groups  = [aws_security_group.ecs_tasks.id]
-    assign_public_ip = true
-  }
-
-  load_balancer {
-    target_group_arn = aws_lb_target_group.laravel_tg.arn
-    container_name   = "laravel"
-    container_port   = 80
+  tags = {
+    Name = "Bastion"
   }
 }
+
+output "ec2_public_ip" {
+  value       = aws_instance.bastion.public_ip
+  description = "The public IP address of the Bastion host"
+}
+
 resource "aws_ecr_repository" "main" {
   name                 = "main"
   image_tag_mutability = "MUTABLE"
@@ -117,97 +33,130 @@ resource "aws_ecr_repository" "main" {
 output "repository_url" {
   value = aws_ecr_repository.main.repository_url
 }
-resource "aws_vpc" "main" {
-  cidr_block           = "10.0.0.0/16"
-  enable_dns_support   = true
-  enable_dns_hostnames = true
-}
+resource "aws_ecs_cluster" "main" {
+  name = "${var.app_name}-cluster"
 
-resource "aws_vpc_endpoint" "ecr_dkr" {
-  vpc_id              = aws_vpc.main.id
-  service_name        = "com.amazonaws.ap-northeast-1.ecr.dkr"
-  vpc_endpoint_type   = "Interface"
-  subnet_ids          = [aws_subnet.private.id]
-  private_dns_enabled = true
-  security_group_ids  = [aws_security_group.ecs_tasks.id]
-}
+  configuration {
+    execute_command_configuration {
+      kms_key_id = aws_kms_key.ecs_execute_command.arn
+      logging    = "OVERRIDE"
 
-resource "aws_vpc_endpoint" "ecr_api" {
-  vpc_id              = aws_vpc.main.id
-  service_name        = "com.amazonaws.ap-northeast-1.ecr.api"
-  vpc_endpoint_type   = "Interface"
-  subnet_ids          = [aws_subnet.private.id]
-  private_dns_enabled = true
-  security_group_ids  = [aws_security_group.ecs_tasks.id]
-}
-
-resource "aws_vpc_endpoint" "s3" {
-  vpc_id            = aws_vpc.main.id
-  service_name      = "com.amazonaws.ap-northeast-1.s3"
-  vpc_endpoint_type = "Gateway"
-
-  route_table_ids = [aws_route_table.private.id]
-}
-
-resource "aws_internet_gateway" "main" {
-  vpc_id = aws_vpc.main.id
-}
-
-resource "aws_subnet" "public" {
-  vpc_id                  = aws_vpc.main.id
-  cidr_block              = "10.0.3.0/24"
-  availability_zone       = "ap-northeast-1a"
-  map_public_ip_on_launch = true
-}
-
-resource "aws_subnet" "private" {
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.4.0/24"
-  availability_zone = "ap-northeast-1a"
-}
-
-resource "aws_eip" "nat" {
-}
-
-resource "aws_nat_gateway" "main" {
-  allocation_id = aws_eip.nat.id
-  subnet_id     = aws_subnet.public.id
-  depends_on    = [aws_internet_gateway.main]
-}
-
-resource "aws_route_table" "private" {
-  vpc_id = aws_vpc.main.id
-
-  route {
-    cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.main.id
+      log_configuration {
+        cloud_watch_encryption_enabled = true
+        cloud_watch_log_group_name     = aws_cloudwatch_log_group.ecs_logs.name
+      }
+    }
   }
 }
+resource "aws_ecs_service" "ecs_service" {
+  name                   = "${var.app_name}-service"
+  cluster                = aws_ecs_cluster.main.id
+  task_definition        = aws_ecs_task_definition.ecs_task_definition.arn
+  launch_type            = "FARGATE"
+  desired_count          = 1
+  enable_execute_command = true
+  depends_on             = [aws_lb.lb, aws_lb_target_group.lb_tg]
 
-resource "aws_route_table_association" "private" {
-  subnet_id      = aws_subnet.private.id
-  route_table_id = aws_route_table.private.id
+  network_configuration {
+    subnets         = [aws_subnet.private.id]
+    security_groups = [aws_security_group.ecs_tasks.id]
+  }
+
+  load_balancer {
+    target_group_arn = aws_lb_target_group.lb_tg.arn
+    container_name   = var.app_name
+    container_port   = 80
+  }
+}
+resource "aws_security_group_rule" "ecs_http" {
+  type        = "ingress"
+  from_port   = 80
+  to_port     = 80
+  protocol    = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.ecs_tasks.id
 }
 
-resource "aws_route" "internet_access" {
-  route_table_id         = aws_route_table.private.id
-  destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = aws_internet_gateway.main.id
+resource "aws_security_group_rule" "ecs_https" {
+  type        = "ingress"
+  from_port   = 443
+  to_port     = 443
+  protocol    = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.ecs_tasks.id
 }
+resource "aws_ecs_task_definition" "ecs_task_definition" {
+  family                   = var.app_name
+  network_mode             = "awsvpc"
+  requires_compatibilities = ["FARGATE"]
+  cpu                      = "512"  # FIXNE: 必要なければ256に変更
+  memory                   = "1024" # FIXNE: 必要なければ512に変更
+  execution_role_arn       = aws_iam_role.ecs_execution_role.arn
+  task_role_arn            = aws_iam_role.ecs_execution_role.arn
 
-resource "aws_route" "nat_access" {
-  route_table_id         = aws_route_table.private.id
-  destination_cidr_block = "0.0.0.0/0"
-  nat_gateway_id         = aws_nat_gateway.main.id
+  container_definitions = jsonencode([
+    {
+      name  = "${var.app_name}",
+      image = aws_ecr_repository.main.repository_url, # ECRのURLを指定
+      portMappings = [
+        {
+          containerPort = 80,
+          hostPort      = 80
+        },
+      ],
+      logConfiguration = {
+        logDriver = "awslogs",
+        options = {
+          "awslogs-group"         = aws_cloudwatch_log_group.ecs_logs.name,
+          "awslogs-region"        = var.region,
+          "awslogs-stream-prefix" = "ecs"
+        }
+      },
+      "secrets" : [
+        for key, value in local.secrets : {
+          "name" : key,
+          "valueFrom" : "${data.aws_secretsmanager_secret.secrets.arn}"
+        }
+      ]
+    },
+  ])
+
 }
-resource "aws_lb" "laravel" {
-  name               = "laravel-lb"
+resource "aws_lb" "lb" {
+  name               = "${var.app_name}-lb"
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.ecs_tasks.id]
-  subnets            = [aws_subnet.main.id, aws_subnet.secondary.id]
+  subnets            = [aws_subnet.public.id, aws_subnet.public2.id]
 
   enable_deletion_protection = false
+}
+
+output "elb_dns_name" {
+  value       = aws_lb.lb.dns_name
+  description = "The DNS name of the load balancer"
+}
+resource "aws_lb_listener" "http" {
+  load_balancer_arn = aws_lb.lb.arn
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.lb_tg.arn
+  }
+}
+resource "aws_lb_target_group" "lb_tg" {
+  name        = "${var.app_name}-tg"
+  port        = 80
+  protocol    = "HTTP"
+  vpc_id      = aws_vpc.main.id
+  target_type = "ip"
+
+  health_check {
+    enabled = true
+    path    = "/" # アプリケーションのヘルスチェック用パス
+  }
 }
 resource "aws_iam_role" "ecs_execution_role" {
   name = "h4b-ecs-task-execution-role"
@@ -253,7 +202,14 @@ resource "aws_iam_policy" "ecs_execution_role_policy" {
                   "logs:CreateLogGroup",
                   "logs:CreateLogStream",
                   "logs:PutLogEvents",
-                  "logs:DescribeLogStreams"
+                  "logs:DescribeLogStreams",
+                  "ssmmessages:CreateControlChannel",
+                  "ssmmessages:CreateDataChannel",
+                  "ssmmessages:OpenControlChannel",
+                  "ssmmessages:OpenDataChannel",
+                  "ssm:StartSession",
+                  "kms:Decrypt",
+                  "logs:DescribeLogGroups"
               ],
               "Resource": "*"
           }
@@ -349,67 +305,94 @@ resource "aws_iam_role_policy_attachment" "ssm_policy_attachment" {
   role       = aws_iam_role.ssm_role_for_ecs_troubleshooting.name
   policy_arn = aws_iam_policy.ssm_policy_for_ecs_troubleshooting.arn
 }
-resource "aws_subnet" "main" {
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.1.0/24"
-  availability_zone = "ap-northeast-1a"
+
+resource "aws_iam_policy" "ecs_secrets" {
+  name   = "ecs_secrets"
+  policy = <<-EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "secretsmanager:GetSecretValue",
+      "Resource": "*"
+    }
+  ]
+}
+EOF
 }
 
-resource "aws_subnet" "secondary" {
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.0.2.0/24"
-  availability_zone = "ap-northeast-1c"
+resource "aws_iam_role_policy_attachment" "ecs_secrets" {
+  role       = aws_iam_role.ecs_execution_role.name
+  policy_arn = aws_iam_policy.ecs_secrets.arn
+}
+resource "tls_private_key" "private_key" {
+  algorithm = "RSA"
 }
 
-resource "aws_db_subnet_group" "main" {
-  name       = "main"
-  subnet_ids = [aws_subnet.main.id, aws_subnet.secondary.id]
-  tags = {
-    Name = "main"
-  }
-}
-resource "aws_lb_listener" "http" {
-  load_balancer_arn = aws_lb.laravel.arn
-  port              = "80"
-  protocol          = "HTTP"
-
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.laravel_tg.arn
-  }
-}
-resource "aws_cloudwatch_log_group" "ecs_logs" {
-  name              = "/ecs/ecs-logs"
-  retention_in_days = 30
-}
-resource "aws_lb_target_group" "laravel_tg" {
-  name        = "laravel-tg"
-  port        = 80
-  protocol    = "HTTP"
-  vpc_id      = aws_vpc.main.id
-  target_type = "ip"
-
-  health_check {
-    enabled = true
-    path    = "/" # Laravelアプリケーションのヘルスチェック用パス
-  }
-}
-resource "aws_security_group_rule" "ecs_http" {
-  type        = "ingress"
-  from_port   = 80
-  to_port     = 80
-  protocol    = "tcp"
-  cidr_blocks = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.ecs_tasks.id
+resource "aws_key_pair" "deployer" {
+  key_name   = "deployer-key"
+  public_key = tls_private_key.private_key.public_key_openssh
 }
 
-resource "aws_security_group_rule" "ecs_https" {
-  type        = "ingress"
-  from_port   = 443
-  to_port     = 443
-  protocol    = "tcp"
-  cidr_blocks = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.ecs_tasks.id
+resource "local_sensitive_file" "private_key" {
+  content         = tls_private_key.private_key.private_key_pem
+  filename        = "${path.module}/privates/private_key.pem"
+  file_permission = "0600"
+}
+resource "aws_kms_key" "ecs_execute_command" {
+  description = "KMS key for ECS execute command"
+  policy      = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Id": "key-default-1",
+  "Statement": [
+    {
+      "Sid": "Enable IAM User Permissions",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::${var.account_id}:root"
+      },
+      "Action": "kms:*",
+      "Resource": "*"
+    }
+  ]
+}
+POLICY
+}
+provider "aws" {
+  profile = "terraform"
+  region  = var.region
+}
+resource "aws_db_instance" "rds" {
+  allocated_storage                   = 20
+  engine                              = "mysql"
+  engine_version                      = "8.0.34"
+  instance_class                      = "db.t2.micro"
+  identifier                          = "${var.app_name}-db"
+  username                            = local.secrets["DB_USERNAME"]
+  password                            = local.secrets["DB_PASSWORD"]
+  parameter_group_name                = "default.mysql8.0"
+  vpc_security_group_ids              = [aws_security_group.rds.id]
+  db_subnet_group_name                = aws_db_subnet_group.main.name
+  skip_final_snapshot                 = true
+  iam_database_authentication_enabled = true
+}
+
+output "db_endpoint" {
+  value       = aws_db_instance.rds.endpoint
+  description = "The connection endpoint for the RDS instance"
+}
+data "aws_secretsmanager_secret" "secrets" {
+  name = "${terraform.workspace}-${var.secret_name}"
+}
+
+data "aws_secretsmanager_secret_version" "secrets" {
+  secret_id = data.aws_secretsmanager_secret.secrets.id
+}
+
+locals {
+  secrets = jsondecode(data.aws_secretsmanager_secret_version.secrets.secret_string)
 }
 resource "aws_security_group" "ecs_tasks" {
   name        = "ecs-tasks"
@@ -435,34 +418,6 @@ resource "aws_security_group_rule" "egress_all_all" {
   cidr_blocks       = ["0.0.0.0/0"]
 }
 
-# resource "aws_security_group_rule" "ecs_tasks_egress" {
-#   type              = "egress"
-#   from_port         = 0
-#   to_port           = 0
-#   protocol          = "-1"
-#   cidr_blocks       = ["0.0.0.0/0"]
-#   security_group_id = aws_security_group.ecs_tasks.id
-# }
-
-# resource "aws_security_group_rule" "vpc_endpoint_ecr_ingress" {
-#   type                     = "ingress"
-#   from_port                = 443
-#   to_port                  = 443
-#   protocol                 = "tcp"
-#   security_group_id        = aws_security_group.ecs_tasks.id
-#   source_security_group_id = aws_security_group.ecs_tasks.id
-# }
-
-# resource "aws_security_group_rule" "ecs_tasks_ecr_access" {
-#   type              = "egress"
-#   from_port         = 443
-#   to_port           = 443
-#   protocol          = "tcp"
-#   security_group_id = aws_security_group.ecs_tasks.id
-#   cidr_blocks       = ["0.0.0.0/0"]
-# }
-
-
 resource "aws_security_group" "rds" {
   name        = "rds"
   description = "Allow RDS"
@@ -470,10 +425,203 @@ resource "aws_security_group" "rds" {
 }
 
 resource "aws_security_group_rule" "rds_ingress" {
-  type              = "ingress"
-  from_port         = 3306
-  to_port           = 3306
-  protocol          = "tcp"
-  cidr_blocks       = [aws_vpc.main.cidr_block]
-  security_group_id = aws_security_group.rds.id
+  type                     = "ingress"
+  from_port                = 3306
+  to_port                  = 3306
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.ecs_tasks.id
+  security_group_id        = aws_security_group.rds.id
+}
+
+resource "aws_security_group" "bastion" {
+  name        = "bastion"
+  description = "Allow SSH inbound traffic"
+  vpc_id      = aws_vpc.main.id
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["58.188.94.17/32"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group_rule" "rds_ingress_from_bastion" {
+  type                     = "ingress"
+  from_port                = 3306
+  to_port                  = 3306
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.bastion.id
+  security_group_id        = aws_security_group.rds.id
+}
+resource "aws_subnet" "public" {
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = "10.0.1.0/24"
+  availability_zone       = "${var.region}a"
+  map_public_ip_on_launch = true
+}
+
+resource "aws_subnet" "public2" {
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = "10.0.2.0/24"
+  availability_zone       = "${var.region}c"
+  map_public_ip_on_launch = true
+}
+
+resource "aws_subnet" "private" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.3.0/24"
+  availability_zone = "${var.region}a"
+}
+
+resource "aws_subnet" "private2" {
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.4.0/24"
+  availability_zone = "${var.region}c"
+}
+
+resource "aws_db_subnet_group" "main" {
+  name       = "main"
+  subnet_ids = [aws_subnet.private.id, aws_subnet.private2.id]
+  tags = {
+    Name = "main"
+  }
+}
+
+variable "region" {
+  description = "The AWS region."
+  type        = string
+  default     = "ap-northeast-1"
+}
+
+variable "account_id" {
+  description = "The AWS account ID."
+  type        = string
+  default     = "785460806234"
+}
+
+variable "secret_name" {
+  description = "The AWS Secrets Manager secret name."
+  type        = string
+  default     = "secrets"
+}
+
+variable "app_name" {
+  description = "The App name."
+  type        = string
+  default     = "online-battle"
+}
+
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.30.0"
+    }
+  }
+}
+resource "aws_vpc" "main" {
+  cidr_block           = "10.0.0.0/16"
+  enable_dns_support   = true
+  enable_dns_hostnames = true
+}
+
+resource "aws_vpc_endpoint" "ecr_dkr" {
+  vpc_id              = aws_vpc.main.id
+  service_name        = "com.amazonaws.${var.region}.ecr.dkr"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = [aws_subnet.private.id]
+  private_dns_enabled = true
+  security_group_ids  = [aws_security_group.ecs_tasks.id]
+}
+
+resource "aws_vpc_endpoint" "ecr_api" {
+  vpc_id              = aws_vpc.main.id
+  service_name        = "com.amazonaws.${var.region}.ecr.api"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = [aws_subnet.private.id]
+  private_dns_enabled = true
+  security_group_ids  = [aws_security_group.ecs_tasks.id]
+}
+
+resource "aws_vpc_endpoint" "s3" {
+  vpc_id            = aws_vpc.main.id
+  service_name      = "com.amazonaws.${var.region}.s3"
+  vpc_endpoint_type = "Gateway"
+  route_table_ids   = [aws_route_table.private.id]
+}
+
+resource "aws_vpc_endpoint" "cloudwatch_logs" {
+  vpc_id              = aws_vpc.main.id
+  service_name        = "com.amazonaws.${var.region}.logs"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = [aws_subnet.private.id]
+  private_dns_enabled = true
+  security_group_ids  = [aws_security_group.ecs_tasks.id]
+}
+
+resource "aws_vpc_endpoint" "secrets_manager" {
+  vpc_id              = aws_vpc.main.id
+  service_name        = "com.amazonaws.${var.region}.secretsmanager"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = [aws_subnet.private.id]
+  private_dns_enabled = true
+  security_group_ids  = [aws_security_group.ecs_tasks.id]
+}
+
+resource "aws_vpc_endpoint" "ssmmessages" {
+  vpc_id              = aws_vpc.main.id
+  service_name        = "com.amazonaws.${var.region}.ssmmessages"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = [aws_subnet.private.id]
+  private_dns_enabled = true
+  security_group_ids  = [aws_security_group.ecs_tasks.id]
+}
+
+resource "aws_internet_gateway" "main" {
+  vpc_id = aws_vpc.main.id
+}
+
+resource "aws_route_table" "public" {
+  vpc_id = aws_vpc.main.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.main.id
+  }
+}
+
+resource "aws_route_table_association" "public" {
+  subnet_id      = aws_subnet.public.id
+  route_table_id = aws_route_table.public.id
+}
+
+
+resource "aws_eip" "nat" {
+}
+
+resource "aws_nat_gateway" "main" {
+  allocation_id = aws_eip.nat.id
+  subnet_id     = aws_subnet.private.id
+}
+
+resource "aws_route_table" "private" {
+  vpc_id = aws_vpc.main.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_nat_gateway.main.id
+  }
+}
+
+resource "aws_route_table_association" "private" {
+  subnet_id      = aws_subnet.private.id
+  route_table_id = aws_route_table.private.id
 }

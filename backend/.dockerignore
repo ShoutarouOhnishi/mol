@@ -1,0 +1,19 @@
+# Docker
+.docker/
+
+# Laravel
+.env
+.env.*
+/vendor
+/node_modules
+/public/storage
+/storage/*.key
+/homestead.yaml
+/Homestead.json
+/.vagrant/
+/phpunit.xml
+/docker-compose.override.yml
+
+# System Files
+.DS_Store
+Thumbs.db

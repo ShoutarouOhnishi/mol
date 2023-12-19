@@ -22,34 +22,6 @@ resource "aws_security_group_rule" "egress_all_all" {
   cidr_blocks       = ["0.0.0.0/0"]
 }
 
-# resource "aws_security_group_rule" "ecs_tasks_egress" {
-#   type              = "egress"
-#   from_port         = 0
-#   to_port           = 0
-#   protocol          = "-1"
-#   cidr_blocks       = ["0.0.0.0/0"]
-#   security_group_id = aws_security_group.ecs_tasks.id
-# }
-
-# resource "aws_security_group_rule" "vpc_endpoint_ecr_ingress" {
-#   type                     = "ingress"
-#   from_port                = 443
-#   to_port                  = 443
-#   protocol                 = "tcp"
-#   security_group_id        = aws_security_group.ecs_tasks.id
-#   source_security_group_id = aws_security_group.ecs_tasks.id
-# }
-
-# resource "aws_security_group_rule" "ecs_tasks_ecr_access" {
-#   type              = "egress"
-#   from_port         = 443
-#   to_port           = 443
-#   protocol          = "tcp"
-#   security_group_id = aws_security_group.ecs_tasks.id
-#   cidr_blocks       = ["0.0.0.0/0"]
-# }
-
-
 resource "aws_security_group" "rds" {
   name        = "rds"
   description = "Allow RDS"
@@ -57,10 +29,39 @@ resource "aws_security_group" "rds" {
 }
 
 resource "aws_security_group_rule" "rds_ingress" {
-  type              = "ingress"
-  from_port         = 3306
-  to_port           = 3306
-  protocol          = "tcp"
-  cidr_blocks       = [aws_vpc.main.cidr_block]
-  security_group_id = aws_security_group.rds.id
+  type                     = "ingress"
+  from_port                = 3306
+  to_port                  = 3306
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.ecs_tasks.id
+  security_group_id        = aws_security_group.rds.id
+}
+
+resource "aws_security_group" "bastion" {
+  name        = "bastion"
+  description = "Allow SSH inbound traffic"
+  vpc_id      = aws_vpc.main.id
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["58.188.94.17/32"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group_rule" "rds_ingress_from_bastion" {
+  type                     = "ingress"
+  from_port                = 3306
+  to_port                  = 3306
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.bastion.id
+  security_group_id        = aws_security_group.rds.id
 }

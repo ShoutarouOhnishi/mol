@@ -11,11 +11,9 @@
   - SNSログイン追加
   - ゲストではじめるを一度目に押下した際のみ403となる問題の解決
   - terraform
-    - db構成を検討
-      - rds or ...
+    - ecs_task_definitionのsecrets定義を効率的なものに変更したい
+      - 予めキーだけ定義or取得しておけばfor文でまわせる
     - ドメイン構成を検討
       - ssl化
     - terraformのディレクトリ構成を検討
-    - 
-  - Dockerfile
-    - backendの環境構築手順に沿って内容を修正し、apiの疎通確認を行う。
+

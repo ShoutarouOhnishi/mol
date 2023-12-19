@@ -26,13 +26,8 @@ COPY ./docker/8.2/php.ini /usr/local/etc/php/php.ini
 # Disable Xdebug for this build
 RUN sed -i '/xdebug/d' /usr/local/etc/php/php.ini
 
-RUN composer require predis/predis
-
 RUN composer install \
     && chmod -R 777 storage bootstrap/cache public/
-RUN php artisan config:cache
-RUN php artisan route:cache
-RUN php artisan view:cache
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
 RUN apt-get install -y nodejs
 RUN npm install npm@latest

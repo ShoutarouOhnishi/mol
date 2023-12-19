@@ -6,7 +6,7 @@ resource "aws_vpc" "main" {
 
 resource "aws_vpc_endpoint" "ecr_dkr" {
   vpc_id              = aws_vpc.main.id
-  service_name        = "com.amazonaws.ap-northeast-1.ecr.dkr"
+  service_name        = "com.amazonaws.${var.region}.ecr.dkr"
   vpc_endpoint_type   = "Interface"
   subnet_ids          = [aws_subnet.private.id]
   private_dns_enabled = true
@@ -15,7 +15,7 @@ resource "aws_vpc_endpoint" "ecr_dkr" {
 
 resource "aws_vpc_endpoint" "ecr_api" {
   vpc_id              = aws_vpc.main.id
-  service_name        = "com.amazonaws.ap-northeast-1.ecr.api"
+  service_name        = "com.amazonaws.${var.region}.ecr.api"
   vpc_endpoint_type   = "Interface"
   subnet_ids          = [aws_subnet.private.id]
   private_dns_enabled = true
@@ -24,14 +24,41 @@ resource "aws_vpc_endpoint" "ecr_api" {
 
 resource "aws_vpc_endpoint" "s3" {
   vpc_id            = aws_vpc.main.id
-  service_name      = "com.amazonaws.ap-northeast-1.s3"
+  service_name      = "com.amazonaws.${var.region}.s3"
   vpc_endpoint_type = "Gateway"
   route_table_ids   = [aws_route_table.private.id]
 }
 
 resource "aws_vpc_endpoint" "cloudwatch_logs" {
   vpc_id              = aws_vpc.main.id
-  service_name        = "com.amazonaws.ap-northeast-1.logs"
+  service_name        = "com.amazonaws.${var.region}.logs"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = [aws_subnet.private.id]
+  private_dns_enabled = true
+  security_group_ids  = [aws_security_group.ecs_tasks.id]
+}
+
+resource "aws_vpc_endpoint" "secrets_manager" {
+  vpc_id              = aws_vpc.main.id
+  service_name        = "com.amazonaws.${var.region}.secretsmanager"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = [aws_subnet.private.id]
+  private_dns_enabled = true
+  security_group_ids  = [aws_security_group.ecs_tasks.id]
+}
+
+resource "aws_vpc_endpoint" "ssmmessages" {
+  vpc_id              = aws_vpc.main.id
+  service_name        = "com.amazonaws.${var.region}.ssmmessages"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = [aws_subnet.private.id]
+  private_dns_enabled = true
+  security_group_ids  = [aws_security_group.ecs_tasks.id]
+}
+
+resource "aws_vpc_endpoint" "kms" {
+  vpc_id              = aws_vpc.main.id
+  service_name        = "com.amazonaws.${var.region}.kms"
   vpc_endpoint_type   = "Interface"
   subnet_ids          = [aws_subnet.private.id]
   private_dns_enabled = true

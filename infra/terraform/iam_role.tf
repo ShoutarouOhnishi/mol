@@ -42,7 +42,14 @@ resource "aws_iam_policy" "ecs_execution_role_policy" {
                   "logs:CreateLogGroup",
                   "logs:CreateLogStream",
                   "logs:PutLogEvents",
-                  "logs:DescribeLogStreams"
+                  "logs:DescribeLogStreams",
+                  "ssmmessages:CreateControlChannel",
+                  "ssmmessages:CreateDataChannel",
+                  "ssmmessages:OpenControlChannel",
+                  "ssmmessages:OpenDataChannel",
+                  "ssm:StartSession",
+                  "kms:Decrypt",
+                  "logs:DescribeLogGroups"
               ],
               "Resource": "*"
           }
@@ -137,4 +144,25 @@ resource "aws_iam_policy" "ssm_policy_for_ecs_troubleshooting" {
 resource "aws_iam_role_policy_attachment" "ssm_policy_attachment" {
   role       = aws_iam_role.ssm_role_for_ecs_troubleshooting.name
   policy_arn = aws_iam_policy.ssm_policy_for_ecs_troubleshooting.arn
+}
+
+resource "aws_iam_policy" "ecs_secrets" {
+  name   = "ecs_secrets"
+  policy = <<-EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "secretsmanager:GetSecretValue",
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "ecs_secrets" {
+  role       = aws_iam_role.ecs_execution_role.name
+  policy_arn = aws_iam_policy.ecs_secrets.arn
 }
