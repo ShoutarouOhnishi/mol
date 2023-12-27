@@ -20,13 +20,31 @@ variable "secret_name" {
 variable "app_name" {
   description = "The App name."
   type        = string
-  default     = "online-battle"
+  default     = "mol"
 }
 
 variable "db_name" {
   description = "The Database name."
   type        = string
-  default     = "online_battle_backend"
+  default     = "mol_backend"
+}
+
+variable "certificate_domain" {
+  description = "The Domain name for the certificate."
+  type        = string
+  default     = "mol.ninja"
+}
+
+variable "hosted_domain" {
+  description = "The Domain name"
+  type        = string
+  default     = "mol.ninja"
+}
+
+variable "domain" {
+  description = "The Domain name"
+  type        = string
+  default     = "mol.ninja"
 }
 
 

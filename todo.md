@@ -13,7 +13,7 @@
   - terraform
     - ecs_task_definitionのsecrets定義を効率的なものに変更したい
       - 予めキーだけ定義or取得しておけばfor文でまわせる
-    - ドメイン構成を検討
-      - ssl化
     - terraformのディレクトリ構成を検討
+  - onlinebattle系をmolに変更してまわる
+  - マッチメイクの実装
 

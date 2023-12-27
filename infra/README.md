@@ -10,9 +10,16 @@
 `cd terraform`
 `scripts/update_db_env_on_secrets_manager.sh ../../backend/.env.dev dev`
 
+## ドメイン関連
+1. Route53でドメイン登録
+2. ドメイン登録時にホストゾーンも併せて作成
+3. ACMで証明書をリクエスト
+4. リクエスト後に証明書が要求するレコードをホストゾーンに登録
+
 ## resource適用
 `tf plan`
-`tf apply -auto-approve`
+`cd terraform`
+`scripts/tfapply.sh`
 
 ## Dockerイメージのビルド
 `cd backend`
@@ -29,15 +36,16 @@
 
 ## ECSクラスターに紐づく全ECSタスクを停止（停止することで新タスクが起動する）
 `cd terraform`
-`scripts/stop_ecs_tasks.sh online-battle-cluster`
+`scripts/stop_ecs_tasks.sh mol-cluster`
 
 # TIPS
 ## tfファイルの定義を単一ファイルに纏める
+`cd terraform`
 `cat *.tf > combined.txt`
 
 ## SSHトンネリングでRDSに接続
 `cd terraform`
-`ssh -N -L 13306:online-battle-db.cfwq71f0u5xg.ap-northeast-1.rds.amazonaws.com:3306 ec2-user@13.112.40.205 -i privates/private_key.pem`
+`ssh -N -L 13306:mol-db.cfwq71f0u5xg.ap-northeast-1.rds.amazonaws.com:3306 ec2-user@13.115.229.29 -i privates/private_key.pem`
 `mysql -h 127.0.0.1 -P 13306 -u ${username} -p`
 
 ## ECSタスク内でコマンド実行
@@ -49,15 +57,15 @@
 `scripts/execute_command_on_ecs_task.sh terraform.tfstate.d/dev/terraform.tfstate "touch .env php artisan key:generate "php artisan passport:install "php artisan migrate"`
 
 ## ECSサービス更新
-`aws ecs update-service --cluster online-battle-cluster --service online-battle-service --force-new-deployment`
+`aws ecs update-service --cluster mol-cluster --service mol-service --force-new-deployment`
 
 ## ECSタスクのコンテナにアクセス
 ```
 aws ecs execute-command  \
     --region ap-northeast-1  \
-    --cluster online-battle-cluster  \
+    --cluster mol-cluster  \
     --task b2d6570e5ca444a581d6aa1cf6b556c8  \
-    --container online-battle  \
+    --container mol  \
     --command "/bin/sh"  \
     --interactive
 ```

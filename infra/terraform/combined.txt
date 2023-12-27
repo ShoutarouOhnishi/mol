@@ -1,6 +1,13 @@
+
+data "aws_acm_certificate" "cert" {
+  domain      = var.domain
+  statuses    = ["ISSUED"]
+  most_recent = true
+}
 resource "aws_cloudwatch_log_group" "ecs_logs" {
   name              = "/ecs/ecs-logs"
   retention_in_days = 30
+  kms_key_id        = aws_kms_key.ecs_execute_command.arn
 }
 resource "aws_instance" "bastion" {
   ami           = "ami-012261b9035f8f938" # Amazon Linux 2 AMI ID
@@ -96,8 +103,9 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
 
   container_definitions = jsonencode([
     {
-      name  = "${var.app_name}",
-      image = aws_ecr_repository.main.repository_url, # ECRのURLを指定
+      name    = "${var.app_name}",
+      image   = aws_ecr_repository.main.repository_url, # ECRのURLを指定
+      command = ["/var/www/html/entrypoint.sh"]
       portMappings = [
         {
           containerPort = 80,
@@ -113,10 +121,159 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
         }
       },
       "secrets" : [
-        for key, value in local.secrets : {
-          "name" : key,
-          "valueFrom" : "${data.aws_secretsmanager_secret.secrets.arn}"
+        {
+          name      = "APP_KEY",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:APP_KEY::"
+        },
+
+        {
+          name      = "APP_NAME",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:APP_NAME::"
+        },
+        {
+          name      = "APP_ENV",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:APP_ENV::"
+        },
+        {
+          name      = "APP_DEBUG",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:APP_DEBUG::"
+        },
+        {
+          name      = "APP_URL",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:APP_URL::"
+        },
+        {
+          name      = "APP_TIMEZONE",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:APP_TIMEZONE::"
+        },
+        {
+          name      = "LOG_CHANNEL",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:LOG_CHANNEL::"
+        },
+        {
+          name      = "LOG_DEPRECATIONS_CHANNEL",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:LOG_DEPRECATIONS_CHANNEL::"
+          }, {
+          name      = "LOG_LEVEL",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:LOG_LEVEL::"
+        },
+        {
+          name      = "DB_CONNECTION",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:DB_CONNECTION::"
+        },
+        {
+          name      = "DB_HOST",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:DB_HOST::"
+        },
+        {
+          name      = "DB_PORT",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:DB_PORT::"
+        },
+        {
+          name      = "DB_DATABASE",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:DB_DATABASE::"
+        },
+        {
+          name      = "DB_USERNAME",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:DB_USERNAME::"
+        },
+        {
+          name      = "DB_PASSWORD",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:DB_PASSWORD::"
+        },
+        {
+          name      = "BROADCAST_DRIVER",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:BROADCAST_DRIVER::"
+        },
+        {
+          name      = "CACHE_DRIVER",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:CACHE_DRIVER::"
+        },
+        {
+          name      = "FILESYSTEM_DRIVER",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:FILESYSTEM_DRIVER::"
+        },
+        {
+          name      = "QUEUE_CONNECTION",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:QUEUE_CONNECTION::"
+        },
+        {
+          name      = "SESSION_DRIVER",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:SESSION_DRIVER::"
+        },
+        {
+          name      = "SESSION_LIFETIME",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:SESSION_LIFETIME::"
+        },
+        {
+          name      = "MEMCACHED_HOST",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:MEMCACHED_HOST::"
+        },
+        {
+          name      = "REDIS_HOST",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:REDIS_HOST::"
+        },
+        {
+          name      = "REDIS_PASSWORD",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:REDIS_PASSWORD::"
+        },
+        {
+          name      = "REDIS_PORT",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:REDIS_PORT::"
+        },
+        {
+          name      = "MAIL_MAILER",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:MAIL_MAILER::"
+        },
+        {
+          name      = "MAIL_HOST",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:MAIL_HOST::"
+        },
+        {
+          name      = "MAIL_PORT",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:MAIL_PORT::"
+        },
+        {
+          name      = "MAIL_USERNAME",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:MAIL_USERNAME::"
+        },
+        {
+          name      = "MAIL_PASSWORD",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:MAIL_PASSWORD::"
+        },
+        {
+          name      = "MAIL_ENCRYPTION",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:MAIL_ENCRYPTION::"
+        },
+        {
+          name      = "MAIL_FROM_ADDRESS",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:MAIL_FROM_ADDRESS::"
+        },
+        {
+          name      = "MAIL_FROM_NAME",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:MAIL_FROM_NAME::"
+        },
+        {
+          name      = "MIX_PUSHER_APP_KEY",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:MIX_PUSHER_APP_KEY::"
+        },
+        {
+          name      = "MIX_PUSHER_APP_CLUSTER",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:MIX_PUSHER_APP_CLUSTER::"
+        },
+        {
+          name      = "FIREBASE_CREDENTIALS",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:FIREBASE_CREDENTIALS::"
+        },
+        {
+          name      = "SPEC_PATH",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:SPEC_PATH::"
+        },
+        {
+          name      = "SAIL_XDEBUG_MODE",
+          valueFrom = "${data.aws_secretsmanager_secret_version.secrets.arn}:SAIL_XDEBUG_MODE::"
         }
+
       ]
     },
   ])
@@ -140,6 +297,19 @@ resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.lb.arn
   port              = "80"
   protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.lb_tg.arn
+  }
+}
+
+resource "aws_lb_listener" "https" {
+  load_balancer_arn = aws_lb.lb.arn
+  port              = "443"
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = data.aws_acm_certificate.cert.arn
 
   default_action {
     type             = "forward"
@@ -355,6 +525,21 @@ resource "aws_kms_key" "ecs_execute_command" {
       },
       "Action": "kms:*",
       "Resource": "*"
+    },
+    {
+      "Sid": "Allow CloudWatch Logs",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "logs.amazonaws.com"
+      },
+      "Action": [
+        "kms:Encrypt*",
+        "kms:Decrypt*",
+        "kms:ReEncrypt*",
+        "kms:GenerateDataKey*",
+        "kms:Describe*"
+      ],
+      "Resource": "*"
     }
   ]
 }
@@ -364,25 +549,64 @@ provider "aws" {
   profile = "terraform"
   region  = var.region
 }
+resource "aws_db_parameter_group" "parameter_group" {
+  name        = "${var.app_name}-db-parameter-group"
+  family      = "mysql8.0"
+  description = "Custom parameter group"
+
+  parameter {
+    name  = "character_set_server"
+    value = "utf8mb4"
+  }
+
+  parameter {
+    name  = "collation_server"
+    value = "utf8mb4_bin"
+  }
+}
+
+
 resource "aws_db_instance" "rds" {
   allocated_storage                   = 20
   engine                              = "mysql"
   engine_version                      = "8.0.34"
   instance_class                      = "db.t2.micro"
   identifier                          = "${var.app_name}-db"
-  username                            = local.secrets["DB_USERNAME"]
-  password                            = local.secrets["DB_PASSWORD"]
-  parameter_group_name                = "default.mysql8.0"
+  username                            = data.aws_secretsmanager_secret_version.db_username.secret_string
+  password                            = data.aws_secretsmanager_secret_version.db_password.secret_string
+  parameter_group_name                = aws_db_parameter_group.parameter_group.name
   vpc_security_group_ids              = [aws_security_group.rds.id]
   db_subnet_group_name                = aws_db_subnet_group.main.name
   skip_final_snapshot                 = true
   iam_database_authentication_enabled = true
+  db_name                             = var.db_name
+
+  lifecycle {
+    ignore_changes = [password]
+  }
 }
 
 output "db_endpoint" {
   value       = aws_db_instance.rds.endpoint
   description = "The connection endpoint for the RDS instance"
 }
+data "aws_route53_zone" "hosted_zone" {
+  name = var.domain
+}
+
+resource "aws_route53_record" "A" {
+  zone_id = data.aws_route53_zone.hosted_zone.zone_id
+  name    = var.domain
+  type    = "A"
+
+  alias {
+    name                   = aws_lb.lb.dns_name
+    zone_id                = aws_lb.lb.zone_id
+    evaluate_target_health = true
+  }
+}
+
+
 data "aws_secretsmanager_secret" "secrets" {
   name = "${terraform.workspace}-${var.secret_name}"
 }
@@ -391,8 +615,20 @@ data "aws_secretsmanager_secret_version" "secrets" {
   secret_id = data.aws_secretsmanager_secret.secrets.id
 }
 
-locals {
-  secrets = jsondecode(data.aws_secretsmanager_secret_version.secrets.secret_string)
+data "aws_secretsmanager_secret" "db_username" {
+  name = "${terraform.workspace}-DB_USERNAME"
+}
+
+data "aws_secretsmanager_secret_version" "db_username" {
+  secret_id = data.aws_secretsmanager_secret.db_username.id
+}
+
+data "aws_secretsmanager_secret" "db_password" {
+  name = "${terraform.workspace}-DB_PASSWORD"
+}
+
+data "aws_secretsmanager_secret_version" "db_password" {
+  secret_id = data.aws_secretsmanager_secret.db_password.id
 }
 resource "aws_security_group" "ecs_tasks" {
   name        = "ecs-tasks"
@@ -516,8 +752,22 @@ variable "secret_name" {
 variable "app_name" {
   description = "The App name."
   type        = string
-  default     = "online-battle"
+  default     = "mol"
 }
+
+variable "db_name" {
+  description = "The Database name."
+  type        = string
+  default     = "online_battle_backend"
+}
+
+variable "domain" {
+  description = "The Domain name"
+  type        = string
+  default     = "mol.ninja"
+}
+
+
 
 terraform {
   required_providers {
@@ -579,6 +829,15 @@ resource "aws_vpc_endpoint" "secrets_manager" {
 resource "aws_vpc_endpoint" "ssmmessages" {
   vpc_id              = aws_vpc.main.id
   service_name        = "com.amazonaws.${var.region}.ssmmessages"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = [aws_subnet.private.id]
+  private_dns_enabled = true
+  security_group_ids  = [aws_security_group.ecs_tasks.id]
+}
+
+resource "aws_vpc_endpoint" "kms" {
+  vpc_id              = aws_vpc.main.id
+  service_name        = "com.amazonaws.${var.region}.kms"
   vpc_endpoint_type   = "Interface"
   subnet_ids          = [aws_subnet.private.id]
   private_dns_enabled = true
