@@ -49,3 +49,8 @@ app.*.map.json
 
 # NPM
 /node_modules
+
+# Google service files
+/android/app/google-services.json
+/ios/Runner/GoogleService-Info.plist
+
