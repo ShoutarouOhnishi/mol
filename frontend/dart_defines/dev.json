@@ -1,13 +1,12 @@
 {
     "flavor": "dev",
-    "appName": "Online Battle",
+    "appName": "MOL",
     "appIdSuffix": ".dev",
-    "firebaseWebApiKey": "AIzaSyDWj-lEugz9_JAA6_tv1jknZnxJCmYhLFk",
-    "firebaseWebAuthDomain": "online-battle-project.firebaseapp.com",
-    "firebaseWebDatabaseURL": "https://online-battle-project-default-rtdb.firebaseio.com",
-    "firebaseWebProjectId": "online-battle-project",
-    "firebaseWebStorageBucket": "online-battle-project.appspot.com",
-    "firebaseWebMessagingSenderId": "587078272552",
-    "firebaseWebAppId": "1:587078272552:web:7f94d4eeb46834a902971d",
-    "firebaseWebMeasurementId": "G-93ZC35YHQM"
+    "firebaseWebApiKey": "AIzaSyCxm-sPVjqlVGbPo3HCrx2QWqt8Ff8IR3k",
+    "firebaseWebAuthDomain": "mol-dev-24b86.firebaseapp.com",
+    "firebaseWebProjectId": "mol-dev-24b86",
+    "firebaseWebStorageBucket": "mol-dev-24b86.appspot.com",
+    "firebaseWebMessagingSenderId": "430858710179",
+    "firebaseWebAppId": "1:430858710179:web:8f84a87adbc2d91c346316",
+    "firebaseWebMeasurementId": "G-P77QQW5DBG"
 }

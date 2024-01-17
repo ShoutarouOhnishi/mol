@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: Online Battle API
+  title: MOL API
   description: アプリ向けAPI仕様
   version: 1.0.0
   contact:
@@ -10,7 +10,7 @@ info:
 servers:
   - url: "http://localhost/api/v1"
     description: ローカル環境
-  - url: "https://online-battle.jp/api/v1" # FIXME: Dev環境のURLを設定
+  - url: "https://dev.mol.ninja/api/v1"
     description: Dev環境
 
 tags:

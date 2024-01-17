@@ -2,22 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CLIENT_ID</key>
-	<string>587078272552-kqdrjfs955moft4jlgeh602c1i55ojol.apps.googleusercontent.com</string>
-	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.587078272552-kqdrjfs955moft4jlgeh602c1i55ojol</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAKCS7yDdxjxFTbRoqJRO5R8Vgi0pIYupo</string>
+	<string>AIzaSyDx-u-D5JD84C0jnsIh_liT4nBQrHEs3nI</string>
 	<key>GCM_SENDER_ID</key>
-	<string>587078272552</string>
+	<string>430858710179</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>jp.sohnishi.onlinebattle</string>
+	<string>jp.sohnishi.mol.dev</string>
 	<key>PROJECT_ID</key>
-	<string>online-battle-project</string>
+	<string>mol-dev-24b86</string>
 	<key>STORAGE_BUCKET</key>
-	<string>online-battle-project.appspot.com</string>
+	<string>mol-dev-24b86.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:587078272552:ios:bc3c2d476be9905102971d</string>
-	<key>DATABASE_URL</key>
-	<string>https://online-battle-project-default-rtdb.firebaseio.com</string>
+	<string>1:430858710179:ios:aa3ac245e0edb785346316</string>
 </dict>
 </plist>

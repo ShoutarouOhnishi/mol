@@ -1,4 +1,5 @@
 {
+  "name": "mol",
   "dependencies": {
     "lefthook": "^1.5.0"
   }

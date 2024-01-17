@@ -1,44 +1,26 @@
 {
   "project_info": {
-    "project_number": "587078272552",
-    "firebase_url": "https://online-battle-project-default-rtdb.firebaseio.com",
-    "project_id": "online-battle-project",
-    "storage_bucket": "online-battle-project.appspot.com"
+    "project_number": "430858710179",
+    "project_id": "mol-dev-24b86",
+    "storage_bucket": "mol-dev-24b86.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:587078272552:android:7366f904751434e002971d",
+        "mobilesdk_app_id": "1:430858710179:android:4b8ea58ceebe73c5346316",
         "android_client_info": {
-          "package_name": "jp.sohnishi.onlinebattle"
+          "package_name": "jp.sohnishi.mol.dev"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "587078272552-vad0l9m69gbuja5or31g0fc0n8mang45.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDRSSZJZQKaarlbSQ_r354yKcamj4-CWSA"
+          "current_key": "AIzaSyDEHCEcZSgP-11FcqnM4CMldX0FgkZTi9I"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "587078272552-vad0l9m69gbuja5or31g0fc0n8mang45.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "587078272552-4dol8b696rf5sj34e57hot1ks139s43a.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "jp.sohnishi.online-battle"
-              }
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

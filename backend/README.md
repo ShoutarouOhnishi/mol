@@ -11,7 +11,7 @@ brew install composer
 
 ## リポジトリをクローン
 ```shell
-git clone https://github.com/ShoutarouOhnishi/online-battle-project
+git clone https://github.com/ShoutarouOhnishi/mol
 ```
 
 ## .env.exampleをコピーして.envを作成

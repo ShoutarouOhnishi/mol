@@ -1,2 +1,2 @@
 // アプリ名
-const kAppName = 'OnlineBattle';
+const kAppName = 'MOL';

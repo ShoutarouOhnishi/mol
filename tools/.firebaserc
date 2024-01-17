@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "online-battle-project"
-  }
+    "default": "mol-dev-24b86",
+    "dev": "mol-dev-24b86"
+  },
+  "targets": {},
+  "etags": {}
 }

@@ -14,7 +14,6 @@ void main() async {
       options: const FirebaseOptions(
         apiKey: String.fromEnvironment('firebaseWebApiKey'),
         authDomain: String.fromEnvironment('firebaseWebAuthDomain'),
-        databaseURL: String.fromEnvironment('firebaseWebDatabaseURL'),
         projectId: String.fromEnvironment('firebaseWebProjectId'),
         storageBucket: String.fromEnvironment('firebaseWebStorageBucket'),
         messagingSenderId:

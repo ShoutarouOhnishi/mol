@@ -75,7 +75,7 @@ select, <a> to toggle all, <i> to invert selection, and <enter> to proceed)
   => Use an existing projectを選択
 
 ? Select a default Firebase project for this directory: (Use arrow keys)
-❯ online-battle-project (Online-Battle-Project-DEV) 
+❯ mol-dev-24b86 (MOL-DEV) 
 
  => 該当のプロジェクトを選択
 

@@ -45,8 +45,24 @@ android {
     }
 
     defaultConfig {
+
+        flavorDimensions "version"
+        productFlavors {
+            dev {
+                dimension "version"
+                applicationIdSuffix ".dev"
+            }
+            stg {
+                dimension "version"
+                applicationIdSuffix ".stg"
+            }
+            prd {
+                dimension "version"
+                applicationIdSuffix ""
+            }
+        }
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "jp.sohnishi.onlinebattle"
+        applicationId "jp.sohnishi.mol"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion 19
