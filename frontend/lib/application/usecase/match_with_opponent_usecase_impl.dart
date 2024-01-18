@@ -16,6 +16,8 @@ class MatchWithOpponentUseCaseImpl implements MatchWithOpponentUseCase {
   Future<MatchMakeState> call(String userId) async {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
     final completer = Completer<String>();
+    MatchMakeState result = const MatchMakeState.error(
+        'Matching processing failed for some reason.');
 
     try {
       // TODO: 3端末でトランザクション検証
@@ -35,25 +37,26 @@ class MatchWithOpponentUseCaseImpl implements MatchWithOpponentUseCase {
           await _matchMakeRepository.removeFromWaitingList(waitingUserId);
 
           // 対戦ルームへ遷移
-          return MatchMakeState.matched(roomId);
+          result = MatchMakeState.matched(roomId);
         } else {
           // 待機リストに追加
           await _matchMakeRepository.addToWaitingList(userId);
           // 待機リストを監視
           _matchMakeRepository.observeWaitingList(userId, (roomId) {
-            completer.complete(roomId); // roomIdを使ってCompleterを完了する
+            if (!completer.isCompleted) {
+              completer.complete(roomId); // roomIdを使ってCompleterを完了する
+            }
           });
           // 受け取ったroomIdを返す
           await completer.future.then((roomId) {
-            return MatchMakeState.matched(roomId);
+            result = MatchMakeState.matched(roomId);
           });
         }
       });
     } catch (e) {
-      return MatchMakeState.error(e.toString());
+      result = MatchMakeState.error(e.toString());
     }
 
-    return const MatchMakeState.error(
-        'Matching processing failed for some reason.');
+    return result;
   }
 }
