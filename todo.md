@@ -14,6 +14,5 @@
     - ecs_task_definitionのsecrets定義を効率的なものに変更したい
       - 予めキーだけ定義or取得しておけばfor文でまわせる
     - terraformのディレクトリ構成を検討
-  - onlinebattle系をmolに変更してまわる
   - マッチメイクの実装
-
+    - 3端末での同時実行検証

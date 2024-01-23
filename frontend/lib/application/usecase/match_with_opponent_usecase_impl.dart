@@ -7,21 +7,22 @@ import 'package:frontend/presentation/state/match_make_page_state.dart';
 
 class MatchWithOpponentUseCaseImpl implements MatchWithOpponentUseCase {
   final MatchMakeRepository _matchMakeRepository;
+  final FirebaseFirestore _firestore;
 
   MatchWithOpponentUseCaseImpl(
     this._matchMakeRepository,
+    this._firestore,
   );
 
   @override
   Future<MatchMakeState> call(String userId) async {
-    final FirebaseFirestore firestore = FirebaseFirestore.instance;
     final completer = Completer<String>();
     MatchMakeState result = const MatchMakeState.error(
         'Matching processing failed for some reason.');
 
     try {
       // TODO: 3端末でトランザクション検証
-      await firestore.runTransaction((transaction) async {
+      await _firestore.runTransaction((transaction) async {
         // 待機中のユーザーを探す
         // TODO: 先入先出ができているか確認
         String? waitingUserId =
