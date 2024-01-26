@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/app_router.dart';
 import 'package:frontend/presentation/notifier/providers.dart';
 import 'package:frontend/presentation/state/splash_page_state.dart';
+import 'package:frontend/presentation/style/app_style.dart';
 
 class SplashPage extends ConsumerStatefulWidget {
   const SplashPage({super.key});
@@ -52,7 +53,7 @@ class _SplashPageState extends ConsumerState<SplashPage> {
     return const Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: Text('Splash'),
+        child: Text('Splash', style: AppStyles.body),
         // child: Assets.logo.logo.image(width: 192, height: 32), // FIXME: 実装
       ),
     );

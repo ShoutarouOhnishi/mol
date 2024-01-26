@@ -49,8 +49,12 @@ class _MyAppState extends ConsumerState<MyApp> {
     return MaterialApp(
       title: kAppName,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        scaffoldBackgroundColor: Colors.black,
+        // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.black,
+        ),
       ),
       initialRoute: AppRouter.splash,
       onGenerateRoute: AppRouter.generateRoute,

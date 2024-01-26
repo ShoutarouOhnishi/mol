@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:frontend/constant/match.dart';
 import 'package:frontend/presentation/component/progress.dart';
 import 'package:frontend/presentation/notifier/providers.dart';
 import 'package:frontend/presentation/page/room_page.dart';
 import 'package:frontend/presentation/state/match_make_page_state.dart';
+import 'package:frontend/presentation/style/app_style.dart';
 
 class MatchMakePage extends ConsumerWidget {
   const MatchMakePage({super.key});
@@ -33,7 +35,7 @@ class MatchMakePage extends ConsumerWidget {
     final authState = ref.watch(authStateProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('対戦マッチング')),
+      appBar: AppBar(title: const Text(kTitleTxt, style: AppStyles.headline)),
       body: Stack(
         children: [
           Center(
@@ -43,14 +45,14 @@ class MatchMakePage extends ConsumerWidget {
                 // 対戦相手を探すボタン
                 ElevatedButton(
                   onPressed: () => notifier.searchForOpponent(
-                      context,
-                      authState.user!.id
-                          .toString()), // FIXME: ユーザーID等のユニークキーを渡す
-                  child: const Text('対戦相手を探す'),
+                      context, authState.user!.id.toString()),
+                  style: AppStyles.primaryButton,
+                  child:
+                      const Text(kFindAnOpponentBtnTxt, style: AppStyles.body),
                 ),
 
                 if (state is Error)
-                  const Text('エラーが発生しました。\nしばらく経ってからもう一度お試しください。'),
+                  const Text(kMatchErrorText, style: AppStyles.caption),
               ],
             ),
           ),
