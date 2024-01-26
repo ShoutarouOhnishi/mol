@@ -34,7 +34,8 @@ class GetUserAuthStateUseCaseImpl implements GetUserAuthStateUseCase {
       }
       return AuthState(
           token: loginResponse.token,
-          event: AuthStateUIEvent.authenticated(loginResponse.token));
+          event: AuthStateUIEvent.authenticated(loginResponse.token),
+          user: loginResponse.user);
     } on Exception catch (e) {
       return AuthState(event: AuthStateUIEvent.error(e));
     }
