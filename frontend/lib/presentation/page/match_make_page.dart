@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:frontend/app_router.dart';
 import 'package:frontend/constant/match.dart';
 import 'package:frontend/presentation/component/progress.dart';
 import 'package:frontend/presentation/notifier/providers.dart';
@@ -12,27 +13,24 @@ class MatchMakePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final provider = matchMakePageStateNotifierProvider;
+    final state = ref.watch(matchMakePageStateNotifierProvider);
+    final notifier = ref.watch(provider.notifier);
+    final authState = ref.watch(authStateProvider);
+
     ref.listen<MatchMakeState>(
       matchMakePageStateNotifierProvider,
       (_, newState) {
         newState.maybeWhen(
           matched: (roomId) {
             debugPrint('matched');
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => RoomPage(roomId: roomId),
-              ),
-            );
+            notifier.createRoom(roomId);
+            Navigator.of(context).pushNamed(AppRouter.room, arguments: roomId);
           },
           orElse: () {},
         );
       },
     );
-
-    final provider = matchMakePageStateNotifierProvider;
-    final state = ref.watch(matchMakePageStateNotifierProvider);
-    final notifier = ref.watch(provider.notifier);
-    final authState = ref.watch(authStateProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text(kTitleTxt, style: AppStyles.headline)),

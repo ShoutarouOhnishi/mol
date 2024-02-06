@@ -18,6 +18,8 @@ class InitialPage extends ConsumerStatefulWidget {
 }
 
 class _InitialPageState extends ConsumerState<InitialPage> {
+  final userNameTextEditingController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -57,7 +59,9 @@ class _InitialPageState extends ConsumerState<InitialPage> {
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 2,
-                  child: const AppTextField(labelText: kUserNameLblTxt),
+                  child: AppTextField(
+                      labelText: kUserNameLblTxt,
+                      controller: userNameTextEditingController),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 80),
@@ -65,6 +69,8 @@ class _InitialPageState extends ConsumerState<InitialPage> {
                   width: MediaQuery.of(context).size.width / 2,
                   child: ElevatedButton(
                     onPressed: () {
+                      notifier.onUserNameChanged(
+                          userNameTextEditingController.text);
                       notifier.createAnonymouslyUser();
                     },
                     style: AppStyles.primaryButton,

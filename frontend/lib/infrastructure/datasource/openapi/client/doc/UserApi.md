@@ -9,7 +9,7 @@ All URIs are relative to *http://localhost/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createUser**](UserApi.md#createuser) | **POST** /api/v1/user | ユーザー作成
+[**createUser**](UserApi.md#createuser) | **POST** /api/v1/users | ユーザー作成
 
 
 # **createUser**

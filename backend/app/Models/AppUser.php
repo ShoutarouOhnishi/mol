@@ -19,6 +19,10 @@ class AppUser extends Model implements Authenticatable
 
     protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_at'];
 
+    protected $hidden = [
+        'pivot'
+    ];
+
     protected $casts = [
         'is_ban' => 'boolean',
         'is_withdraw' => 'boolean',
@@ -44,7 +48,7 @@ class AppUser extends Model implements Authenticatable
      */
     public function scopeDisclosed($query): void
     {
-        $query->select('id', 'name', 'accessed_at', 'created_at');
+        $query->select('app_users.id', 'app_users.name', 'app_users.accessed_at', 'app_users.created_at');
     }
 
     protected static function boot()

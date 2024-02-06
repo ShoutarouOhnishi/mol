@@ -3,7 +3,9 @@
 namespace Tests\Feature;
 
 use App\Http\Middleware\FirebaseTokenIsValid;
+use App\Models\AppUser;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Passport\Passport;
 use Spectator\Spectator;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
@@ -13,13 +15,21 @@ class AppUserControllerTest extends TestCase
 
     use RefreshDatabase;
 
+    public $mockConsoleOutput = false;
+    protected $user;
+
     protected function setUp(): void
     {
         parent::setUp();
 
         Spectator::using('openapi.yml');
 
-        $this->artisan('passport:install');
+        $this->artisan('passport:install', ['--force' => true, '--no-interaction' => true]);
+
+        $this->user = Passport::actingAs(
+            AppUser::factory()->create(),
+            ['app-user-scope']
+        );
 
         // Mock FirebaseTokenIsValid middleware
         $fakeFirebaseUid = 'fakeFirebaseUid';
@@ -32,6 +42,7 @@ class AppUserControllerTest extends TestCase
         });
 
         $this->app->instance(FirebaseTokenIsValid::class, $firebaseMock);
+
     }
 
     public function testStore200()
@@ -41,7 +52,7 @@ class AppUserControllerTest extends TestCase
             'name' => 'ゲスト',
         ];
 
-        $response = $this->postJson('/api/v1/user', $requestData);
+        $response = $this->postJson('/api/v1/users', $requestData);
         $response->assertValidRequest()->assertValidResponse(Response::HTTP_OK);
     }
 
@@ -52,7 +63,7 @@ class AppUserControllerTest extends TestCase
             'name' => 'ゲストゲストゲストゲストゲストゲスト',
         ];
 
-        $response = $this->postJson('/api/v1/user', $requestData);
+        $response = $this->postJson('/api/v1/users', $requestData);
         $response->assertValidRequest()->assertValidResponse(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 }

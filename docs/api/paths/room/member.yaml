@@ -1,0 +1,27 @@
+get:
+  tags:
+    - room
+  summary: ルームメンバー一覧取得
+  operationId: getRoomMembers
+  parameters:
+    - $ref: '../../parameters/room_id.yaml'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: getRoomMembersResponse
+            type: object
+            description: ルームメンバー一覧取得結果
+            required:
+              - members
+            properties:
+              members: 
+                type: array
+                items:
+                  $ref: '../../schemas/user/disclosed_user.yaml'
+    '500':
+      $ref: '../../responses/internal_server_error.yaml'
+  security:
+    - appTokenGuard: []

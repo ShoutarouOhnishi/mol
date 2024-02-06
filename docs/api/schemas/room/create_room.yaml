@@ -1,0 +1,15 @@
+description: "ルーム作成 - Input"
+type: object
+required:
+  - room_id
+  - app_user_id
+properties:
+  room_id:
+    description: "ルームID"
+    type: string
+    example: "dskl29ds"
+  app_user_id:
+    description: "ユーザーID"
+    type: integer
+    example: 1
+

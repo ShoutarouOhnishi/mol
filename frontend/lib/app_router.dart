@@ -20,9 +20,10 @@ class AppRouter {
         return MaterialPageRoute(builder: (context) => const InitialPage());
       case matchMake:
         return MaterialPageRoute(builder: (context) => MatchMakePage());
-      // FIXME: 実装
-      // case room:
-      //   return MaterialPageRoute(builder: (context) => RoomPage());
+      case room:
+        final roomId = settings.arguments as String;
+        return MaterialPageRoute(
+            builder: (context) => RoomPage(roomId: roomId));
       default:
         return MaterialPageRoute(builder: (context) => const InitialPage());
     }

@@ -25,7 +25,7 @@ class UserApi {
   /// * [CreateUser] createUser (required):
   Future<Response> createUserWithHttpInfo(CreateUser createUser,) async {
     // ignore: prefer_const_declarations
-    final path = r'/api/v1/user';
+    final path = r'/api/v1/users';
 
     // ignore: prefer_final_locals
     Object? postBody = createUser;

@@ -10,14 +10,14 @@ class AppStyles {
 
   // 本文用のスタイル
   static const TextStyle body = TextStyle(
-    fontSize: 15.0,
+    fontSize: 14.0,
     fontWeight: FontWeight.normal,
     color: Colors.white,
   );
 
   // 注釈用のスタイル
   static const TextStyle caption = TextStyle(
-    fontSize: 12.0,
+    fontSize: 8.0,
     fontWeight: FontWeight.normal,
     color: Colors.white,
   );

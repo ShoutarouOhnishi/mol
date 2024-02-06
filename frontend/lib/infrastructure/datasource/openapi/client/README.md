@@ -64,16 +64,20 @@ All URIs are relative to *http://localhost/api/v1*
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *AuthApi* | [**login**](doc//AuthApi.md#login) | **POST** /api/v1/login | ログイン
-*UserApi* | [**createUser**](doc//UserApi.md#createuser) | **POST** /api/v1/user | ユーザー作成
+*RoomApi* | [**createRoom**](doc//RoomApi.md#createroom) | **POST** /api/v1/rooms | ルーム作成
+*RoomApi* | [**getRoomMembers**](doc//RoomApi.md#getroommembers) | **GET** /api/v1/rooms/{room}/members | ルームメンバー一覧取得
+*UserApi* | [**createUser**](doc//UserApi.md#createuser) | **POST** /api/v1/users | ユーザー作成
 
 
 ## Documentation For Models
 
+ - [CreateRoom](doc//CreateRoom.md)
  - [CreateUser](doc//CreateUser.md)
  - [CreateUser422Response](doc//CreateUser422Response.md)
  - [CreateUser500Response](doc//CreateUser500Response.md)
  - [CreateUserResponse](doc//CreateUserResponse.md)
  - [DisclosedUser](doc//DisclosedUser.md)
+ - [GetRoomMembersResponse](doc//GetRoomMembersResponse.md)
  - [Login401Response](doc//Login401Response.md)
  - [Login403Response](doc//Login403Response.md)
  - [LoginResponse](doc//LoginResponse.md)

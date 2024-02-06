@@ -4,7 +4,7 @@ class ApiClient {
   ApiClient({this.basePath = '{{{basePath}}}', this.authentication,}) {
     // デフォルトヘッダーに 'Accept: application/json' を追加
     defaultHeaderMap['Accept'] = 'application/json';
-  };
+  }
 
   final String basePath;
   final Authentication? authentication;

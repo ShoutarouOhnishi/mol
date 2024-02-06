@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\AppUserController;
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\RoomController;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 
@@ -16,12 +17,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('firebase.verifyToken')->group(function (Router $router) {
-    $router->apiResource('user', AppUserController::class)
+Route::group(['middleware' => ['firebase.verifyToken']], function (Router $router) {
+    $router->apiResource('users', AppUserController::class)
         ->only(['store']);
     $router->apiResource('login', AuthController::class)
         ->only(['store']);
 });
 
 Route::group(['middleware' => ['auth:api', 'scopes:app-user-scope']], function (Router $router) {
+    $router->apiResource('rooms', RoomController::class)
+        ->only(['store']);
+    $router->get('rooms/{room}/members', [RoomController::class, 'show']);
 });
+

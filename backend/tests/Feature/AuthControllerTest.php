@@ -14,20 +14,22 @@ class AuthControllerTest extends TestCase
 
     use RefreshDatabase;
 
+    public $mockConsoleOutput = false;
+
     protected function setUp(): void
     {
         parent::setUp();
 
         Spectator::using('openapi.yml');
 
-        $this->artisan('passport:install');
+        $this->artisan('passport:install', ['--force' => true, '--no-interaction' => true]);
     }
 
     public function testStore200()
     {
         $this->mockFirebaseTokenIsValid(AppUser::factory()->create()->firebase_uid);
 
-        $response = $this->postJson('/api/v1/authenticate');
+        $response = $this->postJson('/api/v1/login');
         $response->assertValidRequest()->assertValidResponse(Response::HTTP_OK);
     }
 
@@ -36,7 +38,7 @@ class AuthControllerTest extends TestCase
 
         $this->mockFirebaseTokenIsValid('fakeFirebaseUid');
 
-        $response = $this->postJson('/api/v1/authenticate');
+        $response = $this->postJson('/api/v1/login');
         $response->assertValidRequest()->assertValidResponse(Response::HTTP_UNAUTHORIZED);
     }
 
@@ -45,7 +47,7 @@ class AuthControllerTest extends TestCase
 
         $this->mockFirebaseTokenIsValid(AppUser::factory(['is_withdraw' => true])->create()->firebase_uid);
 
-        $response = $this->postJson('/api/v1/authenticate');
+        $response = $this->postJson('/api/v1/login');
         $response->assertValidRequest()->assertValidResponse(Response::HTTP_FORBIDDEN);
     }
 

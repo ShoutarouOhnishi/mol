@@ -15,6 +15,11 @@ servers:
 
 tags:
   - name: auth
+    description: 認証
+  - name: user
+    description: ユーザー
+  - name: room
+    description: 対戦ルーム
 
 components:
   securitySchemes:
@@ -28,9 +33,13 @@ components:
       scheme: bearer
 
 paths:
-  /api/v1/user:
+  /api/v1/users:
     $ref: './paths/user/user.yaml'
   /api/v1/login:
     $ref: './paths/auth/login.yaml'
+  /api/v1/rooms:
+    $ref: './paths/room/room.yaml'
+  /api/v1/rooms/{room}/members:
+    $ref: './paths/room/member.yaml'
 
 

@@ -20,16 +20,16 @@ class CreateInitialTables extends Migration
             $table->boolean('is_ban')->default(false);
             $table->string('reason_for_ban', 256)->nullable();
             $table->boolean('is_withdraw')->default(false);
-            $table->datetime('accessed_at')->nullable()->default(null);
-            $table->datetime('created_at');
-            $table->datetime('updated_at');
+            $table->datetime('accessed_at')->default(now());
+            $table->datetime('created_at')->default(now());
+            $table->datetime('updated_at')->default(now());
             $table->datetime('deleted_at')->nullable();
 
             $table->unique('firebase_uid');
         });
 
         Schema::create('rooms', function (Blueprint $table) {
-            $table->id();
+            $table->string('id', 30)->primary();
             $table->datetime('ended_at')->nullable();
             $table->datetime('created_at')->nullable();
             $table->datetime('updated_at')->nullable();
@@ -37,11 +37,12 @@ class CreateInitialTables extends Migration
 
         Schema::create('room_members', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('room_id');
-            $table->unsignedBigInteger('user_id');
-            $table->integer('rank')->default(0);
-            $table->datetime('created_at')->nullable();
-            $table->datetime('updated_at')->nullable();
+            $table->string('room_id');
+            $table->unsignedBigInteger('app_user_id');
+            $table->integer('rank')->nullable();
+
+            $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade');
+            $table->foreign('app_user_id')->references('id')->on('app_users')->onDelete('cascade');
         });
     }
 

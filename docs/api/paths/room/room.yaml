@@ -1,0 +1,21 @@
+post:
+  tags:
+    - room
+  summary: ルーム作成
+  operationId: createRoom
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+            $ref: '../../schemas/room/create_room.yaml'
+            type: object
+  responses:
+    '200':
+      description: OK
+    '422':
+      $ref: '../../responses/validation_error.yaml'
+    '500':
+      $ref: '../../responses/internal_server_error.yaml'
+  security:
+    - appTokenGuard: []
