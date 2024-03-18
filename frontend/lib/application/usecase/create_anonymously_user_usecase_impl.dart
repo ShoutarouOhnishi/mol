@@ -30,6 +30,7 @@ class CreateAnonymouslyUserUseCaseImpl implements CreateAnonymouslyUserUseCase {
       if (response == null) {
         return const AuthState(event: AuthStateUIEvent.unauthenticated());
       }
+      _apiClient.addDefaultHeader('Authorization', 'Bearer ${response.token}');
       return AuthState(
           token: response.token,
           user: response.user,

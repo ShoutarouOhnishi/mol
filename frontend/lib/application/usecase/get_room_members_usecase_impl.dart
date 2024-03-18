@@ -6,15 +6,12 @@ import 'package:frontend/presentation/state/auth_state.dart';
 
 class GetRoomMembersUseCaseImpl implements GetRoomMembersUseCase {
   final RoomRepository _roomRepository;
-  final ApiClient _apiClient;
 
-  GetRoomMembersUseCaseImpl(this._roomRepository, this._apiClient);
+  GetRoomMembersUseCaseImpl(this._roomRepository);
 
   @override
   Future<List<DisclosedUser>> call(AuthState authState, String roomId) async {
     try {
-      String token = authState.token;
-      _apiClient.addDefaultHeader('Authorization', 'Bearer $token');
       final response = await _roomRepository.getRoomMembers(roomId);
       return response != null ? response.members : [];
     } on Exception catch (e) {

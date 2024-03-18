@@ -15,8 +15,7 @@ import 'api_client_state_notifier.dart';
 
 final apiClientStateProvider =
     StateNotifierProvider<ApiClientStateNotifier, ApiClient>((ref) {
-  final useCase = ref.read(setIdTokenUseCaseProvider);
-  return ApiClientStateNotifier(useCase);
+  return ApiClientStateNotifier();
 });
 
 final authStateProvider =

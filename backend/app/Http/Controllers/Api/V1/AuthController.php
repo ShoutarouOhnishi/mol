@@ -34,6 +34,7 @@ class AuthController extends Controller
             $user->fill([
                 'accessed_at' => Carbon::now(),
             ])->save();
+            $user->tokens()->delete();
             $token = $user->createToken($user->id, ['app-user-scope']);
             return $token;
         });

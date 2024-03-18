@@ -6,15 +6,11 @@ import 'package:frontend/presentation/state/auth_state.dart';
 
 class CreateRoomUseCaseImpl implements CreateRoomUseCase {
   final RoomRepository _roomRepository;
-  final ApiClient _apiClient;
-
-  CreateRoomUseCaseImpl(this._roomRepository, this._apiClient);
+  CreateRoomUseCaseImpl(this._roomRepository);
 
   @override
   Future<void> call(AuthState authState, String roomId) async {
     try {
-      String token = authState.token;
-      _apiClient.addDefaultHeader('Authorization', 'Bearer $token');
       final request = CreateRoom(roomId: roomId, appUserId: authState.user!.id);
       await _roomRepository.createRoom(request);
       return;

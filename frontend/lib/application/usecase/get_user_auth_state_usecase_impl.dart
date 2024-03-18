@@ -32,6 +32,10 @@ class GetUserAuthStateUseCaseImpl implements GetUserAuthStateUseCase {
       if (loginResponse == null) {
         return const AuthState(event: AuthStateUIEvent.unauthenticated());
       }
+
+      _apiClient.addDefaultHeader(
+          'Authorization', 'Bearer ${loginResponse.token}');
+
       return AuthState(
           token: loginResponse.token,
           event: AuthStateUIEvent.authenticated(loginResponse.token),

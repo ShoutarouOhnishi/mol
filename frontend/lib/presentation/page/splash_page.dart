@@ -41,7 +41,6 @@ class _SplashPageState extends ConsumerState<SplashPage> {
             );
           },
           onError: (e) async {
-            // FIXME: 暫定的にinitialへ遷移。エラーWidget作成次第、実装しなおす
             Navigator.of(context).pushReplacementNamed(
               AppRouter.initial,
             );
